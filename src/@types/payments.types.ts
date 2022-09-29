@@ -22,7 +22,7 @@ export interface GetPaymentsRoutesArgs extends PagerSort {
     crypto_network?: string;
 }
 
-export interface PaymentRouteWithNetwork extends PaymentRoute {
+export interface PaymentRouteNetwork extends PaymentRoute {
     network: NetworkObject;
 }
 
