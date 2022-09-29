@@ -1,4 +1,3 @@
-import {NetworkObject} from './../dist/@types/payments.types.d';
 import {GetOperationsLimits, OperationsLimits, operationsLimitsString} from './@types/operations-limits.types';
 import {FindSystemSettingsArgs, Setting, SettingString} from './@types/settings.types';
 import {
@@ -13,6 +12,7 @@ import {
     AddCurrencyNetworksArgs,
     NetworkObjectString,
     RemoveCurrencyNetworks,
+    NetworkObject,
 } from './@types/payments.types';
 import {
     CreateExternalTransferArgs,
@@ -482,6 +482,5 @@ export * from './@types/utils.types';
 export * from './@types/payments.types';
 export * from './@types/crypto-deposit-address.types';
 export * from './@types/settings.types';
-export * from './@types/transfers.types';
 export * from './@types/transfers.types';
 export * from './@types/operations-limits.types';
