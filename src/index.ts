@@ -198,7 +198,7 @@ export class Maya_Sdk {
         return result.create_crypto_deposit_address;
     }
 
-    async update_crypto_deposit_address(args: UpdateCryptoDepositAddressArgs, headers?: HeadersType): Promise<CryptoDepositAddress> {
+    async update_crypto_deposit_address(args: UpdateCryptoDepositAddressArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($crypto_deposit_address_id: String!, $address: String, $currency_id: String) {
                 update_crypto_deposit_address(crypto_deposit_address_id: $crypto_deposit_address_id, address: $address, currency_id: $currency_id)
