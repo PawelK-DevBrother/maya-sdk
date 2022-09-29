@@ -13,8 +13,8 @@ export interface CryptoDepositAddress {
     currency_id: string;
     address?: string;
     network: string;
-    address_tag_type: CryptoAddressTagType;
-    address_tag_value?: string;
+    address_tag_type?: CryptoAddressTagType;
+    address_tag_value: string;
     psp_message?: string;
     created_at: string;
     updated_at: string;
