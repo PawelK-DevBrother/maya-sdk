@@ -1,5 +1,11 @@
 import {PagerSort, ToggleSwitch} from './utils.types';
 
+export interface NetworkObject {
+    label: string;
+    value: string;
+    notes: string;
+}
+
 export interface PaymentRoute {
     payment_route_id: string;
     currency_id: string;
@@ -10,8 +16,12 @@ export interface PaymentRoute {
 }
 
 export interface GetPaymentsRoutesArgs extends PagerSort {
-    payment_route_id?: string;
     currency_id?: string;
+    payment_route_id?: string;
     psp_service_id?: string;
     crypto_network?: string;
+}
+
+export interface PaymentRouteWithNetwork extends PaymentRoute {
+    network: NetworkObject;
 }

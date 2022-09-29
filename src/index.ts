@@ -1,3 +1,5 @@
+import {CreateExternalTransferArgs, ExternalEstimation, Transfer} from './@types/transfers.types';
+import {FindSystemSettingsArgs, SettingItem} from './@types/settings.types';
 import {EstimateNetworkFeeArgs, EstimateNetworkFeeResult} from './@types/fees.types';
 import {GetPaymentsRoutesArgs, PaymentRoute} from './@types/payments.types';
 // Tools
@@ -6,7 +8,7 @@ import {gql, GraphQLClient, Variables} from 'graphql-request';
 // Types
 import {HealthCheckResult} from './@types/utils.types';
 
-export class Maya_SK {
+export class Maya_Sdk {
     private gql_client: GraphQLClient;
     private headers: {[x: string]: string} = {};
 
@@ -57,14 +59,27 @@ export class Maya_SK {
                 }
             }
         `;
-        const {healthcheck} = await this.gql_request(query);
-        return healthcheck;
+        const result = await this.gql_request(query);
+        return result.healthcheck;
     }
 
-    async get_payments_routes(args?: GetPaymentsRoutesArgs): Promise<PaymentRoute[]> {
+    async system_settings(args?: FindSystemSettingsArgs): Promise<SettingItem[]> {
         const query = gql`
-            query ($pager: PagerInput, $sort: SortInput) {
-                payments_routes(pager: $pager, sort: $sort) {
+            query ($search: String, $pager: PagerInput, $sort: SortInput) {
+                system_settings(search: $search, pager: $pager, sort: $sort) {
+                    name
+                    value
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.system_settings;
+    }
+
+    async payments_routes(args?: GetPaymentsRoutesArgs): Promise<PaymentRoute[]> {
+        const query = gql`
+            query ($currency_id: String, $pager: PagerInput) {
+                payments_routes(currency_id: $currency_id, pager: $pager) {
                     payment_route_id
                     currency_id
                     psp_service_id
@@ -75,41 +90,153 @@ export class Maya_SK {
             }
         `;
 
-        const {payments_routes} = await this.gql_request(query, args);
-        return payments_routes;
+        const result = await this.gql_request(query, args);
+        return result.payments_routes;
     }
 
-    async get_network_fees(args: EstimateNetworkFeeArgs): Promise<EstimateNetworkFeeResult> {
+    async payments_routes_with_networks(args?: GetPaymentsRoutesArgs): Promise<PaymentRoute[]> {
         const query = gql`
-            mutation ($currency_id: String!, $network: String, $psp_service_id: String) {
-                estimate_network_fee(currency_id: $currency_id, network: $network, psp_service_id: $psp_service_id) {
-                    low {
-                        fee_per_byte
-                        gas_price
-                        network_fee
-                        base_fee
-                        priority_fee
-                    }
-                    medium {
-                        fee_per_byte
-                        gas_price
-                        network_fee
-                        base_fee
-                        priority_fee
-                    }
-                    high {
-                        fee_per_byte
-                        gas_price
-                        network_fee
-                        base_fee
-                        priority_fee
+            query ($currency_id: String, $pager: PagerInput) {
+                payments_routes_networks(currency_id: $currency_id, pager: $pager) {
+                    payment_route_id
+                    currency_id
+                    psp_service_id
+                    crypto_network
+                    crypto_address_tag_type
+                    is_active
+                    network {
+                        label
+                        value
+                        notes
                     }
                 }
             }
         `;
 
-        const {estimate_network_fee} = await this.gql_request(query, args);
-        return estimate_network_fee;
+        const result = await this.gql_request(query, args);
+        return result.payments_routes_networks;
+    }
+
+    async estimate_validate_external_transfer(args: CreateExternalTransferArgs): Promise<ExternalEstimation> {
+        const query = gql`
+            mutation (
+                $amount: Float!
+                $currency_id: String!
+                $network: String!
+                $destination_address: String!
+                $direction: TransferDirection!
+                $network_speed: CryptoNetworkSpeed!
+                $address_tag_value: String
+                $address_tag_type: CryptoAddressTagType
+                $notes: String
+                $destination_wallet: String
+                $counterparty_first_name: String
+                $counterparty_last_name: String
+            ) {
+                estimate_validate_external_transfer(
+                    amount: $amount
+                    currency_id: $currency_id
+                    network: $network
+                    direction: $direction
+                    notes: $notes
+                    counterparty_first_name: $counterparty_first_name
+                    counterparty_last_name: $counterparty_last_name
+                    destination_address: $destination_address
+                    network_speed: $network_speed
+                    destination_wallet: $destination_wallet
+                    address_tag_value: $address_tag_value
+                    address_tag_type: $address_tag_type
+                ) {
+                    amount
+                    currency_id
+                    direction
+                    amount
+                    fiat_amount
+                    ex_body_amount
+                    ex_fee_amount
+                    internal_fee
+                    network_fee
+                    psp_service_id
+                    destination_address
+                    price
+                    network
+                    address_tag_value
+                    address_tag_type
+                    network_speed
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.estimate_validate_external_transfer;
+    }
+
+    async create_external_transfer(args: CreateExternalTransferArgs): Promise<Transfer> {
+        const query = gql`
+            mutation (
+                $amount: Float!
+                $currency_id: String!
+                $network: String!
+                $destination_address: String!
+                $direction: TransferDirection!
+                $network_speed: CryptoNetworkSpeed!
+                $address_tag_value: String
+                $address_tag_type: CryptoAddressTagType
+                $notes: String
+                $destination_wallet: String
+                $counterparty_first_name: String
+                $counterparty_last_name: String
+            ) {
+                create_external_transfer(
+                    amount: $amount
+                    currency_id: $currency_id
+                    network: $network
+                    direction: $direction
+                    notes: $notes
+                    counterparty_first_name: $counterparty_first_name
+                    counterparty_last_name: $counterparty_last_name
+                    destination_address: $destination_address
+                    network_speed: $network_speed
+                    destination_wallet: $destination_wallet
+                    address_tag_value: $address_tag_value
+                    address_tag_type: $address_tag_type
+                ) {
+                    type
+                    scope
+                    direction
+                    status
+                    user_id
+                    transfer_id
+                    counterparty_first_name
+                    counterparty_last_name
+                    currency_id
+                    amount
+                    fiat_amount
+                    network_fee
+                    internal_fee
+                    crypto_address_value
+                    crypto_address_tag_type
+                    crypto_address_tag_value
+                    crypto_network
+                    crypto_network_speed
+                    crypto_address_wallet
+                    transaction_hash
+                    ex_transfer_txid
+                    ex_body_amount
+                    ex_fee_amount
+                    ex_refund_txid
+                    ex_refund_body_amount
+                    ex_refund_fee_amount
+                    notes
+                    message
+                    error_message
+                    psp_service_id
+                    created_at
+                    updated_at
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.create_external_transfer;
     }
 }
 
@@ -118,3 +245,5 @@ export * from './@types/fees.types';
 export * from './@types/utils.types';
 export * from './@types/payments.types';
 export * from './@types/deposit.address.crypto.types';
+export * from './@types/settings.types';
+export * from './@types/transfers.types';
