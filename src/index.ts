@@ -43,8 +43,8 @@ export type HeadersType = {[x: string]: string};
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
     private headers: {[x: string]: string} = {};
-    private x_user_id = 'x-user-id';
-    private x_user_limit_group_id = 'x-user-limit_group_id';
+    x_user_id = 'x-user-id';
+    x_user_limit_group_id = 'x-user-limit_group_id';
 
     constructor(endpoint: string) {
         this.gql_client = new GraphQLClient(endpoint);
