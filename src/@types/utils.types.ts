@@ -11,22 +11,23 @@ export interface DateRangeInput {
     time_from?: string;
     time_to?: string;
 }
-interface PagerInput {
-    limit?: number;
-    offset?: number;
+export interface Pager {
+    pager: {
+        limit?: number;
+        offset?: number;
+    };
 }
-interface SortInput {
+export interface Sort {
     direction: SortDirection;
 }
-export interface PagerSort {
-    pager?: PagerInput;
-    sort?: SortInput;
-}
+
+export interface PagerSort extends Pager, Sort {}
+
 export interface PagerSortDateRange extends PagerSort {
     dateRange?: DateRangeInput;
 }
 
-export interface UserIdOptionalArgs {
+export interface UserIdOptional {
     user_id?: string;
 }
 

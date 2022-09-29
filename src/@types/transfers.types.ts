@@ -1,5 +1,5 @@
 import {ActionTrigger} from './utils.types';
-import {CryptoAddressTagType} from './deposit.address.crypto.types';
+import {CryptoAddressTagType} from './crypto-deposit-address.types';
 
 export enum PspServiceStatus {
     failed = 'failed',

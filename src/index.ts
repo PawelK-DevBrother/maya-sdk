@@ -1,12 +1,12 @@
-import {CreateExternalTransferArgs, ExternalEstimation, Transfer} from './@types/transfers.types';
 import {FindSystemSettingsArgs, SettingItem} from './@types/settings.types';
-import {EstimateNetworkFeeArgs, EstimateNetworkFeeResult} from './@types/fees.types';
-import {GetPaymentsRoutesArgs, PaymentRoute} from './@types/payments.types';
+import {Asset, GetPaymentsRoutesArgs, PaymentRoute} from './@types/payments.types';
+import {CreateExternalTransferArgs, ExternalEstimation, Transfer} from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
 import {gql, GraphQLClient, Variables} from 'graphql-request';
 // Types
 import {HealthCheckResult} from './@types/utils.types';
+import {CreateCryptoDepositAddressArgs, CryptoDepositAddress, FindCryptoDepositAddressesArgs} from './@types/crypto-deposit-address.types';
 
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
@@ -63,6 +63,19 @@ export class Maya_Sdk {
         return result.healthcheck;
     }
 
+    async getAsset(symbol: string): Promise<Asset> {
+        const query = gql`
+            query ($symbol: String!) {
+                asset(symbol: $symbol) {
+                    symbol
+                    price(quote_asset_symbol: "PHP")
+                }
+            }
+        `;
+        const result = await this.gql_request(query, {symbol});
+        return result.asset;
+    }
+
     async system_settings(args?: FindSystemSettingsArgs): Promise<SettingItem[]> {
         const query = gql`
             query ($search: String, $pager: PagerInput, $sort: SortInput) {
@@ -115,6 +128,48 @@ export class Maya_Sdk {
 
         const result = await this.gql_request(query, args);
         return result.payments_routes_networks;
+    }
+
+    async create_crypto_deposit_address(args: CreateCryptoDepositAddressArgs): Promise<CryptoDepositAddress> {
+        const query = gql`
+            mutation ($currency_id: String!, $network: String!) {
+                create_crypto_deposit_address(currency_id: $currency_id, network: $network) {
+                    crypto_deposit_address_id
+                    user_id
+                    currency_id
+                    address
+                    network
+                    address_tag_type
+                    address_tag_value
+                    # psp_message
+                    created_at
+                    updated_at
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.create_crypto_deposit_address;
+    }
+
+    async crypto_deposit_addresses(args?: FindCryptoDepositAddressesArgs): Promise<CryptoDepositAddress[]> {
+        const query = gql`
+            query ($currency_id: String, $network: String, $pager: PagerInput) {
+                crypto_deposit_addresses(currency_id: $currency_id, network: $network, pager: $pager) {
+                    crypto_deposit_address_id
+                    user_id
+                    currency_id
+                    address
+                    network
+                    address_tag_type
+                    address_tag_value
+                    # psp_message
+                    created_at
+                    updated_at
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.crypto_deposit_addresses;
     }
 
     async estimate_validate_external_transfer(args: CreateExternalTransferArgs): Promise<ExternalEstimation> {
@@ -244,6 +299,6 @@ export * from './utils';
 export * from './@types/fees.types';
 export * from './@types/utils.types';
 export * from './@types/payments.types';
-export * from './@types/deposit.address.crypto.types';
+export * from './@types/crypto-deposit-address.types';
 export * from './@types/settings.types';
 export * from './@types/transfers.types';

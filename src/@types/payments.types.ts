@@ -25,3 +25,8 @@ export interface GetPaymentsRoutesArgs extends PagerSort {
 export interface PaymentRouteWithNetwork extends PaymentRoute {
     network: NetworkObject;
 }
+
+export interface Asset {
+    symbol: string;
+    price: number;
+}
