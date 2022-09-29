@@ -1,6 +1,12 @@
 import {FindSystemSettingsArgs, SettingItem} from './@types/settings.types';
 import {Asset, GetPaymentsRoutesArgs, PaymentRoute, PaymentRouteNetwork} from './@types/payments.types';
-import {CreateExternalTransferArgs, ExternalEstimation, Transfer} from './@types/transfers.types';
+import {
+    CreateExternalTransferArgs,
+    ExternalEstimation,
+    Transfer,
+    ExternalTransferFormDetails,
+    GetExternalTransferFormDetailsArgs,
+} from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
 import {gql, GraphQLClient, Variables} from 'graphql-request';
@@ -170,6 +176,50 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args);
         return result.crypto_deposit_addresses;
+    }
+
+    async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs): Promise<ExternalTransferFormDetails> {
+        const query = gql`
+            query ($currency_id: String!, $network: String!, $address_tag_type: AddressTagType) {
+                external_transfer_form_details(currency_id: $currency_id, network: $network, address_tag_type: $address_tag_type) {
+                    currency_id
+                    network
+                    address_tag_type
+                    psp_service_id
+                    internal_fee_value
+                    networks {
+                        label
+                        value
+                        notes
+                    }
+                    network_fees {
+                        low {
+                            fee_per_byte
+                            gas_price
+                            network_fee
+                            base_fee
+                            priority_fee
+                        }
+                        medium {
+                            fee_per_byte
+                            gas_price
+                            network_fee
+                            base_fee
+                            priority_fee
+                        }
+                        high {
+                            fee_per_byte
+                            gas_price
+                            network_fee
+                            base_fee
+                            priority_fee
+                        }
+                    }
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.external_transfer_form_details;
     }
 
     async estimate_validate_external_transfer(args: CreateExternalTransferArgs): Promise<ExternalEstimation> {

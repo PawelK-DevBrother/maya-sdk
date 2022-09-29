@@ -1,5 +1,7 @@
 import {ActionTrigger} from './utils.types';
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
+import {NetworkObject} from './payments.types';
+import {EstimateNetworkFeeResult} from './fees.types';
 
 export enum PspServiceStatus {
     failed = 'failed',
@@ -111,4 +113,20 @@ export interface ExternalEstimation
     address_tag_value?: string;
     address_tag_type?: CryptoAddressTagType;
     network_speed: CryptoNetworkSpeed;
+}
+
+export class GetExternalTransferFormDetailsArgs {
+    currency_id: string;
+    network: string;
+    address_tag_type?: CryptoAddressTagType;
+}
+
+export class ExternalTransferFormDetails {
+    currency_id: string;
+    network: string;
+    address_tag_type?: CryptoAddressTagType;
+    psp_service_id: string;
+    networks: NetworkObject[];
+    internal_fee_value: number;
+    network_fees: EstimateNetworkFeeResult;
 }
