@@ -1,8 +1,14 @@
 import {TransferStatusType} from './../src/@types/transfers.types';
-import {NetworkObject} from './../src/@types/payments.types';
-import {CreateCryptoDepositAddressArgs} from './../dist/@types/crypto-deposit-address.types.d';
-import {CreatePaymentRouteArgs, UpdatePaymentRouteArgs} from './../dist/@types/payments.types.d';
-import {ActionTrigger, CryptoNetworkSpeed, Maya_Sdk, PspServiceStatus, ToggleSwitch, TransferDirection} from '../src/index';
+import {CreatePaymentRouteArgs, NetworkObject, UpdatePaymentRouteArgs} from './../src/@types/payments.types';
+import {
+    ActionTrigger,
+    CreateCryptoDepositAddressArgs,
+    CryptoNetworkSpeed,
+    Maya_Sdk,
+    PspServiceStatus,
+    ToggleSwitch,
+    TransferDirection,
+} from '../src/index';
 import {expectToEqual, sleep} from './helpers';
 
 jest.setTimeout(20000);
