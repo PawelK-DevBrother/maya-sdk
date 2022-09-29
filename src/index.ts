@@ -1,5 +1,5 @@
 import {FindSystemSettingsArgs, SettingItem} from './@types/settings.types';
-import {Asset, GetPaymentsRoutesArgs, PaymentRoute} from './@types/payments.types';
+import {Asset, GetPaymentsRoutesArgs, PaymentRoute, PaymentRouteNetwork} from './@types/payments.types';
 import {CreateExternalTransferArgs, ExternalEstimation, Transfer} from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
@@ -107,7 +107,7 @@ export class Maya_Sdk {
         return result.payments_routes;
     }
 
-    async payments_routes_with_networks(args?: GetPaymentsRoutesArgs): Promise<PaymentRoute[]> {
+    async payments_routes_with_networks(args?: GetPaymentsRoutesArgs): Promise<PaymentRouteNetwork[]> {
         const query = gql`
             query ($currency_id: String, $pager: PagerInput) {
                 payments_routes_networks(currency_id: $currency_id, pager: $pager) {
