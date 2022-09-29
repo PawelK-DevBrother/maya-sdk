@@ -12,8 +12,49 @@ export interface EstimateNetworkFeeResult {
     high: FeeEstimationItem;
 }
 
-export class EstimateNetworkFeeArgs {
+export const NetworkFeesString = `
+low {
+    fee_per_byte
+    gas_price
+    network_fee
+    base_fee
+    priority_fee
+}
+medium {
+     fee_per_byte
+     gas_price
+     network_fee
+     base_fee
+     priority_fee
+}
+high {
+     fee_per_byte
+     gas_price
+     network_fee
+     base_fee
+     priority_fee
+}
+`;
+
+export interface EstimateNetworkFeeArgs {
     currency_id: string;
     network?: string;
     psp_service_id?: string;
 }
+
+export interface GetCurrenciesPropertiesArgs {
+    currency_id?: string;
+    properties?: string[];
+}
+
+export interface CurrencyProperty {
+    currency_id: string;
+    name: string;
+    value: string;
+}
+
+export const CurrencyPropertyString = `
+currency_id
+name
+value
+`;

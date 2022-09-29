@@ -1,5 +1,6 @@
-import {GetOperationsLimits, OperationsLimits, operationsLimitsString} from './@types/operation_limits/operations-limits.model';
-import {FindSystemSettingsArgs, SettingItem} from './@types/settings.types';
+import {NetworkObject} from './../dist/@types/payments.types.d';
+import {GetOperationsLimits, OperationsLimits, operationsLimitsString} from './@types/operations-limits.types';
+import {FindSystemSettingsArgs, Setting, SettingString} from './@types/settings.types';
 import {
     Asset,
     GetPaymentsRoutesArgs,
@@ -9,6 +10,9 @@ import {
     UpdatePaymentRouteArgs,
     DeletePaymentRouteArgs,
     paymentRouteString,
+    AddCurrencyNetworksArgs,
+    NetworkObjectString,
+    RemoveCurrencyNetworks,
 } from './@types/payments.types';
 import {
     CreateExternalTransferArgs,
@@ -16,16 +20,23 @@ import {
     ExternalTransferFormDetails,
     GetExternalTransferFormDetailsArgs,
     GetTransferArgs,
-    GetTransferResult,
     ProvideTransferMoreInfoArgs,
 } from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
 import {gql, GraphQLClient, Variables} from 'graphql-request';
 // Types
-import {HealthCheckResult} from './@types/utils.types';
-import {CreateCryptoDepositAddressArgs, CryptoDepositAddress, FindCryptoDepositAddressesArgs} from './@types/crypto-deposit-address.types';
-import {Transfer, transferString} from './@types/transfers/transfer.model';
+import {HealthCheck, HealthCheckString} from './@types/utils.types';
+import {
+    CreateCryptoDepositAddressArgs,
+    CryptoDepositAddress,
+    FindCryptoDepositAddressesArgs,
+    CryptoDepositAddressString,
+    DeleteCryptoDepositAddressArgs,
+    UpdateCryptoDepositAddressArgs,
+} from './@types/crypto-deposit-address.types';
+import {Transfer, transferString} from './@types/transfers.types';
+import {GetCurrenciesPropertiesArgs, CurrencyProperty, CurrencyPropertyString, NetworkFeesString} from './@types/fees.types';
 
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
@@ -69,17 +80,52 @@ export class Maya_Sdk {
         });
     }
 
-    async healthcheck(): Promise<HealthCheckResult> {
+    async healthcheck(): Promise<HealthCheck> {
         const query = gql`
             query {
                 healthcheck {
-                    message
-                    status
+                    ${HealthCheckString}
                 }
             }
         `;
         const result = await this.gql_request(query);
         return result.healthcheck;
+    }
+
+    async add_currency_networks(args: AddCurrencyNetworksArgs): Promise<NetworkObject[]> {
+        const query = gql`
+            mutation ($currency_id: String!, $networks: [NetworkObjectArgs!]!) {
+                add_currency_networks(currency_id: $currency_id, networks: $networks) {
+                    ${NetworkObjectString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.add_currency_networks;
+    }
+
+    async remove_currency_networks(args: RemoveCurrencyNetworks): Promise<NetworkObject[]> {
+        const query = gql`
+            mutation ($currency_id: String!, $labels: [String!]!) {
+                remove_currency_networks(currency_id: $currency_id, labels: $labels) {
+                    ${NetworkObjectString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.remove_currency_networks;
+    }
+
+    async currencies_properties(args?: GetCurrenciesPropertiesArgs): Promise<CurrencyProperty[]> {
+        const query = gql`
+            query ($currency_id: String, $properties: [String!]) {
+                currencies_properties(currency_id: $currency_id, properties: $properties) {
+                    ${CurrencyPropertyString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.currencies_properties;
     }
 
     async getAsset(symbol: string): Promise<Asset> {
@@ -95,12 +141,11 @@ export class Maya_Sdk {
         return result.asset;
     }
 
-    async system_settings(args?: FindSystemSettingsArgs): Promise<SettingItem[]> {
+    async system_settings(args?: FindSystemSettingsArgs): Promise<Setting[]> {
         const query = gql`
             query ($search: String, $pager: PagerInput, $sort: SortInput) {
                 system_settings(search: $search, pager: $pager, sort: $sort) {
-                    name
-                    value
+                    ${SettingString}
                 }
             }
         `;
@@ -112,12 +157,7 @@ export class Maya_Sdk {
         const query = gql`
             query ($currency_id: String, $pager: PagerInput) {
                 payments_routes(currency_id: $currency_id, pager: $pager) {
-                    payment_route_id
-                    currency_id
-                    psp_service_id
-                    crypto_network
-                    crypto_address_tag_type
-                    is_active
+                    ${paymentRouteString}
                 }
             }
         `;
@@ -130,16 +170,9 @@ export class Maya_Sdk {
         const query = gql`
             query ($currency_id: String, $pager: PagerInput) {
                 payments_routes_networks(currency_id: $currency_id, pager: $pager) {
-                    payment_route_id
-                    currency_id
-                    psp_service_id
-                    crypto_network
-                    crypto_address_tag_type
-                    is_active
+                    ${paymentRouteString}
                     network {
-                        label
-                        value
-                        notes
+                        ${NetworkObjectString}
                     }
                 }
             }
@@ -153,16 +186,7 @@ export class Maya_Sdk {
         const query = gql`
             mutation ($currency_id: String!, $network: String!) {
                 create_crypto_deposit_address(currency_id: $currency_id, network: $network) {
-                    crypto_deposit_address_id
-                    user_id
-                    currency_id
-                    address
-                    network
-                    address_tag_type
-                    address_tag_value
-                    # psp_message
-                    created_at
-                    updated_at
+                    ${CryptoDepositAddressString}
                 }
             }
         `;
@@ -170,25 +194,36 @@ export class Maya_Sdk {
         return result.create_crypto_deposit_address;
     }
 
+    async update_crypto_deposit_address(args: UpdateCryptoDepositAddressArgs): Promise<CryptoDepositAddress> {
+        const query = gql`
+            mutation ($crypto_deposit_address_id: String!, $address: String, $currency_id: String) {
+                update_crypto_deposit_address(crypto_deposit_address_id: $crypto_deposit_address_id, address: $address, currency_id: $currency_id)
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.update_crypto_deposit_address;
+    }
+
     async crypto_deposit_addresses(args?: FindCryptoDepositAddressesArgs): Promise<CryptoDepositAddress[]> {
         const query = gql`
             query ($currency_id: String, $network: String, $pager: PagerInput) {
                 crypto_deposit_addresses(currency_id: $currency_id, network: $network, pager: $pager) {
-                    crypto_deposit_address_id
-                    user_id
-                    currency_id
-                    address
-                    network
-                    address_tag_type
-                    address_tag_value
-                    # psp_message
-                    created_at
-                    updated_at
+                    ${CryptoDepositAddressString}
                 }
             }
         `;
         const result = await this.gql_request(query, args);
         return result.crypto_deposit_addresses;
+    }
+
+    async delete_crypto_deposit_address(args: DeleteCryptoDepositAddressArgs): Promise<boolean> {
+        const query = gql`
+            mutation ($crypto_deposit_address_id: String!) {
+                delete_crypto_deposit_address(crypto_deposit_address_id: $crypto_deposit_address_id)
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.delete_crypto_deposit_address;
     }
 
     async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs): Promise<ExternalTransferFormDetails> {
@@ -201,32 +236,13 @@ export class Maya_Sdk {
                     psp_service_id
                     internal_fee_value
                     networks {
+                        ${NetworkObjectString}
                         label
                         value
                         notes
                     }
                     network_fees {
-                        low {
-                            fee_per_byte
-                            gas_price
-                            network_fee
-                            base_fee
-                            priority_fee
-                        }
-                        medium {
-                            fee_per_byte
-                            gas_price
-                            network_fee
-                            base_fee
-                            priority_fee
-                        }
-                        high {
-                            fee_per_byte
-                            gas_price
-                            network_fee
-                            base_fee
-                            priority_fee
-                        }
+                        ${NetworkFeesString}
                     }
                 }
             }
@@ -333,7 +349,7 @@ export class Maya_Sdk {
                     transfer_id: $transfer_id
                     counterparty_first_name: $counterparty_first_name
                     counterparty_last_name: $counterparty_last_name
-                    destination_address: $destination_address
+                    destination_wallet: $destination_wallet
                 )
             }
         `;
@@ -467,4 +483,5 @@ export * from './@types/payments.types';
 export * from './@types/crypto-deposit-address.types';
 export * from './@types/settings.types';
 export * from './@types/transfers.types';
-export * from './@types/transfers/transfer.model';
+export * from './@types/transfers.types';
+export * from './@types/operations-limits.types';

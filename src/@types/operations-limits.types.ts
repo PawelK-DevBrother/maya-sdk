@@ -4,7 +4,7 @@ export enum OperationOption {
     unlimited = 'unlimited',
 }
 
-export class OperationsLimits {
+export interface OperationsLimits {
     limit_group_id: string;
     buy_option: OperationOption;
     sell_option: OperationOption;

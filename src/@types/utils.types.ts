@@ -1,7 +1,11 @@
-export interface HealthCheckResult {
+export interface HealthCheck {
     message: string;
     status: boolean;
 }
+export const HealthCheckString = `
+message
+status
+`;
 
 export enum SortDirection {
     ASC = 'ASC',

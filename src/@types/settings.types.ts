@@ -1,12 +1,16 @@
 import {PagerSort} from './utils.types';
 
-export interface SettingItem {
+export interface Setting {
     name: string;
     value: string;
 }
+export const SettingString = `
+name
+value
+`;
 
 export interface UpdateSystemSettingsArgs {
-    items: SettingItem[];
+    items: Setting[];
 }
 
 export interface FindSystemSettingsArgs extends PagerSort {

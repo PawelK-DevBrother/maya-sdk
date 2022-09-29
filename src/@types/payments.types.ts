@@ -6,6 +6,21 @@ export interface NetworkObject {
     value: string;
     notes: string;
 }
+export const NetworkObjectString = `
+label
+value
+notes
+`;
+
+export interface AddCurrencyNetworksArgs {
+    currency_id: string;
+    networks: NetworkObject[];
+}
+
+export interface RemoveCurrencyNetworks {
+    currency_id: string;
+    labels: string[];
+}
 
 export interface PaymentRoute {
     payment_route_id: string;
@@ -15,6 +30,7 @@ export interface PaymentRoute {
     crypto_address_tag_type?: CryptoAddressTagType;
     is_active: ToggleSwitch;
 }
+
 export const paymentRouteString = `
 payment_route_id
 currency_id
