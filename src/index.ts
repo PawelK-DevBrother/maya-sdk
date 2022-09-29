@@ -41,19 +41,21 @@ import {GetCurrenciesPropertiesArgs, CurrencyProperty, CurrencyPropertyString, N
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
     private headers: {[x: string]: string} = {};
+    private x_user_id = 'x-user-id';
+    private x_user_limit_group_id = 'x-user-limit_group_id';
 
     constructor(endpoint: string) {
         this.gql_client = new GraphQLClient(endpoint);
     }
 
-    setAuthToken(token: string): void {
+    setGlobalAuthToken(token: string): void {
         this.headers['authorization'] = `Bearer ${token}`;
     }
-    setXUserId(value: any): void {
-        this.headers['x-user-id'] = value;
+    setGlobalXUserId(value: any): void {
+        this.setCustomHeader(this.x_user_id, value);
     }
-    setXUserLimitGroupId(value: any): void {
-        this.headers['x-user-limit-group-id'] = value;
+    setGlobalXUserLimitGroupId(value: any): void {
+        this.setCustomHeader(this.x_user_limit_group_id, value);
     }
     setCustomHeader(header_name: string, value: any): void {
         this.headers[header_name] = value;
@@ -62,8 +64,8 @@ export class Maya_Sdk {
         return this.headers;
     }
 
-    private async gql_request(body: string, variables: Variables = undefined) {
-        return this.gql_client.request(body, variables, this.headers).catch((e) => {
+    private async gql_request(body: string, variables?: Variables, headers?: {[x: string]: string}) {
+        return this.gql_client.request(body, variables, {...this.headers, ...headers}).catch((e) => {
             try {
                 console.log(e);
                 const error_body = {
