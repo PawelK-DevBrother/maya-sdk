@@ -1,11 +1,23 @@
+import {GetOperationsLimits, OperationsLimits, operationsLimitsString} from './@types/operation_limits/operations-limits.model';
 import {FindSystemSettingsArgs, SettingItem} from './@types/settings.types';
-import {Asset, GetPaymentsRoutesArgs, PaymentRoute, PaymentRouteNetwork} from './@types/payments.types';
+import {
+    Asset,
+    GetPaymentsRoutesArgs,
+    PaymentRoute,
+    PaymentRouteNetwork,
+    CreatePaymentRouteArgs,
+    UpdatePaymentRouteArgs,
+    DeletePaymentRouteArgs,
+    paymentRouteString,
+} from './@types/payments.types';
 import {
     CreateExternalTransferArgs,
     ExternalEstimation,
-    Transfer,
     ExternalTransferFormDetails,
     GetExternalTransferFormDetailsArgs,
+    GetTransferArgs,
+    GetTransferResult,
+    ProvideTransferMoreInfoArgs,
 } from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
@@ -13,6 +25,7 @@ import {gql, GraphQLClient, Variables} from 'graphql-request';
 // Types
 import {HealthCheckResult} from './@types/utils.types';
 import {CreateCryptoDepositAddressArgs, CryptoDepositAddress, FindCryptoDepositAddressesArgs} from './@types/crypto-deposit-address.types';
+import {Transfer, transferString} from './@types/transfers/transfer.model';
 
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
@@ -180,7 +193,7 @@ export class Maya_Sdk {
 
     async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs): Promise<ExternalTransferFormDetails> {
         const query = gql`
-            query ($currency_id: String!, $network: String!, $address_tag_type: AddressTagType) {
+            query ($currency_id: String!, $network: String!, $address_tag_type: CryptoAddressTagType) {
                 external_transfer_form_details(currency_id: $currency_id, network: $network, address_tag_type: $address_tag_type) {
                     currency_id
                     network
@@ -305,44 +318,146 @@ export class Maya_Sdk {
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
                 ) {
-                    type
-                    scope
-                    direction
-                    status
-                    user_id
-                    transfer_id
-                    counterparty_first_name
-                    counterparty_last_name
-                    currency_id
-                    amount
-                    fiat_amount
-                    network_fee
-                    internal_fee
-                    crypto_address_value
-                    crypto_address_tag_type
-                    crypto_address_tag_value
-                    crypto_network
-                    crypto_network_speed
-                    crypto_address_wallet
-                    transaction_hash
-                    ex_transfer_txid
-                    ex_body_amount
-                    ex_fee_amount
-                    ex_refund_txid
-                    ex_refund_body_amount
-                    ex_refund_fee_amount
-                    notes
-                    message
-                    error_message
-                    psp_service_id
-                    created_at
-                    updated_at
+                    ${transferString}
                 }
             }
         `;
         const result = await this.gql_request(query, args);
         return result.create_external_transfer;
     }
+
+    async provide_transfer_more_info(args: ProvideTransferMoreInfoArgs): Promise<boolean> {
+        const query = gql`
+            mutation ($transfer_id: String!, $destination_wallet: String!, $counterparty_first_name: String!, $counterparty_last_name: String!) {
+                provide_transfer_more_info(
+                    transfer_id: $transfer_id
+                    counterparty_first_name: $counterparty_first_name
+                    counterparty_last_name: $counterparty_last_name
+                    destination_address: $destination_address
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.provide_transfer_more_info;
+    }
+
+    async admin_approve_incoming_transfer(args: GetTransferArgs): Promise<boolean> {
+        const query = gql`
+            mutation ($transfer_id: String!) {
+                admin_approve_incoming_transfer(transfer_id: $transfer_id)
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.admin_approve_incoming_transfer;
+    }
+
+    async admin_approve_outgoing_transfer(args: GetTransferArgs): Promise<boolean> {
+        const query = gql`
+            mutation ($transfer_id: String!) {
+                admin_approve_outgoing_transfer(transfer_id: $transfer_id)
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.admin_approve_outgoing_transfer;
+    }
+
+    async transfer(args: GetTransferArgs): Promise<Transfer> {
+        const query = gql`
+            query ($transfer_id: String!) {
+                transfer(transfer_id: $transfer_id){
+                    ${transferString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.transfer;
+    }
+
+    async operations_limits(args: GetOperationsLimits): Promise<OperationsLimits> {
+        const query = gql`
+            query ($limit_group_id: String!) {
+                operations_limits(limit_group_id: $limit_group_id){
+                    ${operationsLimitsString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.operations_limits;
+    }
+
+    async create_payment_route(args: CreatePaymentRouteArgs): Promise<PaymentRoute> {
+        const query = gql`
+            mutation (
+                $currency_id: String!
+                $psp_service_id: String!
+                $crypto_network: String!
+                $crypto_address_tag_type: CryptoAddressTagType
+                $is_active: ToggleSwitch!
+            ) {
+                create_payment_route(
+                    currency_id: $currency_id
+                    psp_service_id: $psp_service_id
+                    crypto_network: $crypto_network
+                    crypto_address_tag_type: $crypto_address_tag_type
+                    is_active: $is_active
+                ){
+                    ${paymentRouteString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.create_payment_route;
+    }
+
+    async update_payment_route(args: UpdatePaymentRouteArgs): Promise<boolean> {
+        const query = gql`
+            mutation (
+                $payment_route_id: String!
+                $currency_id: String
+                $psp_service_id: String
+                $crypto_network: String
+                $crypto_address_tag_type: CryptoAddressTagType
+                $is_active: ToggleSwitch
+            ) {
+                update_payment_route(
+                    payment_route_id: $payment_route_id
+                    currency_id: $currency_id
+                    psp_service_id: $psp_service_id
+                    crypto_network: $crypto_network
+                    crypto_address_tag_type: $crypto_address_tag_type
+                    is_active: $is_active
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.update_payment_route;
+    }
+
+    async delete_payment_route(args: DeletePaymentRouteArgs): Promise<boolean> {
+        const query = gql`
+            mutation ($payment_route_id: String!) {
+                delete_payment_route(payment_route_id: $payment_route_id)
+            }
+        `;
+        const result = await this.gql_request(query, args);
+        return result.delete_payment_route;
+    }
+
+    // async transfers(): Promise<GetTransferResult> {
+    //     const query = gql`
+    //         query {
+    //             transfers {
+    //                 pager_total_rows
+    //                 response_id
+    //                 items {
+    //                     ${transferString}
+    //                 }
+    //             }
+    //         }
+    //     `;
+    //     const result = await this.gql_request(query);
+    //     return result.transfers;
+    // }
 }
 
 export * from './utils';
@@ -352,3 +467,4 @@ export * from './@types/payments.types';
 export * from './@types/crypto-deposit-address.types';
 export * from './@types/settings.types';
 export * from './@types/transfers.types';
+export * from './@types/transfers/transfer.model';

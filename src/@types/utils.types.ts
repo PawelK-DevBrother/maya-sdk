@@ -1,6 +1,6 @@
 export interface HealthCheckResult {
-    maintenance_message: string;
-    maintenance_mode: boolean;
+    message: string;
+    status: boolean;
 }
 
 export enum SortDirection {
@@ -33,7 +33,7 @@ export interface UserIdOptional {
 
 export enum ToggleSwitch {
     on = 'on',
-    off = 'of',
+    off = 'off',
 }
 
 export enum ActionTrigger {

@@ -1,7 +1,7 @@
-import {ActionTrigger} from './utils.types';
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
 import {NetworkObject} from './payments.types';
 import {EstimateNetworkFeeResult} from './fees.types';
+import {Transfer} from './transfers/transfer.model';
 
 export enum PspServiceStatus {
     failed = 'failed',
@@ -44,46 +44,6 @@ export enum TransferStatusType {
     more_information_required = 'more_information_required',
 }
 
-export interface Transfer {
-    transfer_id: string;
-    reference_nr: string;
-    type: TransferType;
-    scope: TransferScope;
-    direction: TransferDirection;
-    status: TransferStatusType;
-    user_id: string;
-    counterparty_first_name?: string;
-    counterparty_last_name?: string;
-    currency_id: string;
-    amount: number;
-    fiat_amount: number;
-    network_fee: number;
-    internal_fee: number;
-    crypto_address_value?: string;
-    crypto_address_tag_type?: CryptoAddressTagType;
-    crypto_address_tag_value?: string;
-    crypto_network?: string;
-    crypto_network_speed?: CryptoNetworkSpeed;
-    crypto_address_wallet?: string;
-    transaction_hash?: string;
-    ex_transfer_txid?: string;
-    ex_body_amount?: number;
-    ex_fee_amount?: number;
-    ex_refund_txid?: string;
-    ex_refund_body_amount?: number;
-    ex_refund_fee_amount?: number;
-    notes?: string;
-    message?: string;
-    error_message?: string;
-    psp_service_id?: string;
-    psp_service_status?: PspServiceStatus;
-    psp_service_trigger?: ActionTrigger;
-    psp_service_message?: string;
-    psp_service_error_message?: string;
-    created_at: string;
-    updated_at: string;
-}
-
 export interface CreateExternalTransferArgs
     extends Pick<Transfer, 'amount' | 'currency_id' | 'notes' | 'direction' | 'counterparty_first_name' | 'counterparty_last_name'> {
     network: string;
@@ -115,13 +75,13 @@ export interface ExternalEstimation
     network_speed: CryptoNetworkSpeed;
 }
 
-export class GetExternalTransferFormDetailsArgs {
+export interface GetExternalTransferFormDetailsArgs {
     currency_id: string;
     network: string;
     address_tag_type?: CryptoAddressTagType;
 }
 
-export class ExternalTransferFormDetails {
+export interface ExternalTransferFormDetails {
     currency_id: string;
     network: string;
     address_tag_type?: CryptoAddressTagType;
@@ -129,4 +89,21 @@ export class ExternalTransferFormDetails {
     networks: NetworkObject[];
     internal_fee_value: number;
     network_fees: EstimateNetworkFeeResult;
+}
+
+export interface GetTransferResult {
+    pager_total_rows: number;
+    response_id: string;
+    items: Transfer[];
+}
+
+export interface ProvideTransferMoreInfoArgs {
+    transfer_id: string;
+    destination_wallet: string;
+    counterparty_first_name: string;
+    counterparty_last_name: string;
+}
+
+export class GetTransferArgs {
+    transfer_id: string;
 }
