@@ -171,8 +171,8 @@ export interface Transfer {
     crypto_address_wallet?: string;
     transaction_hash?: string;
     ex_transfer_txid?: string;
-    ex_body_amount?: number;
-    ex_fee_amount?: number;
+    ex_body_amount: number;
+    ex_fee_amount: number;
     ex_refund_txid?: string;
     ex_refund_body_amount?: number;
     ex_refund_fee_amount?: number;

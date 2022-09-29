@@ -38,6 +38,8 @@ import {
 import {Transfer, transferString} from './@types/transfers.types';
 import {GetCurrenciesPropertiesArgs, CurrencyProperty, CurrencyPropertyString, NetworkFeesString} from './@types/fees.types';
 
+export type HeadersType = {[x: string]: string};
+
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
     private headers: {[x: string]: string} = {};
@@ -64,7 +66,7 @@ export class Maya_Sdk {
         return this.headers;
     }
 
-    private async gql_request(body: string, variables?: Variables, headers?: {[x: string]: string}) {
+    private async gql_request(body: string, variables: Variables = undefined, headers?: HeadersType) {
         return this.gql_client.request(body, variables, {...this.headers, ...headers}).catch((e) => {
             try {
                 console.log(e);
@@ -82,7 +84,7 @@ export class Maya_Sdk {
         });
     }
 
-    async healthcheck(): Promise<HealthCheck> {
+    async healthcheck(headers?: HeadersType): Promise<HealthCheck> {
         const query = gql`
             query {
                 healthcheck {
@@ -94,7 +96,7 @@ export class Maya_Sdk {
         return result.healthcheck;
     }
 
-    async add_currency_networks(args: AddCurrencyNetworksArgs): Promise<NetworkObject[]> {
+    async add_currency_networks(args: AddCurrencyNetworksArgs, headers?: HeadersType): Promise<NetworkObject[]> {
         const query = gql`
             mutation ($currency_id: String!, $networks: [NetworkObjectArgs!]!) {
                 add_currency_networks(currency_id: $currency_id, networks: $networks) {
@@ -102,11 +104,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.add_currency_networks;
     }
 
-    async remove_currency_networks(args: RemoveCurrencyNetworks): Promise<NetworkObject[]> {
+    async remove_currency_networks(args: RemoveCurrencyNetworks, headers?: HeadersType): Promise<NetworkObject[]> {
         const query = gql`
             mutation ($currency_id: String!, $labels: [String!]!) {
                 remove_currency_networks(currency_id: $currency_id, labels: $labels) {
@@ -114,11 +116,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.remove_currency_networks;
     }
 
-    async currencies_properties(args?: GetCurrenciesPropertiesArgs): Promise<CurrencyProperty[]> {
+    async currencies_properties(args?: GetCurrenciesPropertiesArgs, headers?: HeadersType): Promise<CurrencyProperty[]> {
         const query = gql`
             query ($currency_id: String, $properties: [String!]) {
                 currencies_properties(currency_id: $currency_id, properties: $properties) {
@@ -126,11 +128,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.currencies_properties;
     }
 
-    async getAsset(symbol: string): Promise<Asset> {
+    async getAsset(symbol: string, headers?: HeadersType): Promise<Asset> {
         const query = gql`
             query ($symbol: String!) {
                 asset(symbol: $symbol) {
@@ -143,7 +145,7 @@ export class Maya_Sdk {
         return result.asset;
     }
 
-    async system_settings(args?: FindSystemSettingsArgs): Promise<Setting[]> {
+    async system_settings(args?: FindSystemSettingsArgs, headers?: HeadersType): Promise<Setting[]> {
         const query = gql`
             query ($search: String, $pager: PagerInput, $sort: SortInput) {
                 system_settings(search: $search, pager: $pager, sort: $sort) {
@@ -151,11 +153,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.system_settings;
     }
 
-    async payments_routes(args?: GetPaymentsRoutesArgs): Promise<PaymentRoute[]> {
+    async payments_routes(args?: GetPaymentsRoutesArgs, headers?: HeadersType): Promise<PaymentRoute[]> {
         const query = gql`
             query ($currency_id: String, $pager: PagerInput) {
                 payments_routes(currency_id: $currency_id, pager: $pager) {
@@ -164,11 +166,11 @@ export class Maya_Sdk {
             }
         `;
 
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.payments_routes;
     }
 
-    async payments_routes_with_networks(args?: GetPaymentsRoutesArgs): Promise<PaymentRouteNetwork[]> {
+    async payments_routes_with_networks(args?: GetPaymentsRoutesArgs, headers?: HeadersType): Promise<PaymentRouteNetwork[]> {
         const query = gql`
             query ($currency_id: String, $pager: PagerInput) {
                 payments_routes_networks(currency_id: $currency_id, pager: $pager) {
@@ -180,11 +182,11 @@ export class Maya_Sdk {
             }
         `;
 
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.payments_routes_networks;
     }
 
-    async create_crypto_deposit_address(args: CreateCryptoDepositAddressArgs): Promise<CryptoDepositAddress> {
+    async create_crypto_deposit_address(args: CreateCryptoDepositAddressArgs, headers?: HeadersType): Promise<CryptoDepositAddress> {
         const query = gql`
             mutation ($currency_id: String!, $network: String!) {
                 create_crypto_deposit_address(currency_id: $currency_id, network: $network) {
@@ -192,21 +194,21 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.create_crypto_deposit_address;
     }
 
-    async update_crypto_deposit_address(args: UpdateCryptoDepositAddressArgs): Promise<CryptoDepositAddress> {
+    async update_crypto_deposit_address(args: UpdateCryptoDepositAddressArgs, headers?: HeadersType): Promise<CryptoDepositAddress> {
         const query = gql`
             mutation ($crypto_deposit_address_id: String!, $address: String, $currency_id: String) {
                 update_crypto_deposit_address(crypto_deposit_address_id: $crypto_deposit_address_id, address: $address, currency_id: $currency_id)
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.update_crypto_deposit_address;
     }
 
-    async crypto_deposit_addresses(args?: FindCryptoDepositAddressesArgs): Promise<CryptoDepositAddress[]> {
+    async crypto_deposit_addresses(args?: FindCryptoDepositAddressesArgs, headers?: HeadersType): Promise<CryptoDepositAddress[]> {
         const query = gql`
             query ($currency_id: String, $network: String, $pager: PagerInput) {
                 crypto_deposit_addresses(currency_id: $currency_id, network: $network, pager: $pager) {
@@ -214,21 +216,21 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.crypto_deposit_addresses;
     }
 
-    async delete_crypto_deposit_address(args: DeleteCryptoDepositAddressArgs): Promise<boolean> {
+    async delete_crypto_deposit_address(args: DeleteCryptoDepositAddressArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($crypto_deposit_address_id: String!) {
                 delete_crypto_deposit_address(crypto_deposit_address_id: $crypto_deposit_address_id)
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.delete_crypto_deposit_address;
     }
 
-    async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs): Promise<ExternalTransferFormDetails> {
+    async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs, headers?: HeadersType): Promise<ExternalTransferFormDetails> {
         const query = gql`
             query ($currency_id: String!, $network: String!, $address_tag_type: CryptoAddressTagType) {
                 external_transfer_form_details(currency_id: $currency_id, network: $network, address_tag_type: $address_tag_type) {
@@ -249,11 +251,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.external_transfer_form_details;
     }
 
-    async estimate_validate_external_transfer(args: CreateExternalTransferArgs): Promise<ExternalEstimation> {
+    async estimate_validate_external_transfer(args: CreateExternalTransferArgs, headers?: HeadersType): Promise<ExternalEstimation> {
         const query = gql`
             mutation (
                 $amount: Float!
@@ -302,11 +304,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.estimate_validate_external_transfer;
     }
 
-    async create_external_transfer(args: CreateExternalTransferArgs): Promise<Transfer> {
+    async create_external_transfer(args: CreateExternalTransferArgs, headers?: HeadersType): Promise<Transfer> {
         const query = gql`
             mutation (
                 $amount: Float!
@@ -340,11 +342,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.create_external_transfer;
     }
 
-    async provide_transfer_more_info(args: ProvideTransferMoreInfoArgs): Promise<boolean> {
+    async provide_transfer_more_info(args: ProvideTransferMoreInfoArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($transfer_id: String!, $destination_wallet: String!, $counterparty_first_name: String!, $counterparty_last_name: String!) {
                 provide_transfer_more_info(
@@ -355,31 +357,31 @@ export class Maya_Sdk {
                 )
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.provide_transfer_more_info;
     }
 
-    async admin_approve_incoming_transfer(args: GetTransferArgs): Promise<boolean> {
+    async admin_approve_incoming_transfer(args: GetTransferArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($transfer_id: String!) {
                 admin_approve_incoming_transfer(transfer_id: $transfer_id)
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.admin_approve_incoming_transfer;
     }
 
-    async admin_approve_outgoing_transfer(args: GetTransferArgs): Promise<boolean> {
+    async admin_approve_outgoing_transfer(args: GetTransferArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($transfer_id: String!) {
                 admin_approve_outgoing_transfer(transfer_id: $transfer_id)
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.admin_approve_outgoing_transfer;
     }
 
-    async transfer(args: GetTransferArgs): Promise<Transfer> {
+    async transfer(args: GetTransferArgs, headers?: HeadersType): Promise<Transfer> {
         const query = gql`
             query ($transfer_id: String!) {
                 transfer(transfer_id: $transfer_id){
@@ -387,11 +389,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.transfer;
     }
 
-    async operations_limits(args: GetOperationsLimits): Promise<OperationsLimits> {
+    async operations_limits(args: GetOperationsLimits, headers?: HeadersType): Promise<OperationsLimits> {
         const query = gql`
             query ($limit_group_id: String!) {
                 operations_limits(limit_group_id: $limit_group_id){
@@ -399,11 +401,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.operations_limits;
     }
 
-    async create_payment_route(args: CreatePaymentRouteArgs): Promise<PaymentRoute> {
+    async create_payment_route(args: CreatePaymentRouteArgs, headers?: HeadersType): Promise<PaymentRoute> {
         const query = gql`
             mutation (
                 $currency_id: String!
@@ -423,11 +425,11 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.create_payment_route;
     }
 
-    async update_payment_route(args: UpdatePaymentRouteArgs): Promise<boolean> {
+    async update_payment_route(args: UpdatePaymentRouteArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation (
                 $payment_route_id: String!
@@ -447,21 +449,21 @@ export class Maya_Sdk {
                 )
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.update_payment_route;
     }
 
-    async delete_payment_route(args: DeletePaymentRouteArgs): Promise<boolean> {
+    async delete_payment_route(args: DeletePaymentRouteArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($payment_route_id: String!) {
                 delete_payment_route(payment_route_id: $payment_route_id)
             }
         `;
-        const result = await this.gql_request(query, args);
+        const result = await this.gql_request(query, args, headers);
         return result.delete_payment_route;
     }
 
-    // async transfers(): Promise<GetTransferResult> {
+    // async transfers(,headers?:HeadersType): Promise<GetTransferResult> {
     //     const query = gql`
     //         query {
     //             transfers {
