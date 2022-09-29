@@ -12,13 +12,13 @@ export interface DateRangeInput {
     time_to?: string;
 }
 export interface Pager {
-    pager: {
+    pager?: {
         limit?: number;
         offset?: number;
     };
 }
 export interface Sort {
-    direction: SortDirection;
+    direction?: SortDirection;
 }
 
 export interface PagerSort extends Pager, Sort {}
