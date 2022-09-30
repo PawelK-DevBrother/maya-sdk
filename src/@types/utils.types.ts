@@ -34,6 +34,9 @@ export interface PagerSortDateRange extends PagerSort {
 export interface UserIdOptional {
     user_id?: string;
 }
+export interface UserIdArgs {
+    user_id: string;
+}
 
 export enum ToggleSwitch {
     on = 'on',

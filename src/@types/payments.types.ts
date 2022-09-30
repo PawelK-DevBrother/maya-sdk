@@ -26,7 +26,7 @@ export interface PaymentRoute {
     payment_route_id: string;
     currency_id: string;
     psp_service_id: string;
-    crypto_network?: string;
+    crypto_network: string;
     crypto_address_tag_type?: CryptoAddressTagType;
     is_active: ToggleSwitch;
 }

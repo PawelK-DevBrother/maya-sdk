@@ -26,7 +26,7 @@ import {
 import {GraphQlCustomError} from './utils';
 import {gql, GraphQLClient, Variables} from 'graphql-request';
 // Types
-import {HealthCheck, HealthCheckString} from './@types/utils.types';
+import {HealthCheck, HealthCheckString, UserIdOptional, UserIdArgs} from './@types/utils.types';
 import {
     CreateCryptoDepositAddressArgs,
     CryptoDepositAddress,
@@ -396,10 +396,10 @@ export class Maya_Sdk {
         return result.transfer;
     }
 
-    async operations_limits(args: GetOperationsLimits, headers?: HeadersType): Promise<OperationsLimits> {
+    async operations_limits(args: UserIdArgs, headers?: HeadersType): Promise<OperationsLimits> {
         const query = gql`
-            query ($limit_group_id: String!) {
-                operations_limits(limit_group_id: $limit_group_id){
+            query ($user_id: String!) {
+                operations_limits(user_id: $user_id){
                     ${operationsLimitsString}
                 }
             }

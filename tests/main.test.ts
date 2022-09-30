@@ -1,15 +1,14 @@
-import {TransferStatusType} from './../src/@types/transfers.types';
-import {CreatePaymentRouteArgs, NetworkObject, UpdatePaymentRouteArgs} from './../src/@types/payments.types';
 import {
-    ActionTrigger,
-    CreateCryptoDepositAddressArgs,
-    CryptoNetworkSpeed,
     Maya_Sdk,
-    PspServiceStatus,
+    ActionTrigger,
     ToggleSwitch,
+    PspServiceStatus,
     TransferDirection,
+    CryptoNetworkSpeed,
+    CreateCryptoDepositAddressArgs,
 } from '../src/index';
 import {expectToEqual} from './helpers';
+import {CreatePaymentRouteArgs, NetworkObject, UpdatePaymentRouteArgs} from './../src/@types/payments.types';
 
 import 'dotenv/config';
 
@@ -59,7 +58,7 @@ describe('main', () => {
         });
 
         test('operations_limits', async () => {
-            const result = await sdk.operations_limits({limit_group_id});
+            const result = await sdk.operations_limits({user_id});
             // console.log(result);
             expect(result.limit_group_id).toEqual(limit_group_id);
         });
