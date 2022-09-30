@@ -31,3 +31,13 @@ sell_limit
 send_limit
 receive_limit
 `;
+
+export interface UserLimitGroup {
+    user_id: string;
+    limit_group_id: string;
+}
+
+export const UserLimitGroupString = `
+user_id
+limit_group_id
+`;

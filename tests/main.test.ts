@@ -9,7 +9,9 @@ import {
     ToggleSwitch,
     TransferDirection,
 } from '../src/index';
-import {expectToEqual, sleep} from './helpers';
+import {expectToEqual} from './helpers';
+
+import 'dotenv/config';
 
 jest.setTimeout(20000);
 
@@ -29,8 +31,8 @@ describe('main', () => {
 
     beforeAll(() => {
         sdk = new Maya_Sdk('http://localhost:3000/graphql');
-        sdk.setXUserId(user_id);
-        sdk.setXUserLimitGroupId(limit_group_id);
+        sdk.setGlobalXUserId(user_id);
+        sdk.setGlobalApiKey(process.env.API_KEY || '');
     });
 
     describe('HEALTHCHECK', () => {
@@ -45,6 +47,21 @@ describe('main', () => {
             const result = await sdk.system_settings();
             // console.log(result);
             expect(true).toEqual(true);
+        });
+    });
+
+    describe('LIMITS', () => {
+        test('create_default_user_limit_group', async () => {
+            const result = await sdk.create_defualt_user_limit_group();
+
+            expect(result.user_id).toEqual(user_id);
+            expect(result.limit_group_id).toEqual('KYC1');
+        });
+
+        test('operations_limits', async () => {
+            const result = await sdk.operations_limits({limit_group_id});
+            // console.log(result);
+            expect(result.limit_group_id).toEqual(limit_group_id);
         });
     });
 
@@ -212,14 +229,6 @@ describe('main', () => {
         // });
     });
 
-    describe('LIMITS', () => {
-        test('operations_limits', async () => {
-            const result = await sdk.operations_limits({limit_group_id});
-            // console.log(result);
-            expect(result.limit_group_id).toEqual(limit_group_id);
-        });
-    });
-
     describe('CLEAN UP', () => {
         test('delete_crypto_deposit_address', async () => {
             const result = await sdk.delete_crypto_deposit_address({crypto_deposit_address_id});
@@ -234,6 +243,11 @@ describe('main', () => {
         test('remove_currency_networks', async () => {
             const result = await sdk.remove_currency_networks({currency_id, labels: [crypto_network_label]});
             expect(result).toEqual([]);
+        });
+
+        test('delete_user_limit_group', async () => {
+            const result = await sdk.delete_user_limit_group();
+            expect(result).toBeTruthy();
         });
     });
 });

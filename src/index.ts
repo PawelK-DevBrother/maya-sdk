@@ -1,4 +1,4 @@
-import {GetOperationsLimits, OperationsLimits, operationsLimitsString} from './@types/operations-limits.types';
+import {GetOperationsLimits, OperationsLimits, operationsLimitsString, UserLimitGroup, UserLimitGroupString} from './@types/operations-limits.types';
 import {FindSystemSettingsArgs, Setting, SettingString} from './@types/settings.types';
 import {
     Asset,
@@ -42,32 +42,35 @@ export type HeadersType = {[x: string]: string};
 
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
-    private headers: {[x: string]: string} = {};
+    private global_headers: {[x: string]: string} = {};
     x_user_id = 'x-user-id';
-    x_user_limit_group_id = 'x-user-limit_group_id';
+    x_api_key = 'x-api-key';
 
     constructor(endpoint: string) {
         this.gql_client = new GraphQLClient(endpoint);
     }
 
+    setGlobalCustomHeader(header_name: string, value: any): void {
+        this.global_headers[header_name] = value;
+    }
+
     setGlobalAuthToken(token: string): void {
-        this.headers['authorization'] = `Bearer ${token}`;
+        this.global_headers['authorization'] = `Bearer ${token}`;
     }
+    setGlobalApiKey(value: string): void {
+        this.setGlobalCustomHeader(this.x_api_key, value);
+    }
+
     setGlobalXUserId(value: any): void {
-        this.setCustomHeader(this.x_user_id, value);
+        this.setGlobalCustomHeader(this.x_user_id, value);
     }
-    setGlobalXUserLimitGroupId(value: any): void {
-        this.setCustomHeader(this.x_user_limit_group_id, value);
-    }
-    setCustomHeader(header_name: string, value: any): void {
-        this.headers[header_name] = value;
-    }
-    getHeaders() {
-        return this.headers;
+
+    getGlobalHeaders() {
+        return this.global_headers;
     }
 
     private async gql_request(body: string, variables: Variables = undefined, headers?: HeadersType) {
-        return this.gql_client.request(body, variables, {...this.headers, ...headers}).catch((e) => {
+        return this.gql_client.request(body, variables, {...this.global_headers, ...headers}).catch((e) => {
             try {
                 console.log(e);
                 const error_body = {
@@ -461,6 +464,28 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args, headers);
         return result.delete_payment_route;
+    }
+
+    async create_defualt_user_limit_group(headers?: HeadersType): Promise<UserLimitGroup> {
+        const query = gql`
+            mutation {
+                create_default_user_limit_group{
+                    ${UserLimitGroupString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, headers);
+        return result.create_default_user_limit_group;
+    }
+
+    async delete_user_limit_group(headers?: HeadersType): Promise<boolean> {
+        const query = gql`
+            mutation {
+                delete_user_limit_group
+            }
+        `;
+        const result = await this.gql_request(query, headers);
+        return result.delete_user_limit_group;
     }
 
     // async transfers(,headers?:HeadersType): Promise<GetTransferResult> {
