@@ -57,6 +57,13 @@ describe('main', () => {
             expect(result.limit_group_id).toEqual('KYC1');
         });
 
+        test('user_limit_group', async () => {
+            const result = await sdk.user_limit_group();
+
+            expect(result.user_id).toEqual(user_id);
+            expect(result.limit_group_id).toEqual('KYC1');
+        });
+
         test('operations_limits', async () => {
             const result = await sdk.operations_limits({user_id});
             // console.log(result);

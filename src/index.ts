@@ -478,6 +478,17 @@ export class Maya_Sdk {
         return result.create_default_user_limit_group;
     }
 
+    async user_limit_group(headers?: HeadersType): Promise<UserLimitGroup> {
+        const query = gql`
+        query{
+            user_limit_group{
+                ${UserLimitGroupString}
+            }
+        }`;
+        const result = await this.gql_request(query, headers);
+        return result.user_limit_group;
+    }
+
     async delete_user_limit_group(headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation {
