@@ -65,7 +65,7 @@ describe('main', () => {
             expect(result.limit_group_id).toEqual('KYC1');
         });
         test('operations_limits', async () => {
-            const result = await transfers_sdk.operations_limits();
+            const result = await paymaya_sdk.operations_limits();
             console.log(result);
             expect(result.limit_group_id).toEqual(limit_group_id);
         });
