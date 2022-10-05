@@ -7,66 +7,66 @@ import {
     CryptoNetworkSpeed,
     CreateCryptoDepositAddressArgs,
 } from '../src/index';
-import {expectToEqual} from './helpers';
+import {expectToEqual, sleep} from './helpers';
 import {CreatePaymentRouteArgs, NetworkObject, UpdatePaymentRouteArgs} from './../src/@types/payments.types';
-
 import 'dotenv/config';
 
 jest.setTimeout(20000);
 
 describe('main', () => {
-    let sdk: Maya_Sdk, transfer_id: string, payment_route_id: string, crypto_deposit_address_id: string;
+    let paymaya_sdk: Maya_Sdk, transfers_sdk: Maya_Sdk, transfer_id: string, payment_route_id: string, crypto_deposit_address_id: string;
 
     const currency_id = 'BTC';
     const crypto_network_label = 'test_label';
     const crypto_network = 'test_network';
     // btc address
-    const destination_address = '13MDY1ggro6Epsut3Req4WaXLBzVdU7azQ';
+    const destination_address = 'mwX1ybWhq4sVaSqRx8abADnjC9YZcb7Gjn';
 
     const psp_service_id = 'PSP_TESTS';
 
-    const user_id = 'test_user_id';
+    const user_id = 'broker-user-id';
     const limit_group_id = 'KYC1';
 
     beforeAll(() => {
-        sdk = new Maya_Sdk('http://localhost:3000/graphql');
-        sdk.setGlobalXUserId(user_id);
-        sdk.setGlobalApiKey(process.env.API_KEY || '');
+        paymaya_sdk = new Maya_Sdk('http://localhost:3000/graphql');
+        transfers_sdk = new Maya_Sdk('http://localhost:3001/graphql');
+        // sdk.setGlobalXUserId(user_id);
+        paymaya_sdk.setGlobalAuthToken(process.env.AUTH_TOKEN || '');
+        paymaya_sdk.setGlobalApiKey(process.env.API_KEY || '');
+        transfers_sdk.setGlobalXUserId(user_id);
+        transfers_sdk.setGlobalApiKey(process.env.API_KEY || '');
     });
 
     describe('HEALTHCHECK', () => {
         test('healthcheck', async () => {
-            const result = await sdk.healthcheck();
+            const result = await transfers_sdk.healthcheck();
+            console.log(result);
             expect(result).toEqual({message: 'ok', status: true});
         });
     });
 
     describe('SETTINGS', () => {
         test('system_settings', async () => {
-            const result = await sdk.system_settings();
-            // console.log(result);
+            const result = await transfers_sdk.system_settings();
+            console.log(result);
             expect(true).toEqual(true);
         });
     });
 
     describe('LIMITS', () => {
         test('create_default_user_limit_group', async () => {
-            const result = await sdk.create_defualt_user_limit_group();
-
+            const result = await transfers_sdk.create_defualt_user_limit_group();
             expect(result.user_id).toEqual(user_id);
             expect(result.limit_group_id).toEqual('KYC1');
         });
-
         test('user_limit_group', async () => {
-            const result = await sdk.user_limit_group();
-
+            const result = await transfers_sdk.user_limit_group();
             expect(result.user_id).toEqual(user_id);
             expect(result.limit_group_id).toEqual('KYC1');
         });
-
         test('operations_limits', async () => {
-            const result = await sdk.operations_limits({user_id});
-            // console.log(result);
+            const result = await transfers_sdk.operations_limits();
+            console.log(result);
             expect(result.limit_group_id).toEqual(limit_group_id);
         });
     });
@@ -75,18 +75,19 @@ describe('main', () => {
         const networks: NetworkObject[] = [{label: crypto_network_label, value: crypto_network, notes: 'lorem ipsum'}];
 
         test('currencies_properties', async () => {
-            const result = await sdk.currencies_properties();
-            // console.log(result);
+            const result = await paymaya_sdk.currencies_properties();
+            console.log(result);
             expect(true).toEqual(true);
         });
 
         test('add_currency_networks', async () => {
-            const result = await sdk.add_currency_networks({currency_id, networks});
+            const result = await paymaya_sdk.add_currency_networks({currency_id, networks});
+            console.log(result);
             expect(result).toEqual(networks);
         });
 
-        test('currencies_properties with args', async () => {
-            const result = await sdk.currencies_properties({properties: ['network_list']});
+        test('currencies_properties - filter networks lists', async () => {
+            const result = await transfers_sdk.currencies_properties({properties: ['network_list']});
             const record = result[0];
             expectToEqual(record, {data: {currency_id, name: 'network_list'}, omit: ['value']});
 
@@ -94,6 +95,7 @@ describe('main', () => {
             expect(record_network.label).toEqual(networks[0].label);
             expect(record_network.value).toEqual(networks[0].value);
             expect(record_network.notes).toEqual(networks[0].notes);
+            expect(true).toBeTruthy();
         });
     });
 
@@ -109,7 +111,7 @@ describe('main', () => {
                 is_active: ToggleSwitch.off,
             };
 
-            const result = await sdk.create_payment_route(createPaymentRouteArgs);
+            const result = await paymaya_sdk.create_payment_route(createPaymentRouteArgs);
             payment_route_id = result.payment_route_id;
             expectToEqual(result, {data: createPaymentRouteArgs, omit: ['payment_route_id', 'crypto_address_tag_type']});
         });
@@ -120,12 +122,12 @@ describe('main', () => {
                 is_active: ToggleSwitch.on,
             };
 
-            const result = await sdk.update_payment_route(updatePaymentRouteArgs);
+            const result = await paymaya_sdk.update_payment_route(updatePaymentRouteArgs);
             expect(result).toBeTruthy();
         });
 
         test('payment_routes', async () => {
-            const result = await sdk.payments_routes();
+            const result = await paymaya_sdk.payments_routes();
 
             expectToEqual(result[0], {data: {...createPaymentRouteArgs, ...updatePaymentRouteArgs, crypto_address_tag_type: null}, omit: []});
         });
@@ -140,7 +142,7 @@ describe('main', () => {
                 network: crypto_network,
             };
 
-            const result = await sdk.create_crypto_deposit_address(createCryptoDepositAddressArgs);
+            const result = await paymaya_sdk.create_crypto_deposit_address(createCryptoDepositAddressArgs);
             crypto_deposit_address_id = result.crypto_deposit_address_id;
 
             expectToEqual(result, {
@@ -150,19 +152,20 @@ describe('main', () => {
         });
 
         test('update_crypto_deposit_address', async () => {
-            const result = await sdk.update_crypto_deposit_address({crypto_deposit_address_id, address: destination_address});
+            const result = await paymaya_sdk.update_crypto_deposit_address({crypto_deposit_address_id, address: destination_address});
             expect(result).toBeTruthy();
         });
 
         test('crypto_deposit_addresses', async () => {
-            const result = await sdk.crypto_deposit_addresses();
+            const result = await paymaya_sdk.crypto_deposit_addresses();
             // console.log(result);
             expect(true).toEqual(true);
         });
     });
+
     describe('TRANSFERS', () => {
         test('external_transfer_form_details', async () => {
-            const result = await sdk.external_transfer_form_details({
+            const result = await paymaya_sdk.external_transfer_form_details({
                 currency_id,
                 network: crypto_network,
             });
@@ -171,7 +174,7 @@ describe('main', () => {
         });
 
         test('estimate_validate_external_transfer', async () => {
-            const result = await sdk.estimate_validate_external_transfer({
+            const result = await paymaya_sdk.estimate_validate_external_transfer({
                 currency_id,
                 network: crypto_network,
                 amount: 0.001,
@@ -184,7 +187,7 @@ describe('main', () => {
         });
 
         test('create_external_transfer', async () => {
-            const result = await sdk.create_external_transfer({
+            const result = await paymaya_sdk.create_external_transfer({
                 currency_id,
                 network: crypto_network,
                 amount: 1,
@@ -196,27 +199,29 @@ describe('main', () => {
                 counterparty_last_name: '123456',
             });
             transfer_id = result.transfer_id;
-            // console.log(result);
-            expect(true).toEqual(true);
-        });
 
-        test('transfer', async () => {
-            const result = await sdk.transfer({transfer_id});
-            // console.log(result);
+            expect(true).toEqual(true);
             expect(result.psp_service_status).toEqual(null);
             expect(result.psp_service_trigger).toEqual(null);
         });
 
-        test('admin_approve_outgoing_transfer', async () => {
-            const result = await sdk.admin_approve_outgoing_transfer({transfer_id});
-            expect(result).toBeTruthy();
-        });
-
         test('transfer', async () => {
-            const result = await sdk.transfer({transfer_id});
+            const result = await paymaya_sdk.transfer({transfer_id});
             // console.log(result);
             expect(result.psp_service_status).toEqual(PspServiceStatus.pending);
-            expect(result.psp_service_trigger).toEqual(ActionTrigger.manual);
+            expect(result.psp_service_trigger).toEqual(ActionTrigger.auto);
+        });
+
+        // test('admin_approve_outgoing_transfer', async () => {
+        //     const result = await sdk.admin_approve_outgoing_transfer({transfer_id});
+        //     expect(result).toBeTruthy();
+        // });
+
+        test('transfer', async () => {
+            await sleep(3000);
+            const result = await paymaya_sdk.transfer({transfer_id});
+            // console.log(result);
+            expect(result.psp_service_status).toEqual(PspServiceStatus.success);
         });
 
         // test('admin_approve_incoming_transfer', async () => {
@@ -237,22 +242,22 @@ describe('main', () => {
 
     describe('CLEAN UP', () => {
         test('delete_crypto_deposit_address', async () => {
-            const result = await sdk.delete_crypto_deposit_address({crypto_deposit_address_id});
+            const result = await paymaya_sdk.delete_crypto_deposit_address({crypto_deposit_address_id});
             expect(result).toBeTruthy();
         });
 
         test('delete_payment_route', async () => {
-            const result = await sdk.delete_payment_route({payment_route_id});
+            const result = await paymaya_sdk.delete_payment_route({payment_route_id});
             expect(result).toBeTruthy();
         });
 
         test('remove_currency_networks', async () => {
-            const result = await sdk.remove_currency_networks({currency_id, labels: [crypto_network_label]});
+            const result = await paymaya_sdk.remove_currency_networks({currency_id, labels: [crypto_network_label]});
             expect(result).toEqual([]);
         });
 
         test('delete_user_limit_group', async () => {
-            const result = await sdk.delete_user_limit_group();
+            const result = await transfers_sdk.delete_user_limit_group();
             expect(result).toBeTruthy();
         });
     });

@@ -43,6 +43,7 @@ export type HeadersType = {[x: string]: string};
 export class Maya_Sdk {
     private gql_client: GraphQLClient;
     private global_headers: {[x: string]: string} = {};
+
     x_user_id = 'x-user-id';
     x_api_key = 'x-api-key';
 
@@ -396,10 +397,10 @@ export class Maya_Sdk {
         return result.transfer;
     }
 
-    async operations_limits(args: UserIdArgs, headers?: HeadersType): Promise<OperationsLimits> {
+    async operations_limits(args?: UserIdArgs, headers?: HeadersType): Promise<OperationsLimits> {
         const query = gql`
-            query ($user_id: String!) {
-                operations_limits(user_id: $user_id){
+            query{
+                operations_limits{
                     ${operationsLimitsString}
                 }
             }
