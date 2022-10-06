@@ -47,6 +47,7 @@ export class Maya_Sdk {
 
     x_user_id = 'x-user-id';
     x_api_key = 'x-api-key';
+    x_username = 'x-username';
 
     constructor(endpoint: string) {
         this.gql_client = new GraphQLClient(endpoint);
