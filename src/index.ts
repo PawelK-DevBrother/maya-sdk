@@ -37,6 +37,7 @@ import {
 } from './@types/crypto-deposit-address.types';
 import {Transfer, transferString} from './@types/transfers.types';
 import {GetCurrenciesPropertiesArgs, CurrencyProperty, CurrencyPropertyString, NetworkFeesString} from './@types/fees.types';
+import {CreateTransactionArgs, AccountTransaction, RevertAccountTransactionArgs} from './@types/accounts-transactions.types';
 
 export type HeadersType = {[x: string]: string};
 
@@ -498,6 +499,26 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, headers);
         return result.delete_user_limit_group;
+    }
+
+    async create_account_transactions(args: CreateTransactionArgs, headers?: HeadersType): Promise<string> {
+        const query = gql`
+            mutation ($items: [CreateTransactionItem!]!) {
+                createAccountTransactions(items: $items)
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.createAccountTransactions;
+    }
+
+    async revert_account_transaction(args: RevertAccountTransactionArgs, headers?: HeadersType): Promise<string> {
+        const query = gql`
+            mutation ($secretKey: String!, $parent_transaction_id: String!) {
+                revertAccountTransaction(secretKey: $secretKey, parent_transaction_id: $parent_transaction_id)
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.revertAccountTransaction;
     }
 
     // async transfers(,headers?:HeadersType): Promise<GetTransferResult> {

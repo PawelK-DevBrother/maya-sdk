@@ -4,9 +4,13 @@ import {NetworkObject} from './payments.types';
 import {ActionTrigger} from './utils.types';
 
 export enum PspServiceStatus {
-    failed = 'failed',
-    pending = 'pending',
-    success = 'success',
+    failed = 'FAILED',
+    blocked = 'BLOCKED',
+    cancelled = 'CANCELLED',
+    rejected = 'REJECTED',
+    pending = 'PENDING',
+    confirming = 'CONFIRMING',
+    completed = 'COMPLETED',
 }
 
 export enum CryptoNetworkSpeed {
