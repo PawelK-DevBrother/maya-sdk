@@ -38,6 +38,7 @@ import {
 import {Transfer, transferString} from './@types/transfers.types';
 import {GetCurrenciesPropertiesArgs, CurrencyProperty, CurrencyPropertyString, NetworkFeesString} from './@types/fees.types';
 import {CreateTransactionArgs, AccountTransaction, RevertAccountTransactionArgs} from './@types/accounts-transactions.types';
+import {User, UserString} from './@types/user.types';
 
 export type HeadersType = {[x: string]: string};
 
@@ -522,6 +523,18 @@ export class Maya_Sdk {
         return result.revertAccountTransaction;
     }
 
+    async user(headers?: HeadersType): Promise<User> {
+        const query = gql`
+            query {
+                user{
+                ${UserString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, undefined, headers);
+        return result.user;
+    }
+
     // async transfers(,headers?:HeadersType): Promise<GetTransferResult> {
     //     const query = gql`
     //         query {
@@ -547,3 +560,5 @@ export * from './@types/crypto-deposit-address.types';
 export * from './@types/settings.types';
 export * from './@types/transfers.types';
 export * from './@types/operations-limits.types';
+export * from './@types/user.types';
+export * from './@types/accounts-transactions.types';
