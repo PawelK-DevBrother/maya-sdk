@@ -71,3 +71,14 @@ export interface UpdatePaymentRouteArgs extends Partial<CreatePaymentRouteArgs> 
 export interface DeletePaymentRouteArgs {
     payment_route_id: string;
 }
+
+export interface Vasp {
+    did: string;
+    name: string;
+    featured: boolean;
+}
+export const VaspString = `
+did
+name
+featured
+`;

@@ -35,10 +35,6 @@ export enum TransferType {
 }
 
 export enum TransferStatusType {
-    success = 'success',
-    to_approve = 'to_approve',
-    failed = 'failed',
-    //
     approved_auto = 'approved_auto',
     approved_manual = 'approved_manual',
     rejected_auto = 'rejected_auto',
@@ -131,9 +127,12 @@ crypto_address_value
 crypto_address_tag_type
 crypto_address_tag_value
 crypto_network
+crypto_network_label
 crypto_network_speed
 crypto_address_wallet
 transaction_hash
+remote_txid
+confirmations
 ex_transfer_txid
 ex_body_amount
 ex_fee_amount
@@ -171,9 +170,12 @@ export interface Transfer {
     crypto_address_tag_type?: CryptoAddressTagType;
     crypto_address_tag_value?: string;
     crypto_network?: string;
+    crypto_network_label?: string;
     crypto_network_speed?: CryptoNetworkSpeed;
     crypto_address_wallet?: string;
     transaction_hash?: string;
+    remote_txid?: string;
+    confirmations?: number;
     ex_transfer_txid?: string;
     ex_body_amount: number;
     ex_fee_amount: number;

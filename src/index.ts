@@ -13,6 +13,8 @@ import {
     NetworkObjectString,
     RemoveCurrencyNetworks,
     NetworkObject,
+    VaspString,
+    Vasp,
 } from './@types/payments.types';
 import {
     CreateExternalTransferArgs,
@@ -533,6 +535,18 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, undefined, headers);
         return result.user;
+    }
+
+    async destinations_wallets(headers?: HeadersType): Promise<Vasp[]> {
+        const query = gql`
+        query {
+            destinations_wallets {
+                ${VaspString}
+            }
+        }
+        `;
+        const result = await this.gql_request(query, undefined, headers);
+        return result.destinations_wallets;
     }
 
     // async transfers(,headers?:HeadersType): Promise<GetTransferResult> {
