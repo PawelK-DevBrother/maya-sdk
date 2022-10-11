@@ -144,7 +144,9 @@ message
 error_message
 psp_service_id
 psp_service_status
-psp_service_trigger
+psp_service_trigger_type
+psp_service_trigger_by
+psp_service_trigger_reason
 psp_service_message
 psp_service_error_message
 created_at
@@ -188,6 +190,9 @@ export interface Transfer {
     psp_service_id?: string;
     psp_service_status?: PspServiceStatus;
     psp_service_trigger?: ActionTrigger;
+    psp_service_trigger_type?: ActionTrigger;
+    psp_service_trigger_by?: string;
+    psp_service_trigger_reason?: string;
     psp_service_message?: string;
     psp_service_error_message?: string;
     created_at: string;

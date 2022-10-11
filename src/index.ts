@@ -49,6 +49,7 @@ export class Maya_Sdk {
     private global_headers: {[x: string]: string} = {};
 
     x_user_id = 'x-user-id';
+    x_admin_sub = 'x-admin-sub';
     x_api_key = 'x-api-key';
     x_username = 'x-username';
 
