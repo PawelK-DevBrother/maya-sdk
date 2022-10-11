@@ -73,12 +73,16 @@ export interface DeletePaymentRouteArgs {
 }
 
 export interface Vasp {
+    id: string;
     did: string;
     name: string;
     featured: boolean;
+    website: string;
 }
 export const VaspString = `
+id
 did
 name
 featured
+website
 `;
