@@ -15,6 +15,7 @@ import {
     NetworkObject,
     VaspString,
     Vasp,
+    VaspAlpha,
 } from './@types/payments.types';
 import {
     CreateExternalTransferArgs,
@@ -151,7 +152,7 @@ export class Maya_Sdk {
                 }
             }
         `;
-        const result = await this.gql_request(query, {symbol});
+        const result = await this.gql_request(query, {symbol}, headers);
         return result.asset;
     }
 
@@ -545,6 +546,20 @@ export class Maya_Sdk {
                 ${VaspString}
             }
         }
+        `;
+        const result = await this.gql_request(query, undefined, headers);
+        return result.destinations_wallets;
+    }
+
+    async destinations_wallets_alpha(headers?: HeadersType): Promise<VaspAlpha[]> {
+        const query = gql`
+            query {
+                destinations_wallets {
+                    did
+                    name
+                    featured
+                }
+            }
         `;
         const result = await this.gql_request(query, undefined, headers);
         return result.destinations_wallets;

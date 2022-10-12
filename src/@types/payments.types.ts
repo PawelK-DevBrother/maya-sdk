@@ -86,3 +86,9 @@ name
 featured
 website
 `;
+
+export interface VaspAlpha {
+    did: string;
+    name: string;
+    featured: boolean;
+}
