@@ -1,7 +1,7 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
 import {EstimateNetworkFeeResult} from './fees.types';
 import {NetworkObject} from './payments.types';
-import {ActionTrigger} from './utils.types';
+import {ActionTrigger, DateRangeInput, PagerSortDateRange} from './utils.types';
 
 export enum PspServiceStatus {
     failed = 'FAILED',
@@ -113,6 +113,9 @@ type
 scope
 direction
 status
+trigger_by
+trigger_reason
+trigger_ts
 user_id
 transfer_id
 reference_nr
@@ -147,6 +150,7 @@ psp_service_status
 psp_service_trigger_type
 psp_service_trigger_by
 psp_service_trigger_reason
+psp_service_trigger_ts
 psp_service_message
 psp_service_error_message
 created_at
@@ -160,6 +164,9 @@ export interface Transfer {
     scope: TransferScope;
     direction: TransferDirection;
     status: TransferStatusType;
+    trigger_by?: string;
+    trigger_reason?: string;
+    trigger_ts?: string;
     user_id: string;
     counterparty_first_name?: string;
     counterparty_last_name?: string;
@@ -193,8 +200,20 @@ export interface Transfer {
     psp_service_trigger_type?: ActionTrigger;
     psp_service_trigger_by?: string;
     psp_service_trigger_reason?: string;
+    psp_service_trigger_ts?: string;
     psp_service_message?: string;
     psp_service_error_message?: string;
     created_at: string;
     updated_at: string;
+}
+
+export interface GetTransfersArgs extends PagerSortDateRange {
+    search?: string;
+    filters?: GetTransfersFilter[];
+}
+
+export interface GetTransfersFilter {
+    table?: string;
+    field: string;
+    value: string;
 }

@@ -23,6 +23,8 @@ import {
     ExternalTransferFormDetails,
     GetExternalTransferFormDetailsArgs,
     GetTransferArgs,
+    GetTransferResult,
+    GetTransfersArgs,
     ProvideTransferMoreInfoArgs,
 } from './@types/transfers.types';
 // Tools
@@ -565,21 +567,21 @@ export class Maya_Sdk {
         return result.destinations_wallets;
     }
 
-    // async transfers(,headers?:HeadersType): Promise<GetTransferResult> {
-    //     const query = gql`
-    //         query {
-    //             transfers {
-    //                 pager_total_rows
-    //                 response_id
-    //                 items {
-    //                     ${transferString}
-    //                 }
-    //             }
-    //         }
-    //     `;
-    //     const result = await this.gql_request(query);
-    //     return result.transfers;
-    // }
+    async admin_transfers(args?: GetTransfersArgs, headers?: HeadersType): Promise<GetTransferResult> {
+        const query = gql`
+            query ($search: String, $filters: [GetTransfersFilter!], $pager: PagerInput, $sort: SortInput,$date_range: DateRangeInput) {
+                admin_transfers(search: $search, filters:$filters, sort: $sort, date_range: $date_range, pager: $pager){
+                    pager_total_rows
+                    response_id
+                    items {
+                        ${transferString}
+                    }
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.transfers;
+    }
 }
 
 export * from './utils';

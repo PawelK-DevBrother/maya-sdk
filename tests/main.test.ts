@@ -74,7 +74,7 @@ describe('main', () => {
     });
 
     describe('NOTABENE', () => {
-        test.only('destinations_wallets', async () => {
+        test('destinations_wallets', async () => {
             const result = await transfers_sdk.destinations_wallets();
             console.log(result);
             expect(result).toEqual([]);
@@ -258,6 +258,12 @@ describe('main', () => {
             const result = await paymaya_sdk.transfer({transfer_id});
             // console.log(result);
             expect(result.psp_service_status).toEqual(PspServiceStatus.completed);
+        });
+
+        test.only('admin_transfers', async () => {
+            const result = await transfers_sdk.admin_transfers();
+            console.log(result);
+            expect(true).toBeTruthy();
         });
 
         // test('admin_approve_incoming_transfer', async () => {
