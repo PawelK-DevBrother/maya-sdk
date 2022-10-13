@@ -244,7 +244,7 @@ describe('main', () => {
         test('transfer', async () => {
             const result = await paymaya_sdk.transfer({transfer_id});
             // console.log(result);
-            expect(result.psp_service_status).toEqual(PspServiceStatus.pending);
+            expect(result.psp_service_status).toEqual(PspServiceStatus.PENDING);
             expect(result.psp_service_trigger).toEqual(ActionTrigger.auto);
         });
 
@@ -257,12 +257,11 @@ describe('main', () => {
             await sleep(3000);
             const result = await paymaya_sdk.transfer({transfer_id});
             // console.log(result);
-            expect(result.psp_service_status).toEqual(PspServiceStatus.completed);
+            expect(result.psp_service_status).toEqual(PspServiceStatus.COMPLETED);
         });
 
         test.only('admin_transfers', async () => {
             const result = await transfers_sdk.admin_transfers();
-            console.log(result);
             expect(true).toBeTruthy();
         });
 
