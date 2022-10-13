@@ -580,7 +580,7 @@ export class Maya_Sdk {
             }
         `;
         const result = await this.gql_request(query, args, headers);
-        return result.transfers;
+        return result.admin_transfers;
     }
 }
 
