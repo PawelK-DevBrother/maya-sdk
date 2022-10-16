@@ -52,6 +52,7 @@ export interface CreateExternalTransferArgs
     destination_wallet?: string;
     address_tag_value?: string;
     address_tag_type?: CryptoAddressTagType;
+    // isSendToSelf: boolean;
 }
 
 export interface ExternalEstimation
@@ -122,6 +123,7 @@ reference_nr
 counterparty_first_name
 counterparty_last_name
 currency_id
+currency_name
 amount
 fiat_amount
 network_fee
@@ -133,6 +135,8 @@ crypto_network
 crypto_network_label
 crypto_network_speed
 crypto_address_wallet
+crypto_address_wallet_did
+crypto_address_wallet_id
 transaction_hash
 remote_txid
 confirmations
@@ -171,6 +175,7 @@ export interface Transfer {
     counterparty_first_name?: string;
     counterparty_last_name?: string;
     currency_id: string;
+    currency_name: string;
     amount: number;
     fiat_amount: number;
     network_fee: number;
@@ -182,6 +187,8 @@ export interface Transfer {
     crypto_network_label?: string;
     crypto_network_speed?: CryptoNetworkSpeed;
     crypto_address_wallet?: string;
+    crypto_address_wallet_did?: string;
+    crypto_address_wallet_id?: string;
     transaction_hash?: string;
     remote_txid?: string;
     confirmations?: number;
