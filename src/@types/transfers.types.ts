@@ -172,6 +172,7 @@ export interface Transfer {
     trigger_reason?: string;
     trigger_ts?: string;
     user_id: string;
+    user_mobile_nr?: string;
     counterparty_first_name?: string;
     counterparty_last_name?: string;
     currency_id: string;
@@ -210,6 +211,12 @@ export interface Transfer {
     psp_service_trigger_ts?: string;
     psp_service_message?: string;
     psp_service_error_message?: string;
+    //* Travel rule
+    tr_requestReferenceNo?: string;
+    tr_withdrawalId?: string;
+    tr_requirments?: string;
+    tr_message?: string;
+    //* Dates
     created_at: string;
     updated_at: string;
 }
@@ -223,4 +230,9 @@ export interface GetTransfersFilter {
     table?: string;
     field: string;
     value: string;
+}
+
+export interface SendOTPArgs {
+    transfer_id: string;
+    code: string;
 }

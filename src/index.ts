@@ -40,7 +40,7 @@ import {
     DeleteCryptoDepositAddressArgs,
     UpdateCryptoDepositAddressArgs,
 } from './@types/crypto-deposit-address.types';
-import {Transfer, transferString} from './@types/transfers.types';
+import {Transfer, transferString, SendOTPArgs} from './@types/transfers.types';
 import {GetCurrenciesPropertiesArgs, CurrencyProperty, CurrencyPropertyString, NetworkFeesString} from './@types/fees.types';
 import {CreateTransactionArgs, AccountTransaction, RevertAccountTransactionArgs} from './@types/accounts-transactions.types';
 import {User, UserString} from './@types/user.types';
@@ -54,6 +54,7 @@ export class Maya_Sdk {
     x_user_id = 'x-user-id';
     x_admin_sub = 'x-admin-sub';
     x_api_key = 'x-api-key';
+    x_user_mobile_nr = 'x-user-mobile-nr';
     x_username = 'x-username';
 
     constructor(endpoint: string) {
@@ -581,6 +582,16 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args, headers);
         return result.admin_transfers;
+    }
+
+    async verify_outgoing_external_transfer_otp(args?: SendOTPArgs, headers?: HeadersType): Promise<boolean> {
+        const query = gql`
+            mutation ($code: String!, $transfer_id: String!) {
+                verify_outgoing_external_transfer_otp(code: $code, transfer_id: $transfer_id)
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.verify_outgoing_external_transfer_otp;
     }
 }
 
