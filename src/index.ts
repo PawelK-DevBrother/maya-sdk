@@ -584,6 +584,22 @@ export class Maya_Sdk {
         return result.admin_transfers;
     }
 
+    async transfers(args?: GetTransfersArgs, headers?: HeadersType): Promise<GetTransferResult> {
+        const query = gql`
+            query ($search: String, $filters: [GetTransfersFilter!], $pager: PagerInput, $sort: SortInput,$date_range: DateRangeInput) {
+                transfers(search: $search, filters:$filters, sort: $sort, date_range: $date_range, pager: $pager){
+                    pager_total_rows
+                    response_id
+                    items {
+                        ${transferString}
+                    }
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.transfers;
+    }
+
     async verify_outgoing_external_transfer_otp(args?: SendOTPArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($code: String!, $transfer_id: String!) {
