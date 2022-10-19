@@ -1,11 +1,11 @@
 export class GraphQlCustomError extends Error {
-    msg: string;
+    message: string;
     statusCode: number;
     query: string;
     variables: any;
-    constructor(obj: {msg: string; statusCode: number; query: string; variables: any}) {
+    constructor(obj: {message: string; statusCode: number; query: string; variables: any}) {
         super();
-        this.msg = obj.msg;
+        this.message = obj.message;
         this.statusCode = obj.statusCode;
         this.query = obj.query;
         this.variables = obj.variables;
