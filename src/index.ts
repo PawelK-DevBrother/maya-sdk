@@ -83,7 +83,6 @@ export class Maya_Sdk {
     private async gql_request(body: string, variables: Variables = undefined, headers?: HeadersType) {
         return this.gql_client.request(body, variables, {...this.global_headers, ...headers}).catch((e) => {
             try {
-                console.log(e);
                 const error_body = {
                     msg: e.response.errors[0].message,
                     statusCode: e.response.status,

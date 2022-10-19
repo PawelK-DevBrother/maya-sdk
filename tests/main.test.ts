@@ -1,13 +1,5 @@
-import {
-    Maya_Sdk,
-    ActionTrigger,
-    ToggleSwitch,
-    PspServiceStatus,
-    TransferDirection,
-    CryptoNetworkSpeed,
-    CreateCryptoDepositAddressArgs,
-} from '../src/index';
-import {expectToEqual, expectToEqualObject, sleep} from './helpers';
+import {Maya_Sdk, ActionTrigger, ToggleSwitch, PspServiceStatus, TransferDirection, CryptoNetworkSpeed, CreateCryptoDepositAddressArgs} from '../src/index';
+import {expectToEqual, sleep} from './helpers';
 import {CreatePaymentRouteArgs, NetworkObject, UpdatePaymentRouteArgs} from './../src/@types/payments.types';
 import 'dotenv/config';
 import {AccountTransactionType} from '../src/@types/accounts-transactions.types';
