@@ -58,15 +58,7 @@ export interface CreateExternalTransferArgs
 export interface ExternalEstimation
     extends Pick<
         Transfer,
-        | 'currency_id'
-        | 'direction'
-        | 'amount'
-        | 'fiat_amount'
-        | 'ex_body_amount'
-        | 'ex_fee_amount'
-        | 'internal_fee'
-        | 'network_fee'
-        | 'psp_service_id'
+        'currency_id' | 'direction' | 'amount' | 'fiat_amount' | 'ex_body_amount' | 'ex_fee_amount' | 'internal_fee' | 'network_fee' | 'psp_service_id'
     > {
     destination_address: string;
     price: number;
@@ -118,6 +110,7 @@ trigger_by
 trigger_reason
 trigger_ts
 user_id
+user_mobile_nr
 transfer_id
 reference_nr
 counterparty_first_name
