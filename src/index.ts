@@ -624,7 +624,7 @@ export class Maya_Sdk {
     async update_transfer_tr_status(args: UpdateTrStatusArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation (
-                $status: String!
+                $status: TravelRuleStatus!
                 $requestReferenceNo: String!
                 $xTransactionId: String!
                 $withdrawalId: String!
