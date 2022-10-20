@@ -151,6 +151,7 @@ export class Maya_Sdk {
                 asset(symbol: $symbol) {
                     symbol
                     price(quote_asset_symbol: "PHP")
+                    price_decimals
                 }
             }
         `;
@@ -599,7 +600,7 @@ export class Maya_Sdk {
         return result.transfers;
     }
 
-    async verify_outgoing_external_transfer_otp(args?: SendOTPArgs, headers?: HeadersType): Promise<boolean> {
+    async verify_outgoing_external_transfer_otp(args: SendOTPArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($code: String!, $transfer_id: String!) {
                 verify_outgoing_external_transfer_otp(code: $code, transfer_id: $transfer_id)
@@ -607,6 +608,16 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args, headers);
         return result.verify_outgoing_external_transfer_otp;
+    }
+
+    async resend_transfer_otp(args: GetTransferArgs, headers?: HeadersType): Promise<boolean> {
+        const query = gql`
+            mutation ($transfer_id: String!) {
+                resend_transfer_otp(transfer_id: $transfer_id)
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.resend_transfer_otp;
     }
 }
 

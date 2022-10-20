@@ -54,6 +54,7 @@ export interface PaymentRouteNetwork extends PaymentRoute {
 export interface Asset {
     symbol: string;
     price: number;
+    price_decimals: number;
 }
 
 export interface CreatePaymentRouteArgs {
