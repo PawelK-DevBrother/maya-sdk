@@ -249,3 +249,13 @@ export interface SendOTPArgs {
     transfer_id: string;
     code: string;
 }
+
+export interface UpdateTrStatusArgs {
+    status: TravelRuleStatus;
+    requestReferenceNo: string;
+    xTransactionId: string;
+    withdrawalId?: string | null;
+    timestamp: string;
+    requirements: string[];
+    message: string;
+}

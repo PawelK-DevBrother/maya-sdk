@@ -26,6 +26,7 @@ import {
     GetTransferResult,
     GetTransfersArgs,
     ProvideTransferMoreInfoArgs,
+    UpdateTrStatusArgs,
 } from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
@@ -618,6 +619,32 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args, headers);
         return result.resend_transfer_otp;
+    }
+
+    async update_transfer_tr_status(args: UpdateTrStatusArgs, headers?: HeadersType): Promise<boolean> {
+        const query = gql`
+            mutation (
+                $status: String!
+                $requestReferenceNo: String!
+                $xTransactionId: String!
+                $withdrawalId: String!
+                $timestamp: String!
+                $requirements: [String!]!
+                $message: String!
+            ) {
+                update_transfer_tr_status(
+                    status: $status
+                    requestReferenceNo: $requestReferenceNo
+                    xTransactionId: $xTransactionId
+                    withdrawalId: $withdrawalId
+                    timestamp: $timestamp
+                    requirements: $requirements
+                    message: $message
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.update_transfer_tr_status;
     }
 }
 
