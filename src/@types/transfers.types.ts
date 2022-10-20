@@ -150,9 +150,28 @@ psp_service_trigger_reason
 psp_service_trigger_ts
 psp_service_message
 psp_service_error_message
+tr_status
+tr_requestReferenceNo
+tr_withdrawalId
+tr_requirments
+tr_message
 created_at
 updated_at
 `;
+
+export enum TravelRuleStatus {
+    PENDING_TRAVEL_RULE_CHECKING = 'PENDING - TRAVEL RULE CHECKING',
+    PENDING_ADDITIONAL_DETAILS_REQUIRED = 'PENDING - ADDITIONAL DETAILS REQUIRED',
+    PENDING_VALID_TRAVEL_RULE = 'PENDING - VALID TRAVEL RULE',
+    PENDING_TRAVEL_RULE_STARTED = 'PENDING - TRAVEL RULE STARTED',
+    PENDING_MFA_REQUIRED = 'PENDING - MFA REQUIRED',
+    PENDING_MFA_STARTED = 'PENDING - MFA STARTED',
+    PENDING_MFA_VERIFICATION_FAILED = 'PENDING - MFA VERIFICATION FAILED',
+    PENDING_MFA_VERIFIED = 'PENDING - MFA VERIFIED',
+    ACCEPTED = 'ACCEPTED',
+    REJECTED = 'REJECTED',
+    TRANSACTION_ERROR = 'TRANSACTION ERROR',
+}
 
 export interface Transfer {
     transfer_id: string;
@@ -205,6 +224,7 @@ export interface Transfer {
     psp_service_message?: string;
     psp_service_error_message?: string;
     //* Travel rule
+    tr_status?: TravelRuleStatus;
     tr_requestReferenceNo?: string;
     tr_withdrawalId?: string;
     tr_requirments?: string;
