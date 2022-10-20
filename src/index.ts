@@ -627,7 +627,7 @@ export class Maya_Sdk {
                 $status: TravelRuleStatus!
                 $requestReferenceNo: String!
                 $xTransactionId: String!
-                $withdrawalId: String!
+                $withdrawalId: String
                 $timestamp: String!
                 $requirements: [String!]!
                 $message: String!
