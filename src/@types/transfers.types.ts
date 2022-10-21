@@ -164,6 +164,7 @@ psp_service_trigger_reason
 psp_service_trigger_ts
 psp_service_message
 psp_service_error_message
+tr_status
 tr_requestReferenceNo
 tr_withdrawalId
 tr_requirments
@@ -171,7 +172,6 @@ tr_message
 created_at
 updated_at
 `;
-// tr_status
 
 export interface Transfer {
     transfer_id: string;
@@ -224,7 +224,7 @@ export interface Transfer {
     psp_service_message?: string;
     psp_service_error_message?: string;
     //* Travel rule
-    // tr_status?: TravelRuleStatus;
+    tr_status?: TravelRuleStatus;
     tr_requestReferenceNo?: string;
     tr_withdrawalId?: string;
     tr_requirments?: string;

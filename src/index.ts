@@ -52,11 +52,17 @@ export class Maya_Sdk {
     private gql_client: GraphQLClient;
     private global_headers: {[x: string]: string} = {};
 
-    x_user_id = 'x-user-id';
+    //* Internal auth
+    x_api_key: 'x-api-key';
     x_admin_sub = 'x-admin-sub';
-    x_api_key = 'x-api-key';
-    x_user_mobile_nr = 'x-user-mobile-nr';
-    x_username = 'x-username';
+    //* User info required
+    x_user_id: 'x-user-id';
+    //* User info optional
+    x_username: 'x-username';
+    x_user_mobile_nr: 'x-user-mobile-nr';
+    //* Maya auth tokens
+    x_connect_access_token: 'x-connect-access-token';
+    x_open_platform_customer_access_token: 'x-open-platform-customer-access-token';
 
     constructor(endpoint: string) {
         this.gql_client = new GraphQLClient(endpoint);
