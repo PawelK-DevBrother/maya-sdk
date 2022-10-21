@@ -100,6 +100,26 @@ export interface ProvideTransferMoreInfoArgs {
 export interface GetTransferArgs {
     transfer_id: string;
 }
+export interface GetTransfersFilter {
+    table?: string;
+    field: string;
+    value: string;
+}
+
+export interface SendOTPArgs {
+    transfer_id: string;
+    code: string;
+}
+
+export interface UpdateTrStatusArgs {
+    status: TravelRuleStatus;
+    requestReferenceNo: string;
+    xTransactionId: string;
+    withdrawalId?: string | null;
+    timestamp: string;
+    requirements: string[];
+    message: string;
+}
 
 export enum TravelRuleStatus {
     PENDING_TRAVEL_RULE_CHECKING = 'PENDING_TRAVEL_RULE_CHECKING',
@@ -237,25 +257,4 @@ export interface Transfer {
 export interface GetTransfersArgs extends PagerSortDateRange {
     search?: string;
     filters?: GetTransfersFilter[];
-}
-
-export interface GetTransfersFilter {
-    table?: string;
-    field: string;
-    value: string;
-}
-
-export interface SendOTPArgs {
-    transfer_id: string;
-    code: string;
-}
-
-export interface UpdateTrStatusArgs {
-    status: TravelRuleStatus;
-    requestReferenceNo: string;
-    xTransactionId: string;
-    withdrawalId?: string | null;
-    timestamp: string;
-    requirements: string[];
-    message: string;
 }
