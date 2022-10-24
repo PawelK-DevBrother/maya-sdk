@@ -131,8 +131,8 @@ export class Maya_Sdk {
 
     async remove_currency_networks(args: RemoveCurrencyNetworks, headers?: HeadersType): Promise<NetworkObject[]> {
         const query = gql`
-            mutation ($currency_id: String!, $labels: [String!]!) {
-                remove_currency_networks(currency_id: $currency_id, labels: $labels) {
+            mutation ($currency_id: String!, $values: [String!]!) {
+                remove_currency_networks(currency_id: $currency_id, values: $values) {
                     ${NetworkObjectString}
                 }
             }
@@ -181,8 +181,22 @@ export class Maya_Sdk {
 
     async payments_routes(args?: GetPaymentsRoutesArgs, headers?: HeadersType): Promise<PaymentRoute[]> {
         const query = gql`
-            query ($currency_id: String, $pager: PagerInput) {
-                payments_routes(currency_id: $currency_id, pager: $pager) {
+            query (
+                $currency_id: String
+                $payment_route_id: String
+                $psp_service_id: String
+                $crypto_network: String
+                $is_active: ToggleSwitch
+                $pager: PagerInput
+            ) {
+                payments_routes(
+                    currency_id: $currency_id
+                    payment_route_id: $payment_route_id
+                    psp_service_id: $psp_service_id
+                    crypto_network: $crypto_network
+                    is_active: $is_active
+                    pager: $pager
+                ) {
                     ${paymentRouteString}
                 }
             }
@@ -194,8 +208,22 @@ export class Maya_Sdk {
 
     async payments_routes_with_networks(args?: GetPaymentsRoutesArgs, headers?: HeadersType): Promise<PaymentRouteNetwork[]> {
         const query = gql`
-            query ($currency_id: String, $pager: PagerInput) {
-                payments_routes_networks(currency_id: $currency_id, pager: $pager) {
+            query (
+                $currency_id: String
+                $payment_route_id: String
+                $psp_service_id: String
+                $crypto_network: String
+                $is_active: ToggleSwitch
+                $pager: PagerInput
+            ) {
+                payments_routes_networks(
+                    currency_id: $currency_id
+                    payment_route_id: $payment_route_id
+                    psp_service_id: $psp_service_id
+                    crypto_network: $crypto_network
+                    is_active: $is_active
+                    pager: $pager
+                ) {
                     ${paymentRouteString}
                     network {
                         ${NetworkObjectString}

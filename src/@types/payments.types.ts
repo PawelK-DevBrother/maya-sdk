@@ -19,7 +19,7 @@ export interface AddCurrencyNetworksArgs {
 
 export interface RemoveCurrencyNetworks {
     currency_id: string;
-    labels: string[];
+    values: string[];
 }
 
 export interface PaymentRoute {
@@ -45,6 +45,7 @@ export interface GetPaymentsRoutesArgs extends PagerSort {
     payment_route_id?: string;
     psp_service_id?: string;
     crypto_network?: string;
+    is_active?: ToggleSwitch;
 }
 
 export interface PaymentRouteNetwork extends PaymentRoute {
