@@ -49,7 +49,7 @@ import {
     CurrencyPropertyString,
     NetworkFeesString,
     EstimateNetworkFeeResult,
-    EstimateNetworkFeeArgs,
+    EstimateNetworkFeeDevArgs,
 } from './@types/fees.types';
 import {CreateTransactionArgs, RevertAccountTransactionArgs} from './@types/accounts-transactions.types';
 import {User, UserString} from './@types/user.types';
@@ -312,7 +312,7 @@ export class Maya_Sdk {
         return result.external_transfer_form_details;
     }
 
-    async external_transfer_estimate_network_fee(args: EstimateNetworkFeeArgs, headers?: HeadersType): Promise<EstimateNetworkFeeResult> {
+    async external_transfer_estimate_network_fee(args: EstimateNetworkFeeDevArgs, headers?: HeadersType): Promise<EstimateNetworkFeeResult> {
         const query = gql`
             mutation (
                 $amount: Float!
@@ -326,7 +326,6 @@ export class Maya_Sdk {
                     amount: $amount
                     currency_id: $currency_id
                     network: $network
-                    direction: $direction
                     destination_address: $destination_address
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
