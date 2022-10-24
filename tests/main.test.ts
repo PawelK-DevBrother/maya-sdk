@@ -252,7 +252,7 @@ describe('main', () => {
             expect(result.psp_service_status).toEqual(PspServiceStatus.COMPLETED);
         });
 
-        test.only('admin_transfers', async () => {
+        test('admin_transfers', async () => {
             const result = await transfers_sdk.admin_transfers();
             expect(true).toBeTruthy();
         });
@@ -292,6 +292,19 @@ describe('main', () => {
         test('delete_user_limit_group', async () => {
             const result = await transfers_sdk.delete_user_limit_group();
             expect(result).toBeTruthy();
+        });
+    });
+
+    describe('test only', () => {
+        test.only('123', async () => {
+            const result = await transfers_sdk.external_transfer_provide_travel_rule_details({
+                transfer_id: '123',
+                beneficiaryGeographicAddress: {
+                    addressType: '123',
+                },
+            });
+            console.log(result);
+            expect(true).toBeTruthy();
         });
     });
 });

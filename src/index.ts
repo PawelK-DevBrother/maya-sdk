@@ -21,6 +21,7 @@ import {
     CreateExternalTransferArgs,
     ExternalEstimation,
     ExternalTransferFormDetails,
+    ExternalTransferProvideTravelRuleDetailsArgs,
     GetExternalTransferFormDetailsArgs,
     GetTransferArgs,
     GetTransferResult,
@@ -646,6 +647,30 @@ export class Maya_Sdk {
                     timestamp: $timestamp
                     requirements: $requirements
                     message: $message
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.update_transfer_tr_status;
+    }
+
+    async external_transfer_provide_travel_rule_details(args: ExternalTransferProvideTravelRuleDetailsArgs, headers?: HeadersType): Promise<boolean> {
+        const query = gql`
+            mutation (
+                $transfer_id: String!
+                $beneficiaryFirstName: String
+                $beneficiaryLastName: String
+                $beneficiaryVaspId: String
+                $beneficiaryVaspName: String
+                $beneficiaryGeographicAddress: BeneficiaryGeographicAddress
+            ) {
+                external_transfer_provide_travel_rule_details(
+                    transfer_id: $transfer_id
+                    beneficiaryFirstName: $beneficiaryFirstName
+                    beneficiaryLastName: $beneficiaryLastName
+                    beneficiaryVaspId: $beneficiaryVaspId
+                    beneficiaryVaspName: $beneficiaryVaspName
+                    beneficiaryGeographicAddress: $beneficiaryGeographicAddress
                 )
             }
         `;
