@@ -42,7 +42,6 @@ export enum ToggleSwitch {
     on = 'on',
     off = 'off',
 }
-
 export enum ActionTrigger {
     auto = 'auto',
     manual = 'manual',
