@@ -3,6 +3,7 @@ import {expectToEqual, sleep} from './helpers';
 import {CreatePaymentRouteArgs, NetworkObject, UpdatePaymentRouteArgs} from './../src/@types/payments.types';
 import 'dotenv/config';
 import {AccountTransactionType} from '../src/@types/accounts-transactions.types';
+import {gql} from 'graphql-request';
 
 jest.setTimeout(20000);
 
@@ -284,10 +285,10 @@ describe('main', () => {
             expect(result).toBeTruthy();
         });
 
-        test('remove_currency_networks', async () => {
-            const result = await paymaya_sdk.remove_currency_networks({currency_id, labels: [crypto_network_label]});
-            expect(result).toEqual([]);
-        });
+        // test('remove_currency_networks', async () => {
+        //     const result = await paymaya_sdk.remove_currency_networks({currency_id, labels: [crypto_network_label]});
+        //     expect(result).toEqual([]);
+        // });
 
         test('delete_user_limit_group', async () => {
             const result = await transfers_sdk.delete_user_limit_group();
@@ -297,11 +298,18 @@ describe('main', () => {
 
     describe('test only', () => {
         test.only('123', async () => {
-            const result = await transfers_sdk.external_transfer_provide_travel_rule_details({
-                transfer_id: '123',
-                beneficiaryGeographicAddress: {
-                    addressType: '123',
-                },
+            const fetchAssetsQuery = gql`
+                query {
+                    assets {
+                        items {
+                            symbol
+                            price(quote_asset_symbol: "PHP")
+                        }
+                    }
+                }
+            ` as unknown as string;
+            const result = await paymaya_sdk.gql_request(fetchAssetsQuery).catch((e) => {
+                console.log(e);
             });
             console.log(result);
             expect(true).toBeTruthy();

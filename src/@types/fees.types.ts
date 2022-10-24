@@ -4,6 +4,7 @@ export interface FeeEstimationItem {
     network_fee?: number;
     base_fee?: number;
     priority_fee?: number;
+    gas_limit?: number;
 }
 
 export interface EstimateNetworkFeeResult {
@@ -16,6 +17,7 @@ export const NetworkFeesString = `
 low {
     fee_per_byte
     gas_price
+    gas_limit
     network_fee
     base_fee
     priority_fee
@@ -23,6 +25,7 @@ low {
 medium {
      fee_per_byte
      gas_price
+     gas_limit
      network_fee
      base_fee
      priority_fee
@@ -30,6 +33,7 @@ medium {
 high {
      fee_per_byte
      gas_price
+     gas_limit
      network_fee
      base_fee
      priority_fee
@@ -40,6 +44,9 @@ export interface EstimateNetworkFeeArgs {
     currency_id: string;
     network?: string;
     psp_service_id?: string;
+    // address_tag_value?: string;
+    // amount: number;
+    // destination_address: string;
 }
 
 export interface GetCurrenciesPropertiesArgs {

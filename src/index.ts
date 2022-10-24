@@ -1,4 +1,4 @@
-import {GetOperationsLimits, OperationsLimits, operationsLimitsString, UserLimitGroup, UserLimitGroupString} from './@types/operations-limits.types';
+import {OperationsLimits, operationsLimitsString, UserLimitGroup, UserLimitGroupString} from './@types/operations-limits.types';
 import {FindSystemSettingsArgs, Setting, SettingString} from './@types/settings.types';
 import {
     Asset,
@@ -43,8 +43,15 @@ import {
     UpdateCryptoDepositAddressArgs,
 } from './@types/crypto-deposit-address.types';
 import {Transfer, transferString, SendOTPArgs} from './@types/transfers.types';
-import {GetCurrenciesPropertiesArgs, CurrencyProperty, CurrencyPropertyString, NetworkFeesString} from './@types/fees.types';
-import {CreateTransactionArgs, AccountTransaction, RevertAccountTransactionArgs} from './@types/accounts-transactions.types';
+import {
+    GetCurrenciesPropertiesArgs,
+    CurrencyProperty,
+    CurrencyPropertyString,
+    NetworkFeesString,
+    EstimateNetworkFeeResult,
+    EstimateNetworkFeeArgs,
+} from './@types/fees.types';
+import {CreateTransactionArgs, RevertAccountTransactionArgs} from './@types/accounts-transactions.types';
 import {User, UserString} from './@types/user.types';
 
 export type HeadersType = {[x: string]: string};
@@ -88,7 +95,7 @@ export class Maya_Sdk {
         return this.global_headers;
     }
 
-    async gql_request(body: string, variables: Variables = undefined, headers?: HeadersType) {
+    async gql_request(body: string | any, variables: Variables = undefined, headers?: HeadersType) {
         return this.gql_client.request(body, variables, {...this.global_headers, ...headers}).catch((e) => {
             try {
                 const error_body = {
@@ -303,6 +310,33 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args, headers);
         return result.external_transfer_form_details;
+    }
+
+    async external_transfer_estimate_network_fee(args: EstimateNetworkFeeArgs, headers?: HeadersType): Promise<EstimateNetworkFeeResult> {
+        const query = gql`
+            mutation (
+                $amount: Float!
+                $network: String!
+                $currency_id: String!
+                $destination_address: String!
+                $address_tag_value: String
+                $address_tag_type: CryptoAddressTagType
+            ) {
+                external_transfer_estimate_network_fee(
+                    amount: $amount
+                    currency_id: $currency_id
+                    network: $network
+                    direction: $direction
+                    destination_address: $destination_address
+                    address_tag_value: $address_tag_value
+                    address_tag_type: $address_tag_type
+                ) {
+                    ${NetworkFeesString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.external_transfer_estimate_network_fee;
     }
 
     async estimate_validate_external_transfer(args: CreateExternalTransferArgs, headers?: HeadersType): Promise<ExternalEstimation> {
