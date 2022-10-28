@@ -40,7 +40,6 @@ describe('main', () => {
     describe('HEALTHCHECK', () => {
         test('healthcheck', async () => {
             const result = await transfers_sdk.healthcheck();
-            console.log(result);
             expect(result).toEqual({message: 'ok', status: true});
         });
     });

@@ -1,3 +1,15 @@
+export const operationsLimitsString = `
+limit_group_id
+buy_option
+sell_option
+send_option
+receive_option
+buy_limit
+sell_limit
+send_limit
+receive_limit
+`;
+
 export enum OperationOption {
     disabled = 'disabled',
     enabled = 'enabled',
@@ -19,18 +31,6 @@ export interface OperationsLimits {
 export interface GetOperationsLimits {
     limit_group_id: string;
 }
-
-export const operationsLimitsString = `
-limit_group_id
-buy_option
-sell_option
-send_option
-receive_option
-buy_limit
-sell_limit
-send_limit
-receive_limit
-`;
 
 export interface UserLimitGroup {
     user_id: string;

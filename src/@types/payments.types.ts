@@ -5,11 +5,15 @@ export interface NetworkObject {
     label: string;
     value: string;
     notes: string;
+    heading: string;
+    secondary: string;
 }
 export const NetworkObjectString = `
 label
 value
 notes
+heading
+secondary
 `;
 
 export interface AddCurrencyNetworksArgs {
