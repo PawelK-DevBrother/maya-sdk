@@ -1,6 +1,14 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
 import {PagerSort, ToggleSwitch} from './utils.types';
 
+export interface NetworkObjectArgs {
+    label: string;
+    value: string;
+    notes: string;
+    heading: string;
+    secondary: string;
+}
+
 export interface NetworkObject {
     label: string;
     value: string;
@@ -18,7 +26,7 @@ secondary
 
 export interface AddCurrencyNetworksArgs {
     currency_id: string;
-    networks: NetworkObject[];
+    networks: NetworkObjectArgs[];
 }
 
 export interface RemoveCurrencyNetworks {
