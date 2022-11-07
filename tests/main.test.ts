@@ -34,11 +34,11 @@ describe('main', () => {
 
     const revertAccountTransactionSecretKey = process.env.REVERT_ACCOUNT_TRANSACTION_SECRET_KEY || '';
 
-    const destination_address = '0xD745547Ab0c3a961c3df05337A857fE8d02F1568';
+    const destination_address = '0xeB46B672091152595e2135EC6b251e1c8BF35750';
 
     const psp_service_id = 'PSP_TESTS';
 
-    const user_id = 'broker-user-id';
+    const user_id = 'pawel_test_id';
     const default_limit_group_id = 'KYC1';
 
     const defaultRecipientInternalFee = 0.025;
@@ -65,28 +65,28 @@ describe('main', () => {
         });
     });
 
-    describe('ACCOUNTS TRANSACTIONS', () => {
-        test('create_account_transactions', async () => {
-            const items = [
-                {
-                    user_id,
-                    amount: 0.000777,
-                    currency_id,
-                    type: AccountTransactionType.credit,
-                },
-            ];
-            const result = await paymaya_sdk.create_account_transactions({items}, {'x-service-api-key': process.env.SERVICE_API_KEY || ''});
-            expect(typeof result).toEqual('string');
+    // describe('ACCOUNTS TRANSACTIONS', () => {
+    //     test('create_account_transactions', async () => {
+    //         const items = [
+    //             {
+    //                 user_id,
+    //                 amount: 0.000777,
+    //                 currency_id: currency_id_db,
+    //                 type: AccountTransactionType.credit,
+    //             },
+    //         ];
+    //         const result = await paymaya_sdk.create_account_transactions({items}, {'x-service-api-key': process.env.SERVICE_API_KEY || ''});
+    //         expect(typeof result).toEqual('string');
 
-            parent_transaction_id = result;
-        });
-        test('revert_account_transactions', async () => {
-            await sleep(1500);
+    //         parent_transaction_id = result;
+    //     });
+    //     test('revert_account_transactions', async () => {
+    //         await sleep(1500);
 
-            const result = await paymaya_sdk.revert_account_transaction({parent_transaction_id, secretKey: revertAccountTransactionSecretKey});
-            expect(typeof result).toEqual('string');
-        });
-    });
+    //         const result = await paymaya_sdk.revert_account_transaction({parent_transaction_id, secretKey: revertAccountTransactionSecretKey});
+    //         expect(typeof result).toEqual('string');
+    //     });
+    // });
 
     describe('SETTINGS', () => {
         test('system_settings', async () => {
@@ -256,24 +256,22 @@ describe('main', () => {
             expect(true).toEqual(true);
         });
 
-        // test('create_external_transfer', async () => {
-        //     const result = await paymaya_sdk.create_external_transfer({
-        //         currency_id,
-        //         network,
-        //         amount: 1,
-        //         destination_address: destination_address,
-        //         direction: TransferDirection.cryptoToFiat,
-        //         network_speed: CryptoNetworkSpeed.medium,
-        //         destination_wallet: 'test',
-        //         counterparty_first_name: '123',
-        //         counterparty_last_name: '123456',
-        //     });
-        //     transfer_id = result.transfer_id;
+        test('create_external_transfer', async () => {
+            const result = await paymaya_sdk.create_external_transfer({
+                currency_id,
+                network,
+                amount: 1,
+                destination_address,
+                direction: TransferDirection.cryptoToFiat,
+                network_speed: CryptoNetworkSpeed.medium,
+                destination_wallet: 'test',
+                counterparty_first_name: '123',
+                counterparty_last_name: '123456',
+            });
+            transfer_id = result.transfer_id;
 
-        //     expect(true).toEqual(true);
-        //     expect(result.psp_service_status).toEqual(null);
-        //     expect(result.psp_service_trigger).toEqual(null);
-        // });
+            expect(result.user_id).toEqual(user_id);
+        });
 
         // test('transfer', async () => {
         //     const result = await paymaya_sdk.transfer({transfer_id});
@@ -317,21 +315,25 @@ describe('main', () => {
 
     describe('CLEAN UP', () => {
         test('delete_crypto_deposit_address', async () => {
+            await sleep(10_000);
             const result = await paymaya_sdk.delete_crypto_deposit_address({crypto_deposit_address_id});
             expect(result).toBeTruthy();
         });
 
         test('delete_payment_route', async () => {
+            await sleep(5_000);
             const result = await paymaya_sdk.delete_payment_route({payment_route_id});
             expect(result).toBeTruthy();
         });
 
         test('remove_currency_networks', async () => {
+            await sleep(5_000);
             const result = await paymaya_sdk.remove_currency_networks({currency_id, values: [network]});
             expect(result).toEqual([]);
         });
 
         test('delete_user_limit_group', async () => {
+            await sleep(5_000);
             const result = await transfers_sdk.delete_user_limit_group();
             expect(result).toBeTruthy();
         });

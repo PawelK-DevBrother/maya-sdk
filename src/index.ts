@@ -48,8 +48,8 @@ import {
     CurrencyProperty,
     CurrencyPropertyString,
     NetworkFeesString,
-    EstimateNetworkFeeResult,
-    EstimateNetworkFeeDevArgs,
+    EstimateAmountsResult,
+    EstimateNetworkFeeArgs,
 } from './@types/fees.types';
 import {CreateTransactionArgs, RevertAccountTransactionArgs} from './@types/accounts-transactions.types';
 import {User, UserString} from './@types/user.types';
@@ -312,15 +312,16 @@ export class Maya_Sdk {
         return result.external_transfer_form_details;
     }
 
-    async external_transfer_estimate_network_fee(args: EstimateNetworkFeeDevArgs, headers?: HeadersType): Promise<EstimateNetworkFeeResult> {
+    async external_transfer_estimate_network_fee(args: EstimateNetworkFeeArgs, headers?: HeadersType): Promise<EstimateAmountsResult> {
         const query = gql`
             mutation (
                 $amount: Float!
                 $network: String!
                 $currency_id: String!
-                $destination_address: String!
+                $destination_address: String
                 $address_tag_value: String
                 $address_tag_type: CryptoAddressTagType
+                $total_amount: Boolean
             ) {
                 external_transfer_estimate_network_fee(
                     amount: $amount
@@ -329,6 +330,7 @@ export class Maya_Sdk {
                     destination_address: $destination_address
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
+                    total_amount: $total_amount
                 ) {
                     ${NetworkFeesString}
                 }
@@ -353,6 +355,7 @@ export class Maya_Sdk {
                 $destination_wallet: String
                 $counterparty_first_name: String
                 $counterparty_last_name: String
+                $total_amount: Boolean
             ) {
                 estimate_validate_external_transfer(
                     amount: $amount
@@ -367,6 +370,7 @@ export class Maya_Sdk {
                     destination_wallet: $destination_wallet
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
+                    total_amount: $total_amount
                 ) {
                     amount
                     currency_id
@@ -406,6 +410,7 @@ export class Maya_Sdk {
                 $destination_wallet: String
                 $counterparty_first_name: String
                 $counterparty_last_name: String
+                $total_amount: Boolean
             ) {
                 create_external_transfer(
                     amount: $amount
@@ -420,6 +425,7 @@ export class Maya_Sdk {
                     destination_wallet: $destination_wallet
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
+                    total_amount: $total_amount
                 ) {
                     ${transferString}
                 }

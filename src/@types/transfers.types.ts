@@ -52,7 +52,7 @@ export interface CreateExternalTransferArgs
     destination_wallet?: string;
     address_tag_value?: string;
     address_tag_type?: CryptoAddressTagType;
-    // isSendToSelf: boolean;
+    is_total_amount?: boolean;
 }
 
 export interface ExternalEstimation

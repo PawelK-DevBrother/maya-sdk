@@ -35,20 +35,28 @@ export interface FeeEstimationItem {
     priority_fee?: number;
     gas_limit?: number;
 }
-
 export interface EstimateNetworkFeeResult {
     low: FeeEstimationItem;
     medium: FeeEstimationItem;
     high: FeeEstimationItem;
 }
 
-export interface EstimateNetworkFeeDevArgs {
+export interface EstimateAmountsResult extends EstimateNetworkFeeResult {
+    amount: number;
+    ex_body_amount: number;
+    ex_fee_amount: number;
+    internal_fee: number;
+    network_fee: number;
+}
+
+export interface EstimateNetworkFeeArgs {
     currency_id: string;
     network: string;
+    amount: number;
+    destination_address?: string;
     address_tag_type?: CryptoAddressTagType;
     address_tag_value?: string;
-    amount: number;
-    destination_address: string;
+    is_total_amount?: boolean;
 }
 
 export interface GetCurrenciesPropertiesArgs {

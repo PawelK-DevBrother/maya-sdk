@@ -34,7 +34,10 @@ export interface CryptoDepositAddress {
 
 export interface CreateCryptoDepositAddressArgs extends Pick<CryptoDepositAddress, 'currency_id' | 'network'> {}
 
-export interface FindCryptoDepositAddressesArgs extends Pick<CryptoDepositAddress, 'currency_id' | 'network'>, Pager, UserIdOptional {}
+export interface FindCryptoDepositAddressesArgs extends Pager, UserIdOptional {
+    currency_id?: string;
+    network?: string;
+}
 
 export interface DeleteCryptoDepositAddressArgs {
     crypto_deposit_address_id: string;
