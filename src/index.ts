@@ -333,6 +333,11 @@ export class Maya_Sdk {
                     is_total_amount: $is_total_amount
                 ) {
                     ${NetworkFeesString}
+                    ex_fee_amount
+                    ex_body_amount
+                    network_fee
+                    internal_fee
+                    amount
                 }
             }
         `;

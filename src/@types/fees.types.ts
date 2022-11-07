@@ -1,5 +1,16 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
 
+export interface GetCurrenciesPropertiesArgs {
+    currency_id?: string;
+    properties?: string[];
+}
+
+export interface CurrencyProperty {
+    currency_id: string;
+    name: string;
+    value: string;
+}
+
 export const NetworkFeesString = `
 low {
     fee_per_byte
@@ -57,17 +68,6 @@ export interface EstimateNetworkFeeArgs {
     address_tag_type?: CryptoAddressTagType;
     address_tag_value?: string;
     is_total_amount?: boolean;
-}
-
-export interface GetCurrenciesPropertiesArgs {
-    currency_id?: string;
-    properties?: string[];
-}
-
-export interface CurrencyProperty {
-    currency_id: string;
-    name: string;
-    value: string;
 }
 
 export const CurrencyPropertyString = `
