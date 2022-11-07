@@ -68,12 +68,6 @@ export interface ExternalEstimation
     network_speed: CryptoNetworkSpeed;
 }
 
-export interface GetExternalTransferFormDetailsArgs {
-    currency_id: string;
-    network: string;
-    address_tag_type?: CryptoAddressTagType;
-}
-
 export interface ExternalTransferFormDetails {
     currency_id: string;
     network: string;
@@ -82,6 +76,12 @@ export interface ExternalTransferFormDetails {
     networks: NetworkObject[];
     internal_fee_value: number;
     network_fees: EstimateNetworkFeeResult;
+}
+
+export interface GetExternalTransferFormDetailsArgs {
+    currency_id: string;
+    network: string;
+    address_tag_type?: CryptoAddressTagType;
 }
 
 export interface GetTransferResult {

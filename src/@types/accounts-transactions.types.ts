@@ -1,18 +1,3 @@
-export interface AccountTransaction {
-    serial_id: string;
-    account_transaction_id: string;
-    parent_transaction_id: string;
-    client_transaction_id: string;
-    user_id: string;
-    account_id: string;
-    type: AccountTransactionType;
-    amount: number;
-    comment: string;
-    created_at: string;
-    updated_at: string;
-    is_replicated?: number;
-}
-
 export enum AccountTransactionType {
     debit = 'debit',
     credit = 'credit',
@@ -34,4 +19,19 @@ export interface CreateTransactionItem {
 export interface RevertAccountTransactionArgs {
     secretKey: string;
     parent_transaction_id: string;
+}
+
+export interface AccountTransaction {
+    serial_id: string;
+    account_transaction_id: string;
+    parent_transaction_id: string;
+    client_transaction_id: string;
+    user_id: string;
+    account_id: string;
+    type: AccountTransactionType;
+    amount: number;
+    comment: string;
+    created_at: string;
+    updated_at: string;
+    is_replicated?: number;
 }
