@@ -193,6 +193,31 @@ created_at
 updated_at
 `;
 
+export interface GetTransfersArgs extends PagerSortDateRange {
+    search?: string;
+    filters?: GetTransfersFilter[];
+}
+
+export class BeneficiaryGeographicAddress {
+    addressType: string;
+    streetName: string;
+    buildingNumber: string;
+    buildingName: string;
+    postcode: string;
+    townName: string;
+    countrySubDivision: string;
+    country: string;
+}
+
+export class ExternalTransferProvideTravelRuleDetailsArgs {
+    transfer_id: string;
+    beneficiaryFirstName?: string;
+    beneficiaryLastName?: string;
+    beneficiaryVaspId?: string;
+    beneficiaryVaspName?: string;
+    beneficiaryGeographicAddress?: BeneficiaryGeographicAddress;
+}
+
 export interface Transfer {
     transfer_id: string;
     reference_nr: string;
@@ -252,29 +277,4 @@ export interface Transfer {
     //* Dates
     created_at: string;
     updated_at: string;
-}
-
-export interface GetTransfersArgs extends PagerSortDateRange {
-    search?: string;
-    filters?: GetTransfersFilter[];
-}
-
-export class BeneficiaryGeographicAddress {
-    addressType: string;
-    streetName: string;
-    buildingNumber: string;
-    buildingName: string;
-    postcode: string;
-    townName: string;
-    countrySubDivision: string;
-    country: string;
-}
-
-export class ExternalTransferProvideTravelRuleDetailsArgs {
-    transfer_id: string;
-    beneficiaryFirstName?: string;
-    beneficiaryLastName?: string;
-    beneficiaryVaspId?: string;
-    beneficiaryVaspName?: string;
-    beneficiaryGeographicAddress?: BeneficiaryGeographicAddress;
 }

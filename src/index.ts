@@ -410,7 +410,7 @@ export class Maya_Sdk {
                 $destination_wallet: String
                 $counterparty_first_name: String
                 $counterparty_last_name: String
-                $total_amount: Boolean
+                $is_total_amount: Boolean
             ) {
                 create_external_transfer(
                     amount: $amount
@@ -425,7 +425,7 @@ export class Maya_Sdk {
                     destination_wallet: $destination_wallet
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
-                    total_amount: $total_amount
+                    is_total_amount: $is_total_amount
                 ) {
                     ${transferString}
                 }
