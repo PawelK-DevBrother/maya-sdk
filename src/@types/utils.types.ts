@@ -15,6 +15,9 @@ export interface DateRangeInput {
     time_from?: string;
     time_to?: string;
 }
+export interface DateRange {
+    data_range: DateRangeInput;
+}
 export interface Pager {
     pager?: {
         limit?: number;

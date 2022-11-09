@@ -33,7 +33,7 @@ import {
 import {GraphQlCustomError} from './utils';
 import {gql, GraphQLClient, Variables} from 'graphql-request';
 // Types
-import {HealthCheck, HealthCheckString, UserIdOptional, UserIdArgs} from './@types/utils.types';
+import {HealthCheck, HealthCheckString, UserIdOptional, UserIdArgs, DateRange} from './@types/utils.types';
 import {
     CreateCryptoDepositAddressArgs,
     CryptoDepositAddress,
@@ -678,6 +678,18 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args, headers);
         return result.transfers;
+    }
+
+    async total_cost_transfers(args?: DateRange, headers?: HeadersType): Promise<Transfer[]> {
+        const query = gql`
+            query (date_range: DateRangeInput) {
+                total_cost_transfers(date_range: $date_range){
+                    ${transferString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.total_cost_transfers;
     }
 
     async verify_outgoing_external_transfer_otp(args: SendOTPArgs, headers?: HeadersType): Promise<boolean> {

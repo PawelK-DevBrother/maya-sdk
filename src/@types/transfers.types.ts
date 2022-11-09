@@ -35,13 +35,16 @@ export enum TransferType {
 }
 
 export enum TransferStatusType {
+    //* Success
     approved_auto = 'approved_auto',
     approved_manual = 'approved_manual',
+    //* Pending
+    pending = 'pending',
+    more_information_required = 'more_information_required',
+    //* Rejected
     rejected_auto = 'rejected_auto',
     rejected_manual = 'rejected_manual',
     rejected_bsp = 'rejected_bsp',
-    pending = 'pending',
-    more_information_required = 'more_information_required',
 }
 
 export interface CreateExternalTransferArgs
@@ -225,9 +228,6 @@ export interface Transfer {
     scope: TransferScope;
     direction: TransferDirection;
     status: TransferStatusType;
-    trigger_by?: string;
-    trigger_reason?: string;
-    trigger_ts?: string;
     user_id: string;
     user_mobile_nr?: string;
     counterparty_first_name?: string;
@@ -238,36 +238,45 @@ export interface Transfer {
     fiat_amount: number;
     network_fee: number;
     internal_fee: number;
+    ex_body_amount: number;
+    ex_fee_amount: number;
+    //
     crypto_address_value?: string;
     crypto_address_tag_type?: CryptoAddressTagType;
     crypto_address_tag_value?: string;
     crypto_network?: string;
     crypto_network_label?: string;
     crypto_network_speed?: CryptoNetworkSpeed;
+    //* Vasps
     crypto_address_wallet?: string;
     crypto_address_wallet_did?: string;
     crypto_address_wallet_id?: string;
     transaction_hash?: string;
     remote_txid?: string;
     confirmations?: number;
+    //* Accounts transactions
     ex_transfer_txid?: string;
-    ex_body_amount: number;
-    ex_fee_amount: number;
     ex_refund_txid?: string;
+    //*
     ex_refund_body_amount?: number;
     ex_refund_fee_amount?: number;
     notes?: string;
     message?: string;
     error_message?: string;
+    //* Admin approve fields - internal validation
+    trigger_by?: string;
+    trigger_reason?: string;
+    trigger_ts?: string;
+    //* Psp service
     psp_service_id?: string;
     psp_service_status?: PspServiceStatus;
-    psp_service_trigger?: ActionTrigger;
-    psp_service_trigger_type?: ActionTrigger;
-    psp_service_trigger_by?: string;
-    psp_service_trigger_reason?: string;
-    psp_service_trigger_ts?: string;
     psp_service_message?: string;
     psp_service_error_message?: string;
+    //* Admin approve fields - psp service
+    psp_service_trigger_type?: ActionTrigger;
+    psp_service_trigger_by?: string;
+    psp_service_trigger_ts?: string;
+    psp_service_trigger_reason?: string;
     //* Travel rule
     tr_status?: TravelRuleStatus;
     tr_requestReferenceNo?: string;
