@@ -201,6 +201,10 @@ export interface GetTransfersArgs extends PagerSortDateRange {
     filters?: GetTransfersFilter[];
 }
 
+export interface GetTotalCostTransfersArgs {
+    date_range: DateRangeInput;
+}
+
 export class BeneficiaryGeographicAddress {
     addressType: string;
     streetName: string;

@@ -682,7 +682,7 @@ export class Maya_Sdk {
 
     async total_cost_transfers(args?: DateRange, headers?: HeadersType): Promise<Transfer[]> {
         const query = gql`
-            query (date_range: DateRangeInput) {
+            query ($date_range: DateRangeInput) {
                 total_cost_transfers(date_range: $date_range){
                     ${transferString}
                 }
