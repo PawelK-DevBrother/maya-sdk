@@ -42,7 +42,7 @@ import {
     DeleteCryptoDepositAddressArgs,
     UpdateCryptoDepositAddressArgs,
 } from './@types/crypto-deposit-address.types';
-import {Transfer, transferString, SendOTPArgs} from './@types/transfers.types';
+import {Transfer, transferString, SendOTPArgs, GetTotalCostTransfersArgs} from './@types/transfers.types';
 import {
     GetCurrenciesPropertiesArgs,
     CurrencyProperty,
@@ -680,7 +680,7 @@ export class Maya_Sdk {
         return result.transfers;
     }
 
-    async total_cost_transfers(args?: DateRange, headers?: HeadersType): Promise<Transfer[]> {
+    async total_cost_transfers(args?: GetTotalCostTransfersArgs, headers?: HeadersType): Promise<Transfer[]> {
         const query = gql`
             query ($date_range: DateRangeInput) {
                 total_cost_transfers(date_range: $date_range){
