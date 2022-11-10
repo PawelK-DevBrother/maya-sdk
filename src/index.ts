@@ -362,6 +362,7 @@ export class Maya_Sdk {
                 $counterparty_first_name: String
                 $counterparty_last_name: String
                 $is_total_amount: Boolean
+                $is_send_to_self: Boolean
             ) {
                 estimate_validate_external_transfer(
                     amount: $amount
@@ -377,6 +378,7 @@ export class Maya_Sdk {
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
                     is_total_amount: $is_total_amount
+                    is_send_to_self: $is_send_to_self
                 ) {
                     amount
                     currency_id
@@ -417,6 +419,7 @@ export class Maya_Sdk {
                 $counterparty_first_name: String
                 $counterparty_last_name: String
                 $is_total_amount: Boolean
+                $is_send_to_self: Boolean
             ) {
                 create_external_transfer(
                     amount: $amount
@@ -432,6 +435,7 @@ export class Maya_Sdk {
                     address_tag_value: $address_tag_value
                     address_tag_type: $address_tag_type
                     is_total_amount: $is_total_amount
+                    is_send_to_self: $is_send_to_self
                 ) {
                     ${transferString}
                 }

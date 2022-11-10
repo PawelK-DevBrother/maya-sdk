@@ -56,6 +56,7 @@ export interface CreateExternalTransferArgs
     address_tag_value?: string;
     address_tag_type?: CryptoAddressTagType;
     is_total_amount?: boolean;
+    is_send_to_self?: boolean;
 }
 
 export interface ExternalEstimation
