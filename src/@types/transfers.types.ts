@@ -79,6 +79,7 @@ export interface ExternalTransferFormDetails {
     networks: NetworkObject[];
     internal_fee_value: number;
     network_fees: EstimateNetworkFeeResult;
+    min_amount: number;
 }
 
 export interface GetExternalTransferFormDetailsArgs {

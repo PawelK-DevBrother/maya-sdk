@@ -296,6 +296,7 @@ export class Maya_Sdk {
                     address_tag_type
                     psp_service_id
                     internal_fee_value
+                    min_amount
                     networks {
                         ${NetworkObjectString}
                         label
