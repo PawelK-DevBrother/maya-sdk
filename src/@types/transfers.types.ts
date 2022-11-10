@@ -1,4 +1,5 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
+
 import {EstimateNetworkFeeResult} from './fees.types';
 import {NetworkObject} from './payments.types';
 import {ActionTrigger, DateRangeInput, PagerSortDateRange} from './utils.types';
@@ -11,6 +12,26 @@ export enum PspServiceStatus {
     PENDING = 'PENDING',
     CONFIRMING = 'CONFIRMING',
     COMPLETED = 'COMPLETED',
+}
+
+export enum PspSourceType {
+    VAULT_ACCOUNT = 'VAULT_ACCOUNT',
+    EXCHANGE_ACCOUNT = 'EXCHANGE_ACCOUNT',
+    FIAT_ACCOUNT = 'FIAT_ACCOUNT',
+    GAS_STATION = 'GAS_STATION',
+    UNKNOWN = 'UNKNOWN',
+}
+
+export enum PspDestinationType {
+    VAULT_ACCOUNT = 'VAULT_ACCOUNT',
+    EXCHANGE_ACCOUNT = 'EXCHANGE_ACCOUNT',
+    INTERNAL_WALLET = 'INTERNAL_WALLET',
+    EXTERNAL_WALLET = 'EXTERNAL_WALLET',
+    ONE_TIME_ADDRESS = 'ONE_TIME_ADDRESS',
+    NETWORK_CONNECTION = 'NETWORK_CONNECTION',
+    FIAT_ACCOUNT = 'FIAT_ACCOUNT',
+    COMPOUND = 'COMPOUND',
+    UNKNOWN = 'UNKNOWN',
 }
 
 export enum CryptoNetworkSpeed {
@@ -189,6 +210,10 @@ psp_service_trigger_reason
 psp_service_trigger_ts
 psp_service_message
 psp_service_error_message
+psp_source_type
+psp_source_id
+psp_destination_type
+psp_destination_id
 tr_status
 tr_requestReferenceNo
 tr_withdrawalId
@@ -283,6 +308,10 @@ export interface Transfer {
     psp_service_trigger_by?: string;
     psp_service_trigger_ts?: string;
     psp_service_trigger_reason?: string;
+    psp_source_type?: PspSourceType;
+    psp_source_id?: string;
+    psp_destination_type?: PspDestinationType;
+    psp_destination_id?: string;
     //* Travel rule
     tr_status?: TravelRuleStatus;
     tr_requestReferenceNo?: string;
