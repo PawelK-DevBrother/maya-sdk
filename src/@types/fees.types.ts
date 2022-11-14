@@ -1,20 +1,7 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
 
-export interface FeeEstimationItem {
-    fee_per_byte?: number;
-    gas_price?: number;
-    network_fee?: number;
-    base_fee?: number;
-    priority_fee?: number;
-    gas_limit?: number;
-}
-export interface EstimateNetworkFeeResult {
-    low: FeeEstimationItem;
-    medium: FeeEstimationItem;
-    high: FeeEstimationItem;
-}
-
 export interface EstimateAmountsResult extends EstimateNetworkFeeResult {
+    fees_error: boolean;
     amount: number;
     ex_body_amount: number;
     ex_fee_amount: number;
@@ -30,6 +17,20 @@ export interface EstimateNetworkFeeArgs {
     address_tag_type?: CryptoAddressTagType;
     address_tag_value?: string;
     is_total_amount?: boolean;
+}
+
+export interface FeeEstimationItem {
+    fee_per_byte?: number;
+    gas_price?: number;
+    network_fee?: number;
+    base_fee?: number;
+    priority_fee?: number;
+    gas_limit?: number;
+}
+export interface EstimateNetworkFeeResult {
+    low: FeeEstimationItem;
+    medium: FeeEstimationItem;
+    high: FeeEstimationItem;
 }
 
 export interface GetCurrenciesPropertiesArgs {
