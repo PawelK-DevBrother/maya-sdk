@@ -1,18 +1,7 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
-
 import {EstimateNetworkFeeResult} from './fees.types';
 import {NetworkObject} from './payments.types';
 import {ActionTrigger, DateRangeInput, PagerSortDateRange} from './utils.types';
-
-export enum PspServiceStatus {
-    FAILED = 'FAILED',
-    BLOCKED = 'BLOCKED',
-    CANCELLED = 'CANCELLED',
-    REJECTED = 'REJECTED',
-    PENDING = 'PENDING',
-    CONFIRMING = 'CONFIRMING',
-    COMPLETED = 'COMPLETED',
-}
 
 export enum PspSourceType {
     VAULT_ACCOUNT = 'VAULT_ACCOUNT',
@@ -32,6 +21,17 @@ export enum PspDestinationType {
     FIAT_ACCOUNT = 'FIAT_ACCOUNT',
     COMPOUND = 'COMPOUND',
     UNKNOWN = 'UNKNOWN',
+}
+
+export enum PspServiceStatus {
+    FAILED = 'FAILED',
+    BLOCKED = 'BLOCKED',
+    CANCELLED = 'CANCELLED',
+    REJECTED = 'REJECTED',
+    PENDING = 'PENDING',
+    CONFIRMING = 'CONFIRMING',
+    COMPLETED = 'COMPLETED',
+    PENDING_AML_SCREENING = 'PENDING_AML_SCREENING',
 }
 
 export enum CryptoNetworkSpeed {
