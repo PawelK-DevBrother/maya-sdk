@@ -21,7 +21,7 @@ import {
     CreateExternalTransferArgs,
     ExternalEstimation,
     ExternalTransferFormDetails,
-    ExternalTransferProvideTravelRuleOriginatorDetails,
+    ExternalTransferUpdateOriginatorTravelRuleDetails,
     ExternalTransferUpdateBeneficiaryTravelRuleDetails,
     GetExternalTransferFormDetailsArgs,
     GetTransferArgs,
@@ -747,7 +747,7 @@ export class Maya_Sdk {
     }
 
     async external_transfer_update_orignator_travel_rule_details(
-        args: ExternalTransferProvideTravelRuleOriginatorDetails,
+        args: ExternalTransferUpdateOriginatorTravelRuleDetails,
         headers?: HeadersType,
     ): Promise<boolean> {
         const query = gql`

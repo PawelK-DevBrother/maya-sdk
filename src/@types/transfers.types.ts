@@ -146,6 +146,23 @@ export interface UpdateTrStatusArgs {
     requirements: string[];
     message: string;
 }
+export class ExternalTransferUpdateOriginatorTravelRuleDetails {
+    transfer_id: string;
+    originatorFirstName?: string;
+    originatorLastName?: string;
+    originatorVaspId?: string;
+    originatorVaspName?: string;
+    originatorGeographicAddress?: TravelRuleGeographicAddress;
+}
+
+export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
+    transfer_id: string;
+    beneficiaryFirstName?: string;
+    beneficiaryLastName?: string;
+    beneficiaryVaspId?: string;
+    beneficiaryVaspName?: string;
+    beneficiaryGeographicAddress?: TravelRuleGeographicAddress;
+}
 
 export enum TravelRuleStatus {
     PENDING_TRAVEL_RULE_CHECKING = 'PENDING_TRAVEL_RULE_CHECKING',
@@ -241,24 +258,6 @@ export class BeneficiaryGeographicAddress {
     townName: string;
     countrySubDivision: string;
     country: string;
-}
-
-export class ExternalTransferProvideTravelRuleOriginatorDetails {
-    transfer_id: string;
-    originatorFirstName?: string;
-    originatorLastName?: string;
-    originatorVaspId?: string;
-    originatorVaspName?: string;
-    originatorGeographicAddress?: TravelRuleGeographicAddress;
-}
-
-export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
-    transfer_id: string;
-    beneficiaryFirstName?: string;
-    beneficiaryLastName?: string;
-    beneficiaryVaspId?: string;
-    beneficiaryVaspName?: string;
-    beneficiaryGeographicAddress?: TravelRuleGeographicAddress;
 }
 
 export class TravelRuleGeographicAddress {
