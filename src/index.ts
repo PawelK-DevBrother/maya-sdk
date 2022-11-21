@@ -719,6 +719,32 @@ export class Maya_Sdk {
         return result.resend_transfer_otp;
     }
 
+    async update_transfer_tr_status(args: UpdateTrStatusArgs, headers?: HeadersType): Promise<boolean> {
+        const query = gql`
+            mutation (
+                $status: TravelRuleStatus!
+                $requestReferenceNo: String!
+                $xTransactionId: String!
+                $withdrawalId: String
+                $timestamp: String!
+                $requirements: [String!]!
+                $message: String!
+            ) {
+                update_transfer_tr_status(
+                    status: $status
+                    requestReferenceNo: $requestReferenceNo
+                    xTransactionId: $xTransactionId
+                    withdrawalId: $withdrawalId
+                    timestamp: $timestamp
+                    requirements: $requirements
+                    message: $message
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.update_transfer_tr_status;
+    }
+
     async external_transfer_update_beneficiary_travel_rule_details(
         args: ExternalTransferUpdateBeneficiaryTravelRuleDetails,
         headers?: HeadersType,
@@ -738,7 +764,7 @@ export class Maya_Sdk {
                     beneficiaryLastName: $beneficiaryLastName
                     beneficiaryVaspId: $beneficiaryVaspId
                     beneficiaryVaspName: $beneficiaryVaspName
-                    beneficiaryGeographicAddress: $TravelRuleGeographicAddress
+                    beneficiaryGeographicAddress: $beneficiaryGeographicAddress
                 )
             }
         `;
@@ -765,38 +791,12 @@ export class Maya_Sdk {
                     originatorLastName: $originatorLastName
                     originatorVaspId: $originatorVaspId
                     originatorVaspName: $originatorVaspName
-                    originatorGeographicAddress: $TravelRuleGeographicAddress
+                    originatorGeographicAddress: $originatorGeographicAddress
                 )
             }
         `;
         const result = await this.gql_request(query, args, headers);
         return result.external_transfer_update_originator_travel_rule_details;
-    }
-
-    async update_transfer_tr_status(args: UpdateTrStatusArgs, headers?: HeadersType): Promise<boolean> {
-        const query = gql`
-            mutation (
-                $status: TravelRuleStatus!
-                $requestReferenceNo: String!
-                $xTransactionId: String!
-                $withdrawalId: String
-                $timestamp: String!
-                $requirements: [String!]!
-                $message: String!
-            ) {
-                update_transfer_tr_status(
-                    status: $status
-                    requestReferenceNo: $requestReferenceNo
-                    xTransactionId: $xTransactionId
-                    withdrawalId: $withdrawalId
-                    timestamp: $timestamp
-                    requirements: $requirements
-                    message: $message
-                )
-            }
-        `;
-        const result = await this.gql_request(query, args, headers);
-        return result.update_transfer_tr_status;
     }
 }
 
