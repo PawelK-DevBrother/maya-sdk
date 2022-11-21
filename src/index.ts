@@ -745,33 +745,6 @@ export class Maya_Sdk {
         return result.update_transfer_tr_status;
     }
 
-    async external_transfer_update_beneficiary_travel_rule_details(
-        args: ExternalTransferUpdateBeneficiaryTravelRuleDetails,
-        headers?: HeadersType,
-    ): Promise<boolean> {
-        const query = gql`
-            mutation (
-                $transfer_id: String!
-                $beneficiaryFirstName: String
-                $beneficiaryLastName: String
-                $beneficiaryVaspId: String
-                $beneficiaryVaspName: String
-                $beneficiaryGeographicAddress: TravelRuleGeographicAddress
-            ) {
-                external_transfer_updaate_beneficiary_travel_rule_details(
-                    transfer_id: $transfer_id
-                    beneficiaryFirstName: $beneficiaryFirstName
-                    beneficiaryLastName: $beneficiaryLastName
-                    beneficiaryVaspId: $beneficiaryVaspId
-                    beneficiaryVaspName: $beneficiaryVaspName
-                    beneficiaryGeographicAddress: $beneficiaryGeographicAddress
-                )
-            }
-        `;
-        const result = await this.gql_request(query, args, headers);
-        return result.external_transfer_b;
-    }
-
     async external_transfer_update_orignator_travel_rule_details(
         args: ExternalTransferUpdateOriginatorTravelRuleDetails,
         headers?: HeadersType,
@@ -797,6 +770,33 @@ export class Maya_Sdk {
         `;
         const result = await this.gql_request(query, args, headers);
         return result.external_transfer_update_originator_travel_rule_details;
+    }
+
+    async external_transfer_update_beneficiary_travel_rule_details(
+        args: ExternalTransferUpdateBeneficiaryTravelRuleDetails,
+        headers?: HeadersType,
+    ): Promise<boolean> {
+        const query = gql`
+            mutation (
+                $transfer_id: String!
+                $beneficiaryFirstName: String
+                $beneficiaryLastName: String
+                $beneficiaryVaspId: String
+                $beneficiaryVaspName: String
+                $beneficiaryGeographicAddress: TravelRuleGeographicAddress
+            ) {
+                external_transfer_update_beneficiary_travel_rule_details(
+                    transfer_id: $transfer_id
+                    beneficiaryFirstName: $beneficiaryFirstName
+                    beneficiaryLastName: $beneficiaryLastName
+                    beneficiaryVaspId: $beneficiaryVaspId
+                    beneficiaryVaspName: $beneficiaryVaspName
+                    beneficiaryGeographicAddress: $beneficiaryGeographicAddress
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.external_transfer_b;
     }
 }
 
