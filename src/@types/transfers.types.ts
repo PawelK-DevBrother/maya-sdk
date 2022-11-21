@@ -243,13 +243,33 @@ export class BeneficiaryGeographicAddress {
     country: string;
 }
 
-export class ExternalTransferProvideTravelRuleDetailsArgs {
+export class ExternalTransferProvideTravelRuleOriginatorDetails {
+    transfer_id: string;
+    originatorFirstName?: string;
+    originatorLastName?: string;
+    originatorVaspId?: string;
+    originatorVaspName?: string;
+    originatorGeographicAddress?: TravelRuleGeographicAddress;
+}
+
+export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
     transfer_id: string;
     beneficiaryFirstName?: string;
     beneficiaryLastName?: string;
     beneficiaryVaspId?: string;
     beneficiaryVaspName?: string;
-    beneficiaryGeographicAddress?: BeneficiaryGeographicAddress;
+    beneficiaryGeographicAddress?: TravelRuleGeographicAddress;
+}
+
+export class TravelRuleGeographicAddress {
+    addressType: string;
+    streetName: string;
+    buildingNumber: string;
+    buildingName: string;
+    postcode: string;
+    townName: string;
+    countrySubDivision: string;
+    country: string;
 }
 
 export interface Transfer {
