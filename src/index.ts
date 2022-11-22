@@ -699,10 +699,12 @@ export class Maya_Sdk {
         return result.total_cost_transfers;
     }
 
-    async verify_outgoing_external_transfer_otp(args: SendOTPArgs, headers?: HeadersType): Promise<boolean> {
+    async verify_outgoing_external_transfer_otp(args: SendOTPArgs, headers?: HeadersType): Promise<Transfer> {
         const query = gql`
             mutation ($code: String!, $transfer_id: String!) {
-                verify_outgoing_external_transfer_otp(code: $code, transfer_id: $transfer_id)
+                verify_outgoing_external_transfer_otp(code: $code, transfer_id: $transfer_id){
+                    ${transferString}
+                }
             }
         `;
         const result = await this.gql_request(query, args, headers);
