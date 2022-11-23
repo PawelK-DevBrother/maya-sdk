@@ -150,8 +150,7 @@ export class ExternalTransferUpdateOriginatorTravelRuleDetails {
     transfer_id: string;
     originatorFirstName?: string;
     originatorLastName?: string;
-    originatorVaspId?: string;
-    originatorVaspName?: string;
+    originatorVasp?: string;
     originatorGeographicAddress?: TravelRuleGeographicAddress;
 }
 
@@ -159,8 +158,7 @@ export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
     transfer_id: string;
     beneficiaryFirstName?: string;
     beneficiaryLastName?: string;
-    beneficiaryVaspId?: string;
-    beneficiaryVaspName?: string;
+    beneficiaryVasp?: string;
     beneficiaryGeographicAddress?: TravelRuleGeographicAddress;
 }
 

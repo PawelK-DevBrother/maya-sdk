@@ -756,16 +756,14 @@ export class Maya_Sdk {
                 $transfer_id: String!
                 $originatorFirstName: String
                 $originatorLastName: String
-                $originatorVaspId: String
-                $originatorVaspName: String
+                $originatorVasp: String
                 $originatorGeographicAddress: TravelRuleGeographicAddress
             ) {
                 external_transfer_update_originator_travel_rule_details(
                     transfer_id: $transfer_id
                     originatorFirstName: $originatorFirstName
                     originatorLastName: $originatorLastName
-                    originatorVaspId: $originatorVaspId
-                    originatorVaspName: $originatorVaspName
+                    originatorVasp: $originatorVasp
                     originatorGeographicAddress: $originatorGeographicAddress
                 )
             }
@@ -783,16 +781,14 @@ export class Maya_Sdk {
                 $transfer_id: String!
                 $beneficiaryFirstName: String
                 $beneficiaryLastName: String
-                $beneficiaryVaspId: String
-                $beneficiaryVaspName: String
+                $beneficiaryVasp: String
                 $beneficiaryGeographicAddress: TravelRuleGeographicAddress
             ) {
                 external_transfer_update_beneficiary_travel_rule_details(
                     transfer_id: $transfer_id
                     beneficiaryFirstName: $beneficiaryFirstName
                     beneficiaryLastName: $beneficiaryLastName
-                    beneficiaryVaspId: $beneficiaryVaspId
-                    beneficiaryVaspName: $beneficiaryVaspName
+                    beneficiaryVasp: $beneficiaryVasp
                     beneficiaryGeographicAddress: $beneficiaryGeographicAddress
                 )
             }
