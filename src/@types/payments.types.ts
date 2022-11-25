@@ -58,6 +58,7 @@ export interface GetPaymentsRoutesArgs extends PagerSort {
     psp_service_id?: string;
     crypto_network?: string;
     is_active?: ToggleSwitch;
+    crypto_address_tag_type?: CryptoAddressTagType;
 }
 
 export interface PaymentRouteNetwork extends PaymentRoute {
