@@ -168,6 +168,8 @@ export class Maya_Sdk {
                     symbol
                     price(quote_asset_symbol: "PHP")
                     price_decimals
+                    color
+                    name
                 }
             }
         `;

@@ -68,6 +68,8 @@ export interface Asset {
     symbol: string;
     price: number;
     price_decimals: number;
+    color?: string;
+    name?: string;
 }
 
 export interface CreatePaymentRouteArgs {
