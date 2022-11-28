@@ -233,7 +233,10 @@ tr_status
 tr_requestReferenceNo
 tr_withdrawalId
 tr_requirments
-tr_requirments_parsed
+tr_requirments_parsed{
+    name
+    value
+}
 tr_message
 created_at
 updated_at
