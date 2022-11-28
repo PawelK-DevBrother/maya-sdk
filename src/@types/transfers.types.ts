@@ -349,3 +349,8 @@ export interface Transfer {
     created_at: string;
     updated_at: string;
 }
+
+export class AdminApproveTransferArgs {
+    transfer_id: string;
+    reason: string;
+}

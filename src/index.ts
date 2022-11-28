@@ -29,6 +29,7 @@ import {
     GetTransfersArgs,
     ProvideTransferMoreInfoArgs,
     UpdateTrStatusArgs,
+    AdminApproveTransferArgs,
 } from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
@@ -464,20 +465,20 @@ export class Maya_Sdk {
         return result.provide_transfer_more_info;
     }
 
-    async admin_approve_incoming_transfer(args: GetTransferArgs, headers?: HeadersType): Promise<boolean> {
+    async admin_approve_incoming_transfer(args: AdminApproveTransferArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
-            mutation ($transfer_id: String!) {
-                admin_approve_incoming_transfer(transfer_id: $transfer_id)
+            mutation ($transfer_id: String!, $reason: String!) {
+                admin_approve_incoming_transfer(transfer_id: $transfer_id, reason: $reason)
             }
         `;
         const result = await this.gql_request(query, args, headers);
         return result.admin_approve_incoming_transfer;
     }
 
-    async admin_approve_outgoing_transfer(args: GetTransferArgs, headers?: HeadersType): Promise<boolean> {
+    async admin_approve_outgoing_transfer(args: AdminApproveTransferArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
-            mutation ($transfer_id: String!) {
-                admin_approve_outgoing_transfer(transfer_id: $transfer_id)
+            mutation ($transfer_id: String!, $reason: String!) {
+                admin_approve_outgoing_transfer(transfer_id: $transfer_id, reason: $reason)
             }
         `;
         const result = await this.gql_request(query, args, headers);
