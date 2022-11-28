@@ -233,6 +233,7 @@ tr_status
 tr_requestReferenceNo
 tr_withdrawalId
 tr_requirments
+tr_requirments_parsed
 tr_message
 created_at
 updated_at
@@ -267,6 +268,11 @@ export class TravelRuleGeographicAddress {
     townName: string;
     countrySubDivision: string;
     country: string;
+}
+
+export class TravelRuleRequirements {
+    name: string;
+    value: string;
 }
 
 export interface Transfer {
@@ -334,6 +340,7 @@ export interface Transfer {
     tr_requestReferenceNo?: string;
     tr_withdrawalId?: string;
     tr_requirments?: string;
+    tr_requirments_parsed?: TravelRuleRequirements[];
     tr_message?: string;
     //* Dates
     created_at: string;
