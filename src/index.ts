@@ -797,7 +797,7 @@ export class Maya_Sdk {
             }
         `;
         const result = await this.gql_request(query, args, headers);
-        return result.external_transfer_b;
+        return result.external_transfer_update_beneficiary_travel_rule_details;
     }
 }
 
