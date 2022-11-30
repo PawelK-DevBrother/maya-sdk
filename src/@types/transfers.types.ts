@@ -248,7 +248,8 @@ export interface GetTransfersArgs extends PagerSortDateRange {
 }
 
 export interface GetTotalCostTransfersArgs {
-    date_range: DateRangeInput;
+    currency_id: string;
+    date_range?: DateRangeInput;
 }
 
 export class BeneficiaryGeographicAddress {
