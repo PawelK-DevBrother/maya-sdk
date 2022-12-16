@@ -341,6 +341,8 @@ export interface Transfer {
     psp_source_id?: string;
     psp_destination_type?: PspDestinationType;
     psp_destination_id?: string;
+    psp_fee_amount?: number;
+    psp_fee_currency?: string;
     //* Travel rule
     tr_status?: TravelRuleStatus;
     tr_requestReferenceNo?: string;
