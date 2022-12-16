@@ -229,6 +229,8 @@ psp_source_type
 psp_source_id
 psp_destination_type
 psp_destination_id
+psp_fee_amount
+psp_fee_currency
 tr_status
 tr_requestReferenceNo
 tr_withdrawalId
