@@ -301,6 +301,7 @@ export class Maya_Sdk {
                     psp_service_id
                     internal_fee_value
                     min_amount
+                    threshold
                     networks {
                         ${NetworkObjectString}
                         label
