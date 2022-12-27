@@ -102,6 +102,7 @@ export interface ExternalTransferFormDetails {
     internal_fee_value: number;
     network_fees: EstimateNetworkFeeResult;
     min_amount: number;
+    threshold: number;
 }
 
 export interface GetExternalTransferFormDetailsArgs {
