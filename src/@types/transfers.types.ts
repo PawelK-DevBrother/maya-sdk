@@ -111,6 +111,10 @@ export interface GetExternalTransferFormDetailsArgs {
     address_tag_type?: CryptoAddressTagType;
 }
 
+export interface GetExternalTransferFormDetailsByRouteArgs {
+    payment_route_id: string;
+}
+
 export interface GetTransferResult {
     pager_total_rows: number;
     response_id: string;

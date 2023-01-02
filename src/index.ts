@@ -291,6 +291,33 @@ export class Maya_Sdk {
         return result.delete_crypto_deposit_address;
     }
 
+    async external_transfer_form_details_by_route(args: GetExternalTransferFormDetailsArgs, headers?: HeadersType): Promise<ExternalTransferFormDetails> {
+        const query = gql`
+            query ($payment_route_id: String!) {
+                external_transfer_form_details_by_route(payment_route_id: $payment_route_id) {
+                    currency_id
+                    network
+                    address_tag_type
+                    psp_service_id
+                    internal_fee_value
+                    min_amount
+                    threshold
+                    networks {
+                        ${NetworkObjectString}
+                        label
+                        value
+                        notes
+                    }
+                    network_fees {
+                        ${NetworkFeesString}
+                    }
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.external_transfer_form_details;
+    }
+
     async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs, headers?: HeadersType): Promise<ExternalTransferFormDetails> {
         const query = gql`
             query ($currency_id: String!, $network: String!, $address_tag_type: CryptoAddressTagType) {
