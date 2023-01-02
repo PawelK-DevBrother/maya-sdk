@@ -44,7 +44,7 @@ import {
     DeleteCryptoDepositAddressArgs,
     UpdateCryptoDepositAddressArgs,
 } from './@types/crypto-deposit-address.types';
-import {Transfer, transferString, SendOTPArgs, GetTotalCostTransfersArgs} from './@types/transfers.types';
+import {Transfer, transferString, SendOTPArgs, GetTotalCostTransfersArgs, GetExternalTransferFormDetailsByRouteArgs} from './@types/transfers.types';
 import {
     GetCurrenciesPropertiesArgs,
     CurrencyProperty,
@@ -291,7 +291,10 @@ export class Maya_Sdk {
         return result.delete_crypto_deposit_address;
     }
 
-    async external_transfer_form_details_by_route(args: GetExternalTransferFormDetailsArgs, headers?: HeadersType): Promise<ExternalTransferFormDetails> {
+    async external_transfer_form_details_by_route(
+        args: GetExternalTransferFormDetailsByRouteArgs,
+        headers?: HeadersType,
+    ): Promise<ExternalTransferFormDetails> {
         const query = gql`
             query ($payment_route_id: String!) {
                 external_transfer_form_details_by_route(payment_route_id: $payment_route_id) {
