@@ -318,7 +318,7 @@ export class Maya_Sdk {
             }
         `;
         const result = await this.gql_request(query, args, headers);
-        return result.external_transfer_form_details;
+        return result.external_transfer_form_details_by_route;
     }
 
     async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs, headers?: HeadersType): Promise<ExternalTransferFormDetails> {
