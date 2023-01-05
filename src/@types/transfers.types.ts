@@ -1,3 +1,4 @@
+import {gql} from 'graphql-request';
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
 import {EstimateNetworkFeeResult} from './fees.types';
 import {NetworkObject} from './payments.types';
@@ -181,7 +182,7 @@ export enum TravelRuleStatus {
     TRANSACTION_ERROR = 'TRANSACTION_ERROR',
 }
 
-export const transferString = `
+export const transferString = gql`
 type
 scope
 direction
@@ -243,6 +244,11 @@ tr_requirments
 tr_requirments_parsed{
     name
     value
+    type
+    values{
+        name
+        value
+    }
 }
 tr_message
 created_at
@@ -281,9 +287,16 @@ export class TravelRuleGeographicAddress {
     country: string;
 }
 
-export class TravelRuleRequirements {
+export interface TrTypeValues {
     name: string;
     value: string;
+}
+
+export interface TravelRuleRequirements {
+    name: string;
+    value: string;
+    type: string;
+    values?: TrTypeValues[];
 }
 
 export interface Transfer {
