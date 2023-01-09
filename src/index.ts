@@ -341,6 +341,10 @@ export class Maya_Sdk {
                     network_fees {
                         ${NetworkFeesString}
                     }
+                    wallet_options{
+                        name
+                        value
+                    }
                 }
             }
         `;
@@ -399,6 +403,7 @@ export class Maya_Sdk {
                 $counterparty_last_name: String
                 $is_total_amount: Boolean
                 $is_send_to_self: Boolean
+                $wallet_type: String
             ) {
                 estimate_validate_external_transfer(
                     amount: $amount
@@ -415,6 +420,7 @@ export class Maya_Sdk {
                     address_tag_type: $address_tag_type
                     is_total_amount: $is_total_amount
                     is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
                 ) {
                     amount
                     currency_id
@@ -456,6 +462,7 @@ export class Maya_Sdk {
                 $counterparty_last_name: String
                 $is_total_amount: Boolean
                 $is_send_to_self: Boolean
+                $wallet_type: String
             ) {
                 create_external_transfer(
                     amount: $amount
@@ -472,6 +479,7 @@ export class Maya_Sdk {
                     address_tag_type: $address_tag_type
                     is_total_amount: $is_total_amount
                     is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
                 ) {
                     ${transferString}
                 }
@@ -792,6 +800,8 @@ export class Maya_Sdk {
                 $originatorLastName: String
                 $originatorVasp: String
                 $originatorGeographicAddress: TravelRuleGeographicAddress
+                $is_send_to_self: Boolean
+                $wallet_type: String
             ) {
                 external_transfer_update_originator_travel_rule_details(
                     transfer_id: $transfer_id
@@ -799,6 +809,8 @@ export class Maya_Sdk {
                     originatorLastName: $originatorLastName
                     originatorVasp: $originatorVasp
                     originatorGeographicAddress: $originatorGeographicAddress
+                    is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
                 )
             }
         `;
@@ -817,6 +829,8 @@ export class Maya_Sdk {
                 $beneficiaryLastName: String
                 $beneficiaryVasp: String
                 $beneficiaryGeographicAddress: TravelRuleGeographicAddress
+                $is_send_to_self: Boolean
+                $wallet_type: String
             ) {
                 external_transfer_update_beneficiary_travel_rule_details(
                     transfer_id: $transfer_id
@@ -824,6 +838,8 @@ export class Maya_Sdk {
                     beneficiaryLastName: $beneficiaryLastName
                     beneficiaryVasp: $beneficiaryVasp
                     beneficiaryGeographicAddress: $beneficiaryGeographicAddress
+                    is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
                 )
             }
         `;

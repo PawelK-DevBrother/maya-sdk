@@ -79,6 +79,7 @@ export interface CreateExternalTransferArgs
     address_tag_type?: CryptoAddressTagType;
     is_total_amount?: boolean;
     is_send_to_self?: boolean;
+    wallet_type?: string;
 }
 
 export interface ExternalEstimation
@@ -104,6 +105,7 @@ export interface ExternalTransferFormDetails {
     network_fees: EstimateNetworkFeeResult;
     min_amount: number;
     threshold: number;
+    wallet_options: TrTypeValues[];
 }
 
 export interface GetExternalTransferFormDetailsArgs {
@@ -158,6 +160,9 @@ export class ExternalTransferUpdateOriginatorTravelRuleDetails {
     originatorLastName?: string;
     originatorVasp?: string;
     originatorGeographicAddress?: TravelRuleGeographicAddress;
+
+    is_send_to_self?: boolean;
+    wallet_type?: string;
 }
 
 export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
@@ -166,6 +171,9 @@ export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
     beneficiaryLastName?: string;
     beneficiaryVasp?: string;
     beneficiaryGeographicAddress?: TravelRuleGeographicAddress;
+
+    is_send_to_self?: boolean;
+    wallet_type?: string;
 }
 
 export enum TravelRuleStatus {
