@@ -354,7 +354,7 @@ export class Maya_Sdk {
 
     async external_transfer_estimate_network_fee(args: EstimateNetworkFeeArgs, headers?: HeadersType): Promise<EstimateAmountsResult> {
         const query = gql`
-            mutation (
+            query(
                 $amount: Float!
                 $network: String!
                 $currency_id: String!
