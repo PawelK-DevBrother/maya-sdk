@@ -702,6 +702,7 @@ export class Maya_Sdk {
             query ($search: String, $filters: [GetTransfersFilter!], $pager: PagerInput, $sort: SortInput,$date_range: DateRangeInput) {
                 admin_transfers(search: $search, filters:$filters, sort: $sort, date_range: $date_range, pager: $pager){
                     pager_total_rows
+                    pager_has_next_page
                     response_id
                     items {
                         ${transferString}
@@ -718,6 +719,7 @@ export class Maya_Sdk {
             query ($search: String, $filters: [GetTransfersFilter!], $pager: PagerInput, $sort: SortInput,$date_range: DateRangeInput) {
                 transfers(search: $search, filters:$filters, sort: $sort, date_range: $date_range, pager: $pager){
                     pager_total_rows
+                    pager_has_next_page
                     response_id
                     items {
                         ${transferString}

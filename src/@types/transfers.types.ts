@@ -120,6 +120,7 @@ export interface GetExternalTransferFormDetailsByRouteArgs {
 
 export interface GetTransferResult {
     pager_total_rows: number;
+    pager_has_next_page?: boolean;
     response_id: string;
     items: Transfer[];
 }
