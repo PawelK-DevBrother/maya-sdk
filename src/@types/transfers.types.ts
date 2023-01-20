@@ -246,6 +246,11 @@ psp_destination_type
 psp_destination_id
 psp_fee_amount
 psp_fee_currency
+psp_risk_status
+psp_risk_score
+psp_usd_amount
+ex_fee_sell_txid
+ex_blockchain_fee_sell_txid
 tr_status
 tr_requestReferenceNo
 tr_withdrawalId
@@ -306,6 +311,12 @@ export interface TravelRuleRequirements {
     value: string;
     type: string;
     values?: TrTypeValues[];
+}
+
+export enum PspRiskStatus {
+    REJECTED = 'REJECTED',
+    ALERT = 'ALERT',
+    ACCEPT = 'ACCEPT',
 }
 
 export interface Transfer {
@@ -370,6 +381,10 @@ export interface Transfer {
     psp_destination_id?: string;
     psp_fee_amount?: number;
     psp_fee_currency?: string;
+    //* Eliptc
+    psp_risk_status?: PspRiskStatus;
+    psp_risk_score?: string;
+    psp_usd_amount?: number;
     //* Travel rule
     tr_status?: TravelRuleStatus;
     tr_requestReferenceNo?: string;
@@ -377,6 +392,9 @@ export interface Transfer {
     tr_requirments?: string;
     tr_requirments_parsed?: TravelRuleRequirements[];
     tr_message?: string;
+    //* exchange
+    ex_fee_sell_txid?: string;
+    ex_blockchain_fee_sell_txid?: string;
     //* Dates
     created_at: string;
     updated_at: string;
