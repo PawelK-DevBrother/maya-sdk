@@ -2,6 +2,7 @@ import {CryptoAddressTagType} from './crypto-deposit-address.types';
 
 export interface EstimateAmountsResult extends EstimateNetworkFeeResult {
     fees_error: boolean;
+    address_error: boolean;
     amount: number;
     ex_body_amount: number;
     ex_fee_amount: number;

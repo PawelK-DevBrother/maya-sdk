@@ -379,6 +379,7 @@ export class Maya_Sdk {
                     internal_fee
                     amount
                     fees_error
+                    address_error
                 }
             }
         `;
