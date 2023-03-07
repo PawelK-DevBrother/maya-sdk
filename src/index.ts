@@ -1,4 +1,9 @@
-import {OperationsLimits, operationsLimitsString, UserLimitGroup, UserLimitGroupString} from './@types/operations-limits.types';
+import {
+    OperationsLimits,
+    operationsLimitsString,
+    UserLimitGroup,
+    UserLimitGroupString,
+} from './@types/operations-limits.types';
 import {FindSystemSettingsArgs, Setting, SettingString} from './@types/settings.types';
 import {
     Asset,
@@ -44,7 +49,13 @@ import {
     DeleteCryptoDepositAddressArgs,
     UpdateCryptoDepositAddressArgs,
 } from './@types/crypto-deposit-address.types';
-import {Transfer, transferString, SendOTPArgs, GetTotalCostTransfersArgs, GetExternalTransferFormDetailsByRouteArgs} from './@types/transfers.types';
+import {
+    Transfer,
+    transferString,
+    SendOTPArgs,
+    GetTotalCostTransfersArgs,
+    GetExternalTransferFormDetailsByRouteArgs,
+} from './@types/transfers.types';
 import {
     GetCurrenciesPropertiesArgs,
     CurrencyProperty,
@@ -150,7 +161,10 @@ export class Maya_Sdk {
         return result.remove_currency_networks;
     }
 
-    async currencies_properties(args?: GetCurrenciesPropertiesArgs, headers?: HeadersType): Promise<CurrencyProperty[]> {
+    async currencies_properties(
+        args?: GetCurrenciesPropertiesArgs,
+        headers?: HeadersType,
+    ): Promise<CurrencyProperty[]> {
         const query = gql`
             query ($currency_id: String, $properties: [String!]) {
                 currencies_properties(currency_id: $currency_id, properties: $properties) {
@@ -217,7 +231,10 @@ export class Maya_Sdk {
         return result.payments_routes;
     }
 
-    async payments_routes_with_networks(args?: GetPaymentsRoutesArgs, headers?: HeadersType): Promise<PaymentRouteNetwork[]> {
+    async payments_routes_with_networks(
+        args?: GetPaymentsRoutesArgs,
+        headers?: HeadersType,
+    ): Promise<PaymentRouteNetwork[]> {
         const query = gql`
             query (
                 $currency_id: String
@@ -247,7 +264,10 @@ export class Maya_Sdk {
         return result.payments_routes_networks;
     }
 
-    async create_crypto_deposit_address(args: CreateCryptoDepositAddressArgs, headers?: HeadersType): Promise<CryptoDepositAddress> {
+    async create_crypto_deposit_address(
+        args: CreateCryptoDepositAddressArgs,
+        headers?: HeadersType,
+    ): Promise<CryptoDepositAddress> {
         const query = gql`
             mutation ($currency_id: String!, $network: String!) {
                 create_crypto_deposit_address(currency_id: $currency_id, network: $network) {
@@ -262,14 +282,21 @@ export class Maya_Sdk {
     async update_crypto_deposit_address(args: UpdateCryptoDepositAddressArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
             mutation ($crypto_deposit_address_id: String!, $address: String, $currency_id: String) {
-                update_crypto_deposit_address(crypto_deposit_address_id: $crypto_deposit_address_id, address: $address, currency_id: $currency_id)
+                update_crypto_deposit_address(
+                    crypto_deposit_address_id: $crypto_deposit_address_id
+                    address: $address
+                    currency_id: $currency_id
+                )
             }
         `;
         const result = await this.gql_request(query, args, headers);
         return result.update_crypto_deposit_address;
     }
 
-    async crypto_deposit_addresses(args?: FindCryptoDepositAddressesArgs, headers?: HeadersType): Promise<CryptoDepositAddress[]> {
+    async crypto_deposit_addresses(
+        args?: FindCryptoDepositAddressesArgs,
+        headers?: HeadersType,
+    ): Promise<CryptoDepositAddress[]> {
         const query = gql`
             query ($currency_id: String, $network: String, $pager: PagerInput) {
                 crypto_deposit_addresses(currency_id: $currency_id, network: $network, pager: $pager) {
@@ -321,7 +348,10 @@ export class Maya_Sdk {
         return result.external_transfer_form_details_by_route;
     }
 
-    async external_transfer_form_details(args: GetExternalTransferFormDetailsArgs, headers?: HeadersType): Promise<ExternalTransferFormDetails> {
+    async external_transfer_form_details(
+        args: GetExternalTransferFormDetailsArgs,
+        headers?: HeadersType,
+    ): Promise<ExternalTransferFormDetails> {
         const query = gql`
             query ($currency_id: String!, $network: String!, $address_tag_type: CryptoAddressTagType) {
                 external_transfer_form_details(currency_id: $currency_id, network: $network, address_tag_type: $address_tag_type) {
@@ -352,7 +382,10 @@ export class Maya_Sdk {
         return result.external_transfer_form_details;
     }
 
-    async external_transfer_estimate_network_fee(args: EstimateNetworkFeeArgs, headers?: HeadersType): Promise<EstimateAmountsResult> {
+    async external_transfer_estimate_network_fee(
+        args: EstimateNetworkFeeArgs,
+        headers?: HeadersType,
+    ): Promise<EstimateAmountsResult> {
         const query = gql`
             query(
                 $amount: Float!
@@ -380,6 +413,7 @@ export class Maya_Sdk {
                     amount
                     fees_error
                     address_error
+                    address_error_message
                 }
             }
         `;
@@ -387,7 +421,10 @@ export class Maya_Sdk {
         return result.external_transfer_estimate_network_fee;
     }
 
-    async estimate_validate_external_transfer(args: CreateExternalTransferArgs, headers?: HeadersType): Promise<ExternalEstimation> {
+    async estimate_validate_external_transfer(
+        args: CreateExternalTransferArgs,
+        headers?: HeadersType,
+    ): Promise<ExternalEstimation> {
         const query = gql`
             mutation (
                 $amount: Float!
@@ -492,7 +529,12 @@ export class Maya_Sdk {
 
     async provide_transfer_more_info(args: ProvideTransferMoreInfoArgs, headers?: HeadersType): Promise<boolean> {
         const query = gql`
-            mutation ($transfer_id: String!, $destination_wallet: String!, $counterparty_first_name: String!, $counterparty_last_name: String!) {
+            mutation (
+                $transfer_id: String!
+                $destination_wallet: String!
+                $counterparty_first_name: String!
+                $counterparty_last_name: String!
+            ) {
                 provide_transfer_more_info(
                     transfer_id: $transfer_id
                     counterparty_first_name: $counterparty_first_name
