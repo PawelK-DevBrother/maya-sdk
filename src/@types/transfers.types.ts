@@ -70,7 +70,10 @@ export enum TransferStatusType {
 }
 
 export interface CreateExternalTransferArgs
-    extends Pick<Transfer, 'amount' | 'currency_id' | 'notes' | 'direction' | 'counterparty_first_name' | 'counterparty_last_name'> {
+    extends Pick<
+        Transfer,
+        'amount' | 'currency_id' | 'notes' | 'direction' | 'counterparty_first_name' | 'counterparty_last_name'
+    > {
     network: string;
     destination_address: string;
     network_speed: CryptoNetworkSpeed;
@@ -85,7 +88,15 @@ export interface CreateExternalTransferArgs
 export interface ExternalEstimation
     extends Pick<
         Transfer,
-        'currency_id' | 'direction' | 'amount' | 'fiat_amount' | 'ex_body_amount' | 'ex_fee_amount' | 'internal_fee' | 'network_fee' | 'psp_service_id'
+        | 'currency_id'
+        | 'direction'
+        | 'amount'
+        | 'fiat_amount'
+        | 'ex_body_amount'
+        | 'ex_fee_amount'
+        | 'internal_fee'
+        | 'network_fee'
+        | 'psp_service_id'
     > {
     destination_address: string;
     price: number;
@@ -164,6 +175,9 @@ export class ExternalTransferUpdateOriginatorTravelRuleDetails {
 
     is_send_to_self?: boolean;
     wallet_type?: string;
+
+    originatorBirthInfo?: TrBirthInfo;
+    originatorNationalId?: TrNationalId;
 }
 
 export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
@@ -175,6 +189,9 @@ export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
 
     is_send_to_self?: boolean;
     wallet_type?: string;
+
+    beneficiaryBirthInfo?: TrBirthInfo;
+    beneficiaryNationalId?: TrNationalId;
 }
 
 export enum TravelRuleStatus {
@@ -299,6 +316,16 @@ export class TravelRuleGeographicAddress {
     townName: string;
     countrySubDivision: string;
     country: string;
+}
+export class TrBirthInfo {
+    country: string;
+    place: string;
+    dob: string;
+}
+export class TrNationalId {
+    type: string;
+    countryOfIssue: string;
+    idNumber: string;
 }
 
 export interface TrTypeValues {

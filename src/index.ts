@@ -847,6 +847,8 @@ export class Maya_Sdk {
                 $originatorGeographicAddress: TravelRuleGeographicAddress
                 $is_send_to_self: Boolean
                 $wallet_type: String
+                $originatorBirthInfo: TrBirthInfo
+                $originatorNationalId: TrNationalId
             ) {
                 external_transfer_update_originator_travel_rule_details(
                     transfer_id: $transfer_id
@@ -856,6 +858,8 @@ export class Maya_Sdk {
                     originatorGeographicAddress: $originatorGeographicAddress
                     is_send_to_self: $is_send_to_self
                     wallet_type: $wallet_type
+                    originatorBirthInfo: $originatorBirthInfo
+                    originatorNationalId: $originatorNationalId
                 )
             }
         `;
@@ -876,6 +880,8 @@ export class Maya_Sdk {
                 $beneficiaryGeographicAddress: TravelRuleGeographicAddress
                 $is_send_to_self: Boolean
                 $wallet_type: String
+                $beneficiaryBirthInfo: TrBirthInfo
+                $beneficiaryNationalId: TrNationalId
             ) {
                 external_transfer_update_beneficiary_travel_rule_details(
                     transfer_id: $transfer_id
@@ -885,6 +891,8 @@ export class Maya_Sdk {
                     beneficiaryGeographicAddress: $beneficiaryGeographicAddress
                     is_send_to_self: $is_send_to_self
                     wallet_type: $wallet_type
+                    beneficiaryBirthInfo: $beneficiaryBirthInfo
+                    beneficiaryNationalId: $beneficiaryNationalId
                 )
             }
         `;
