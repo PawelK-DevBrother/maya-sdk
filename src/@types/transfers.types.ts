@@ -169,7 +169,9 @@ export interface UpdateTrStatusArgs {
 export class ExternalTransferUpdateOriginatorTravelRuleDetails {
     transfer_id: string;
     originatorFirstName?: string;
+    originatorMiddleName?: string;
     originatorLastName?: string;
+    originatorCountry?: string;
     originatorVasp?: string;
     originatorGeographicAddress?: TravelRuleGeographicAddress;
 
@@ -183,7 +185,9 @@ export class ExternalTransferUpdateOriginatorTravelRuleDetails {
 export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
     transfer_id: string;
     beneficiaryFirstName?: string;
+    beneficiaryMiddleName?: string;
     beneficiaryLastName?: string;
+    beneficiaryCountry?: string;
     beneficiaryVasp?: string;
     beneficiaryGeographicAddress?: TravelRuleGeographicAddress;
 

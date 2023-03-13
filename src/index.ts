@@ -842,7 +842,9 @@ export class Maya_Sdk {
             mutation (
                 $transfer_id: String!
                 $originatorFirstName: String
+                $originatorMiddleName: String
                 $originatorLastName: String
+                $originatorCountry: String
                 $originatorVasp: String
                 $originatorGeographicAddress: TravelRuleGeographicAddress
                 $is_send_to_self: Boolean
@@ -853,7 +855,9 @@ export class Maya_Sdk {
                 external_transfer_update_originator_travel_rule_details(
                     transfer_id: $transfer_id
                     originatorFirstName: $originatorFirstName
+                    originatorMiddleName: $originatorMiddleName
                     originatorLastName: $originatorLastName
+                    originatorCountry: $originatorCountry
                     originatorVasp: $originatorVasp
                     originatorGeographicAddress: $originatorGeographicAddress
                     is_send_to_self: $is_send_to_self
@@ -875,7 +879,9 @@ export class Maya_Sdk {
             mutation (
                 $transfer_id: String!
                 $beneficiaryFirstName: String
+                $beneficiaryMiddleName: String
                 $beneficiaryLastName: String
+                $beneficiaryCountry: String
                 $beneficiaryVasp: String
                 $beneficiaryGeographicAddress: TravelRuleGeographicAddress
                 $is_send_to_self: Boolean
@@ -886,7 +892,9 @@ export class Maya_Sdk {
                 external_transfer_update_beneficiary_travel_rule_details(
                     transfer_id: $transfer_id
                     beneficiaryFirstName: $beneficiaryFirstName
+                    beneficiaryMiddleName: $beneficiaryMiddleName
                     beneficiaryLastName: $beneficiaryLastName
+                    beneficiaryCountry: $beneficiaryCountry
                     beneficiaryVasp: $beneficiaryVasp
                     beneficiaryGeographicAddress: $beneficiaryGeographicAddress
                     is_send_to_self: $is_send_to_self
