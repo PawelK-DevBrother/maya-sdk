@@ -1,6 +1,6 @@
 {
   "name": "maya-sdk",
-  "version": "1.0.88",
+  "version": "1.0.89",
   "description": "Simple sdk for maya",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
