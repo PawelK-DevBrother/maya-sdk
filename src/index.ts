@@ -817,6 +817,7 @@ export class Maya_Sdk {
                 $withdrawalId: String
                 $timestamp: String!
                 $requirements: [String!]!
+                $requirementsV2: [String!]!
                 $message: String!
             ) {
                 update_transfer_tr_status(
@@ -826,6 +827,7 @@ export class Maya_Sdk {
                     withdrawalId: $withdrawalId
                     timestamp: $timestamp
                     requirements: $requirements
+                    requirementsV2: $requirementsV2
                     message: $message
                 )
             }

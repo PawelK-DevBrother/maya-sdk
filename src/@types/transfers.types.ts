@@ -285,6 +285,16 @@ tr_requirments_parsed{
         value
     }
 }
+tr_requirments_v2
+tr_requirments_parsed_v2{
+    name
+    value
+    type
+    values{
+        name
+        value
+    }
+}
 tr_message
 created_at
 updated_at
@@ -422,6 +432,9 @@ export interface Transfer {
     tr_withdrawalId?: string;
     tr_requirments?: string;
     tr_requirments_parsed?: TravelRuleRequirements[];
+    // Backwards compatibility
+    tr_requirments_v2?: string;
+    tr_requirments_parsed_v2?: TravelRuleRequirements[];
     tr_message?: string;
     //* exchange
     ex_fee_sell_txid?: string;
