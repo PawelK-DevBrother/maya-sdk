@@ -169,6 +169,26 @@ export interface UpdateTrStatusArgs {
 export class ExternalTransferUpdateOriginatorTravelRuleDetails {
     transfer_id: string;
     originatorFirstName?: string;
+    originatorLastName?: string;
+    originatorVasp?: string;
+    originatorGeographicAddress?: TravelRuleGeographicAddress;
+    is_send_to_self?: boolean;
+    wallet_type?: string;
+}
+
+export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
+    transfer_id: string;
+    beneficiaryFirstName?: string;
+    beneficiaryLastName?: string;
+    beneficiaryVasp?: string;
+    beneficiaryGeographicAddress?: TravelRuleGeographicAddress;
+    is_send_to_self?: boolean;
+    wallet_type?: string;
+}
+
+export class ExternalTransferUpdateOriginatorTravelRuleDetails_2 {
+    transfer_id: string;
+    originatorFirstName?: string;
     originatorMiddleName?: string;
     originatorLastName?: string;
     originatorCountry?: string;
@@ -182,7 +202,7 @@ export class ExternalTransferUpdateOriginatorTravelRuleDetails {
     originatorNationalId?: TrNationalId;
 }
 
-export class ExternalTransferUpdateBeneficiaryTravelRuleDetails {
+export class ExternalTransferUpdateBeneficiaryTravelRuleDetails_2 {
     transfer_id: string;
     beneficiaryFirstName?: string;
     beneficiaryMiddleName?: string;
@@ -288,12 +308,38 @@ tr_requirments_parsed{
 tr_requirments_v2
 tr_requirments_parsed_v2{
     name
-    value
-    type
+    type 
+    isRequired
+    field
     values{
         name
         value
     }
+    fields{
+        name
+        type 
+        isRequired
+        field
+        values{
+            name
+            value
+        }
+        fields{
+            name
+            type 
+            isRequired
+            field
+            values{
+                name
+                value
+            }
+        }
+    }
+}
+receipt_details
+receipt_details_parsed{
+    name
+    value
 }
 tr_message
 created_at
@@ -434,7 +480,11 @@ export interface Transfer {
     tr_requirments_parsed?: TravelRuleRequirements[];
     // Backwards compatibility
     tr_requirments_v2?: string;
-    tr_requirments_parsed_v2?: TravelRuleRequirements[];
+    tr_requirments_parsed_v2?: AdditionalRequirementItem[];
+    // Receipt
+    receipt_details?: string;
+    receipt_details_parsed?: TransferReceiptDetails[];
+
     tr_message?: string;
     //* exchange
     ex_fee_sell_txid?: string;
@@ -447,4 +497,30 @@ export interface Transfer {
 export class AdminApproveTransferArgs {
     transfer_id: string;
     reason: string;
+}
+
+export enum ItemFieldTypeOption {
+    string = 'string',
+    date = 'date',
+    select = 'select',
+    object = 'object',
+}
+
+export class AdditionalRequirementItem {
+    name: string;
+    type: ItemFieldTypeOption;
+    values?: AdditionalRequirementItemValues[];
+    fields?: AdditionalRequirementItem[];
+    isRequired: boolean;
+    field: string;
+}
+
+export class AdditionalRequirementItemValues {
+    name: string;
+    value: string;
+}
+
+export class TransferReceiptDetails {
+    name: string;
+    value: string;
 }

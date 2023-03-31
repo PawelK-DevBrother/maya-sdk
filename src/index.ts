@@ -35,6 +35,8 @@ import {
     ProvideTransferMoreInfoArgs,
     UpdateTrStatusArgs,
     AdminApproveTransferArgs,
+    ExternalTransferUpdateBeneficiaryTravelRuleDetails_2,
+    ExternalTransferUpdateOriginatorTravelRuleDetails_2,
 } from './@types/transfers.types';
 // Tools
 import {GraphQlCustomError} from './utils';
@@ -844,6 +846,35 @@ export class Maya_Sdk {
             mutation (
                 $transfer_id: String!
                 $originatorFirstName: String
+                $originatorLastName: String
+                $originatorVasp: String
+                $originatorGeographicAddress: TravelRuleGeographicAddress
+                $is_send_to_self: Boolean
+                $wallet_type: String
+            ) {
+                external_transfer_update_originator_travel_rule_details(
+                    transfer_id: $transfer_id
+                    originatorFirstName: $originatorFirstName
+                    originatorLastName: $originatorLastName
+                    originatorVasp: $originatorVasp
+                    originatorGeographicAddress: $originatorGeographicAddress
+                    is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.external_transfer_update_originator_travel_rule_details;
+    }
+
+    async external_transfer_update_orignator_travel_rule_details_2(
+        args: ExternalTransferUpdateOriginatorTravelRuleDetails_2,
+        headers?: HeadersType,
+    ): Promise<boolean> {
+        const query = gql`
+            mutation (
+                $transfer_id: String!
+                $originatorFirstName: String
                 $originatorMiddleName: String
                 $originatorLastName: String
                 $originatorCountry: String
@@ -854,7 +885,7 @@ export class Maya_Sdk {
                 $originatorBirthInfo: TrBirthInfo
                 $originatorNationalId: TrNationalId
             ) {
-                external_transfer_update_originator_travel_rule_details(
+                external_transfer_update_originator_travel_rule_details_2(
                     transfer_id: $transfer_id
                     originatorFirstName: $originatorFirstName
                     originatorMiddleName: $originatorMiddleName
@@ -870,7 +901,7 @@ export class Maya_Sdk {
             }
         `;
         const result = await this.gql_request(query, args, headers);
-        return result.external_transfer_update_originator_travel_rule_details;
+        return result.external_transfer_update_originator_travel_rule_details_2;
     }
 
     async external_transfer_update_beneficiary_travel_rule_details(
@@ -887,11 +918,42 @@ export class Maya_Sdk {
                 $beneficiaryVasp: String
                 $beneficiaryGeographicAddress: TravelRuleGeographicAddress
                 $is_send_to_self: Boolean
+            ) {
+                external_transfer_update_beneficiary_travel_rule_details(
+                    transfer_id: $transfer_id
+                    beneficiaryFirstName: $beneficiaryFirstName
+                    beneficiaryMiddleName: $beneficiaryMiddleName
+                    beneficiaryLastName: $beneficiaryLastName
+                    beneficiaryCountry: $beneficiaryCountry
+                    beneficiaryVasp: $beneficiaryVasp
+                    beneficiaryGeographicAddress: $beneficiaryGeographicAddress
+                    is_send_to_self: $is_send_to_self
+                )
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.external_transfer_update_beneficiary_travel_rule_details;
+    }
+
+    async external_transfer_update_beneficiary_travel_rule_details_2(
+        args: ExternalTransferUpdateBeneficiaryTravelRuleDetails_2,
+        headers?: HeadersType,
+    ): Promise<boolean> {
+        const query = gql`
+            mutation (
+                $transfer_id: String!
+                $beneficiaryFirstName: String
+                $beneficiaryMiddleName: String
+                $beneficiaryLastName: String
+                $beneficiaryCountry: String
+                $beneficiaryVasp: String
+                $beneficiaryGeographicAddress: TravelRuleGeographicAddress
+                $is_send_to_self: Boolean
                 $wallet_type: String
                 $beneficiaryBirthInfo: TrBirthInfo
                 $beneficiaryNationalId: TrNationalId
             ) {
-                external_transfer_update_beneficiary_travel_rule_details(
+                external_transfer_update_beneficiary_travel_rule_details_2(
                     transfer_id: $transfer_id
                     beneficiaryFirstName: $beneficiaryFirstName
                     beneficiaryMiddleName: $beneficiaryMiddleName
@@ -907,7 +969,7 @@ export class Maya_Sdk {
             }
         `;
         const result = await this.gql_request(query, args, headers);
-        return result.external_transfer_update_beneficiary_travel_rule_details;
+        return result.external_transfer_update_beneficiary_travel_rule_details_2;
     }
 }
 
