@@ -163,7 +163,7 @@ export interface UpdateTrStatusArgs {
     xTransactionId: string;
     withdrawalId?: string | null;
     timestamp: string;
-    requirements: string[];
+    requirements: AdditionalRequirementItem[];
     message: string;
 }
 export class ExternalTransferUpdateOriginatorTravelRuleDetails {
@@ -311,7 +311,8 @@ tr_requirments_parsed_v2{
     type 
     isRequired
     field
-    values{
+    isCountryList
+    options{
         name
         value
     }
@@ -320,7 +321,8 @@ tr_requirments_parsed_v2{
         type 
         isRequired
         field
-        values{
+        isCountryList
+        options{
             name
             value
         }
@@ -329,7 +331,8 @@ tr_requirments_parsed_v2{
             type 
             isRequired
             field
-            values{
+            isCountryList
+            options{
                 name
                 value
             }
@@ -509,13 +512,14 @@ export enum ItemFieldTypeOption {
 export class AdditionalRequirementItem {
     name: string;
     type: ItemFieldTypeOption;
-    values?: AdditionalRequirementItemValues[];
+    options?: AdditionalRequirementItemOptions[];
     fields?: AdditionalRequirementItem[];
-    isRequired: boolean;
     field: string;
+    isRequired?: boolean;
+    isCountryList?: boolean;
 }
 
-export class AdditionalRequirementItemValues {
+export class AdditionalRequirementItemOptions {
     name: string;
     value: string;
 }
