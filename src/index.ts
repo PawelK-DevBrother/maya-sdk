@@ -819,7 +819,7 @@ export class Maya_Sdk {
                 $withdrawalId: String
                 $timestamp: String!
                 $requirements: [String!]!
-                $requirementsV2: [AdditionalRequirementItem!]!
+                $requirementsV2: [AdditionalRequirementItemInput!]!
                 $message: String!
             ) {
                 update_transfer_tr_status(
