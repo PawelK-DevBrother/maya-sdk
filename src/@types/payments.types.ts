@@ -95,12 +95,14 @@ export interface Vasp {
     name: string;
     featured: boolean;
     website: string;
+    featuredOrder?: number;
 }
 export const VaspString = `
 id
 did
 name
 featured
+featuredOrder
 website
 `;
 
