@@ -912,22 +912,20 @@ export class Maya_Sdk {
             mutation (
                 $transfer_id: String!
                 $beneficiaryFirstName: String
-                $beneficiaryMiddleName: String
                 $beneficiaryLastName: String
-                $beneficiaryCountry: String
                 $beneficiaryVasp: String
                 $beneficiaryGeographicAddress: TravelRuleGeographicAddress
                 $is_send_to_self: Boolean
+                $wallet_type: String
             ) {
                 external_transfer_update_beneficiary_travel_rule_details(
                     transfer_id: $transfer_id
                     beneficiaryFirstName: $beneficiaryFirstName
-                    beneficiaryMiddleName: $beneficiaryMiddleName
                     beneficiaryLastName: $beneficiaryLastName
-                    beneficiaryCountry: $beneficiaryCountry
                     beneficiaryVasp: $beneficiaryVasp
                     beneficiaryGeographicAddress: $beneficiaryGeographicAddress
                     is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
                 )
             }
         `;
