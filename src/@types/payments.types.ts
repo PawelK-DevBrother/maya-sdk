@@ -15,6 +15,7 @@ export interface NetworkObject {
     notes: string;
     heading: string;
     secondary: string;
+    address_tag_type_required: boolean;
 }
 export const NetworkObjectString = `
 label
@@ -22,6 +23,7 @@ value
 notes
 heading
 secondary
+address_tag_type_required
 `;
 
 export interface AddCurrencyNetworksArgs {

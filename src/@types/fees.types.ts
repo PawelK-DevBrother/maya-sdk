@@ -19,6 +19,7 @@ export interface EstimateNetworkFeeArgs {
     address_tag_type?: CryptoAddressTagType;
     address_tag_value?: string;
     is_total_amount?: boolean;
+    force_clean?: boolean;
 }
 
 export interface FeeEstimationItem {
