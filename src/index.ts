@@ -418,6 +418,9 @@ export class Maya_Sdk {
                     fees_error
                     address_error
                     address_error_message
+                    php_ex_body_amount
+                    php_amount
+                    price
                 }
             }
         `;

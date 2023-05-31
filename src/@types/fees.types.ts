@@ -1,4 +1,5 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
+import {TransferDirection} from './transfers.types';
 
 export interface EstimateAmountsResult extends EstimateNetworkFeeResult {
     fees_error: boolean;
@@ -9,6 +10,9 @@ export interface EstimateAmountsResult extends EstimateNetworkFeeResult {
     ex_fee_amount: number;
     internal_fee: number;
     network_fee: number;
+    php_ex_body_amount?: number;
+    php_amount?: number;
+    price?: number;
 }
 
 export interface EstimateNetworkFeeArgs {
@@ -20,6 +24,7 @@ export interface EstimateNetworkFeeArgs {
     address_tag_value?: string;
     is_total_amount?: boolean;
     force_clean?: boolean;
+    direction?: TransferDirection;
 }
 
 export interface FeeEstimationItem {
