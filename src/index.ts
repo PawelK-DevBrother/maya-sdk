@@ -398,6 +398,7 @@ export class Maya_Sdk {
                 $address_tag_type: CryptoAddressTagType
                 $is_total_amount: Boolean
                 $force_clean: Boolean
+                $direction: TransferDirection
             ) {
                 external_transfer_estimate_network_fee(
                     amount: $amount
@@ -408,6 +409,7 @@ export class Maya_Sdk {
                     address_tag_type: $address_tag_type
                     is_total_amount: $is_total_amount
                     force_clean: $force_clean
+                    direction: $direction
                 ) {
                     ${NetworkFeesString}
                     ex_fee_amount
