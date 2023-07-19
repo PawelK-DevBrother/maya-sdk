@@ -399,6 +399,7 @@ export class Maya_Sdk {
                 $is_total_amount: Boolean
                 $force_clean: Boolean
                 $direction: TransferDirection
+                $network_speed: CryptoNetworkSpeed
             ) {
                 external_transfer_estimate_network_fee(
                     amount: $amount
@@ -410,6 +411,7 @@ export class Maya_Sdk {
                     is_total_amount: $is_total_amount
                     force_clean: $force_clean
                     direction: $direction
+                    network_speed: $network_speed
                 ) {
                     ${NetworkFeesString}
                     ex_fee_amount

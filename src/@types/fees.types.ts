@@ -1,5 +1,5 @@
 import {CryptoAddressTagType} from './crypto-deposit-address.types';
-import {TransferDirection} from './transfers.types';
+import {CryptoNetworkSpeed, TransferDirection} from './transfers.types';
 
 export interface EstimateAmountsResult extends EstimateNetworkFeeResult {
     fees_error: boolean;
@@ -25,6 +25,7 @@ export interface EstimateNetworkFeeArgs {
     is_total_amount?: boolean;
     force_clean?: boolean;
     direction?: TransferDirection;
+    network_speed?: CryptoNetworkSpeed;
 }
 
 export interface FeeEstimationItem {
