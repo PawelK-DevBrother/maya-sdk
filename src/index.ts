@@ -1055,7 +1055,7 @@ export class Maya_Sdk {
         headers?: HeadersType,
     ): Promise<boolean> {
         const query = gql`
-            mutation ($transfer_id: String!, $reason: String!) {
+            mutation ($transfer_id: String!) {
                 admin_change_transfer_to_pending(transfer_id: $transfer_id)
             }
         `;
