@@ -72,7 +72,8 @@ export enum TransferStatusType {
 export interface CreateExternalTransferArgs
     extends Pick<
         Transfer,
-        'amount' | 'currency_id' | 'notes' | 'direction' | 'counterparty_first_name' | 'counterparty_last_name'
+        'amount' | 'currency_id' | 'notes' | 'direction' | 'counterparty_first_name' | 'counterparty_last_name' |
+        'counterparty_middle_name' | 'counterparty_country'
     > {
     network: string;
     destination_address: string;
@@ -419,7 +420,9 @@ export interface Transfer {
     user_id: string;
     user_mobile_nr?: string;
     counterparty_first_name?: string;
+    counterparty_middle_name?: string;
     counterparty_last_name?: string;
+    counterparty_country?: string;
     currency_id: string;
     currency_name: string;
     amount: number;
