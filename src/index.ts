@@ -523,6 +523,123 @@ export class Maya_Sdk {
         return result.estimate_validate_external_transfer;
     }
 
+    async estimate_validate_external_transfer_v2(
+      args: CreateExternalTransferArgs,
+      headers?: HeadersType,
+    ): Promise<ExternalEstimation> {
+        const query = gql`
+            mutation (
+                $amount: Float!
+                $currency_id: String!
+                $network: String!
+                $destination_address: String!
+                $direction: TransferDirection!
+                $network_speed: CryptoNetworkSpeed!
+                $address_tag_value: String
+                $address_tag_type: CryptoAddressTagType
+                $notes: String
+                $destination_wallet: String
+                $counterparty_first_name: String
+                $counterparty_middle_name: String
+                $counterparty_last_name: String
+                $counterparty_country: String
+                $is_total_amount: Boolean
+                $is_send_to_self: Boolean
+                $wallet_type: String
+            ) {
+                estimate_validate_external_transfer_v2(
+                    amount: $amount
+                    currency_id: $currency_id
+                    network: $network
+                    direction: $direction
+                    notes: $notes
+                    counterparty_first_name: $counterparty_first_name
+                    counterparty_middle_name: $counterparty_middle_name
+                    counterparty_last_name: $counterparty_last_name
+                    counterparty_country: $counterparty_country
+                    destination_address: $destination_address
+                    network_speed: $network_speed
+                    destination_wallet: $destination_wallet
+                    address_tag_value: $address_tag_value
+                    address_tag_type: $address_tag_type
+                    is_total_amount: $is_total_amount
+                    is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
+                ) {
+                    amount
+                    currency_id
+                    direction
+                    amount
+                    fiat_amount
+                    ex_body_amount
+                    ex_fee_amount
+                    internal_fee
+                    network_fee
+                    psp_service_id
+                    destination_address
+                    price
+                    network
+                    address_tag_value
+                    address_tag_type
+                    network_speed
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.estimate_validate_external_transfer_v2;
+    }
+
+    async create_external_transfer_v2(
+      args: CreateExternalTransferArgs,
+      headers?: HeadersType,
+    ): Promise<Transfer> {
+        const query = gql`
+            mutation (
+                $amount: Float!
+                $currency_id: String!
+                $network: String!
+                $destination_address: String!
+                $direction: TransferDirection!
+                $network_speed: CryptoNetworkSpeed!
+                $address_tag_value: String
+                $address_tag_type: CryptoAddressTagType
+                $notes: String
+                $destination_wallet: String
+                $counterparty_first_name: String
+                $counterparty_middle_name: String
+                $counterparty_last_name: String
+                $counterparty_country: String
+                $is_total_amount: Boolean
+                $is_send_to_self: Boolean
+                $wallet_type: String
+            ) {
+                create_external_transfer_v2(
+                    amount: $amount
+                    currency_id: $currency_id
+                    network: $network
+                    direction: $direction
+                    notes: $notes
+                    counterparty_first_name: $counterparty_first_name
+                    counterparty_middle_name: $counterparty_middle_name
+                    counterparty_last_name: $counterparty_last_name
+                    counterparty_country: $counterparty_country
+                    destination_address: $destination_address
+                    network_speed: $network_speed
+                    destination_wallet: $destination_wallet
+                    address_tag_value: $address_tag_value
+                    address_tag_type: $address_tag_type
+                    is_total_amount: $is_total_amount
+                    is_send_to_self: $is_send_to_self
+                    wallet_type: $wallet_type
+                ) {
+                    ${transferString}
+                }
+            }
+        `;
+        const result = await this.gql_request(query, args, headers);
+        return result.create_external_transfer_v2;
+    }
+
     async create_external_transfer(
         args: CreateExternalTransferArgs,
         headers?: HeadersType,
