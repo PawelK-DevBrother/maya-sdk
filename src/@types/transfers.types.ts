@@ -348,6 +348,7 @@ receipt_details_parsed{
 tr_message
 created_at
 updated_at
+updated_at_ts
 `;
 
 export interface GetTransfersArgs extends PagerSortDateRange {
@@ -498,6 +499,7 @@ export interface Transfer {
     //* Dates
     created_at: string;
     updated_at: string;
+    updated_at_ts: string;
 }
 
 export class AdminApproveTransferArgs {
